@@ -31,29 +31,43 @@ function Signup() {
     return (
         <>
             <NonUserNav />
-            <main>
-                <div>
-                    <div className="signup-window">
-                        <h2>Sign Up</h2>
-                        <form className="Signup">
-                            <div>
-                                <input type="firstName" id="firstName-input"></input>
-                                <lable for="firstName">First name</lable>
-                            </div>
-                            <div>
 
-                                <input type="email" id="email-input" onChange={e => setRegisterUsername(e.target.value)} ></input>
-                                <lable for="email">Email</lable>
-                            </div>
-                            <div>
-                                <input type="password" id="password-input" onChange={e => setRegisterPassword(e.target.value)}></input>
-                                <lable for="password">Password</lable>
-                            </div>
-                            <button type="submit" name="action" onClick={register} onClick={goToHome}>Sign Up</button>
-                        </form>
-                        <br></br>
-                        <p>Or log in <Link to="/">here</Link></p>
+            <main className="container">
+                <div className="column is-4 is-offset-7">
+                    <h1>Sign Up</h1>
+
+                    <div className="field">
+                        <p className="control has-icons-left">
+                            <input className="input" type="name" placeholder="First name" id="firstName-input" />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-user"></i>
+                            </span>
+                        </p>
                     </div>
+
+                    <div className="field">
+                        <p className="control has-icons-left">
+                            <input className="input" type="email" placeholder="Email" id="email-input" onChange={e => setRegisterUsername(e.target.value)} />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-envelope"></i>
+                            </span>
+                        </p>
+                    </div>
+
+                    <div className="field">
+                        <p className="control has-icons-left">
+                            <input className="input" type="password" placeholder="Password" id="password-input" onChange={e => setRegisterPassword(e.target.value)} />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+
+                    <button className="button is-success" type="submit" name="action" onClick={register} onClick={goToHome}>Sign Up</button>
+
+                    <br></br>
+                    <p>Or sign up <Link to="/">here</Link></p>
+
                 </div>
             </main>
             <Footer />

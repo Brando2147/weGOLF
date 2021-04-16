@@ -9,25 +9,34 @@ function Login() {
     return (
         <>
             <NonUserNav />
-            <main>
-                <div>
-                    <div className="login-window">
-                        <h2>Login</h2>
-                        <form className="Login">
-                            <div>
-                                <input type="email" id="email-input"></input>
-                                <lable for="email">Email</lable>
-                            </div>
-                            <div>
-                                <input type="password" id="password-input"></input>
-                                <lable for="password">Password</lable>
-                            </div>
-                            <button type="submit" name="action">Login</button>
-                        </form>
-                        <br></br>
-                        <p>Or sign up <Link to="/signup">here</Link></p>
+            <main className="container">
+                <div className="column is-4 is-offset-7">
+                    <h1>Login</h1>
+                    <div className="field">
+                        <p className="control has-icons-left">
+                            <input className="input" type="email" placeholder="Email" id="email-input" />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-envelope"></i>
+                            </span>
+                        </p>
                     </div>
+
+                    <div className="field">
+                        <p className="control has-icons-left">
+                            <input className="input" type="password" placeholder="Password" id="password-input" />
+                            <span className="icon is-small is-left">
+                                <i className="fas fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+
+                    <button className="button is-success">Login</button>
+
+                    <br></br>
+                    <p>Or sign up <Link to="/signup">here</Link></p>
+
                 </div>
+
             </main>
             <Footer />
         </>
