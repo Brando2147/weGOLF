@@ -22,8 +22,9 @@ module.exports = function(app) {
       email: req.body.email,
       password: req.body.password
     })
-      .then(() => {
+      .then((results) => {
         res.redirect(307, "/api/login");
+        console.log(results);
       })
       .catch(err => {
         res.status(401).json(err);
