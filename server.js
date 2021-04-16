@@ -6,7 +6,7 @@ const passport = require("./config/passport");
 const routes = require("./routes/html-routes");
 
 // Setting up port and requiring models for syncing
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3001;
 const db = require("./models");
 
 // Creating express app and configuring middleware needed for authentication

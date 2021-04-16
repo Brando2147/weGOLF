@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "Error@ppear1",
-    "database": "business_inventory",
+    "database": "wegolf",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
