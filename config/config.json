@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "Error@ppear1",
-    "database": "wegolf",
+    "password": "password",
+    "database": "wegolf_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
