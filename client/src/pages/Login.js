@@ -1,6 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Footer from "../components/Footer/index.js"
 import NonUserNav from "../components/NonUserNav/index.js"
+import Signup from "./Signup.js"
 
 
 function Login() {
@@ -23,7 +25,7 @@ function Login() {
                             <button type="submit" name="action">Login</button>
                         </form>
                         <br></br>
-                        <p>Or sign up<a href="/signup">here</a></p>
+                        <p>Or sign up <Link to="/signup">here</Link></p>
                     </div>
                 </div>
             </main>
