@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Footer from "../components/Footer/index.js";
-import NonUserNav from "../components/NonUserNav/index.js";
+import { Link } from "react-router-dom";
+import Footer from "../components/Footer/index.js"
+import NonUserNav from "../components/NonUserNav/index.js"
 import axios from 'axios';
 
 
@@ -27,6 +28,11 @@ const register = () => {
                         <h2>Sign Up</h2>
                         <form className="Signup">
                             <div>
+                                <input type="firstName" id="firstName-input"></input>
+                                <lable for="firstName">First name</lable>
+                            </div>
+                            <div>
+
                                 <input type="email" id="email-input" onChange={e => setRegisterUsername(e.target.value)} ></input>
                                 <lable for="email">Email</lable>
                             </div>
@@ -37,7 +43,7 @@ const register = () => {
                             <button type="submit" name="action" onClick={register}>Sign Up</button>
                         </form>
                         <br></br>
-                        <p>Or log in<a href="/">here</a></p>
+                        <p>Or log in <Link to="/">here</Link></p>
                     </div>
                 </div>
             </main>
