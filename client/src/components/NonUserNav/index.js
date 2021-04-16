@@ -1,12 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 function NonUserNav() {
     return (
         <nav>
-            <div>
-                <a href="#">weGOLF</a>
-            </div>
-        </nav>
+            <Link to="/">
+                weGOLF
+            </Link>
+        </nav >
     )
 }
 export default NonUserNav
