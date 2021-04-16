@@ -27,7 +27,6 @@ module.exports = function(app) {
       });
     }
   });
-};
 
 
 // GET route to retrieve data for specific state AND city sorted by ascending state
@@ -113,3 +112,5 @@ app.get("/api/state", function (req, res) {
 
 
     //****************** PUT ROUTES ****************** /
+
+  };
