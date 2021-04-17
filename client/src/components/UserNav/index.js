@@ -3,10 +3,12 @@ import { Link, useHistory } from "react-router-dom";
 import firebase from '../../firebase'
 import "./style.css"
 
+
 function UserNav() {
     let history = useHistory();
-
+    const [isActive, setisActive] = React.useState(false);
     const [user, setUser] = useState(false)
+  
 
     useEffect(() => {
         console.log('happens');
@@ -35,15 +37,20 @@ function UserNav() {
                 <div className="navbar-brand">
                     <Link className="navbar-item" to="/home"><h3>weGolf</h3></Link>
 
-                    <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                    <a onClick={() => {
+                    setisActive(!isActive)}}
+                    role="button" 
+                    className={`navbar-burger burger ${isActive ? "is-active" : ""}`}
+                    aria-label="menu" 
+                    aria-expanded="false" 
+                    data-target="navbarBasicExample">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                     </a>
                 </div>
 
-
-                <div className="navbar-menu">
+                <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
                     <div className="navbar-end">
                         <Link className="navbar-item is-tab" to="/newmatch">
                             <span className="icon is-small"><i className="fas fa-golf-ball" aria-hidden="true"></i></span>
