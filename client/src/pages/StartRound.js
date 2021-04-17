@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react"
 import UserNav from "../components/UserNav/index.js"
 import Scorecard from "../components/Scorecard/index.js"
+import { Link, useHistory } from "react-router-dom";
+import firebase from "../firebase"
 
 function StartRound() {
     let states = ["", "AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY",
@@ -9,20 +11,82 @@ function StartRound() {
 
     let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
+    useEffect(() => {
+        console.log('happens');
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log(user.uid);
+                setUser(user)
+                setInputs({
+                    ...inputs, playerNameArr: [{ "player1": user.email }],
+                })
+                console.log(user)
+            } else {
+                console.log('user is not signed in');
+
+                history.push("/")
+            }
+        })
+    }, [])
+
+    const [user, setUser] = useState(false)
+
+
 
     const [inputs, setInputs] = useState({
         numOfHoles: 1,
         numOfPlayers: 1,
+        playerNameArr: [{ "player1": userEmail }],
         roundState: ""
     })
 
+    const [playerName, setPlayerName] = useState({
+
+
+
+    })
+
+    let history = useHistory();
+
+
+
     console.log(inputs)
 
+    let numOfPlayers = parseInt(inputs.numOfPlayers)
+    console.log(numOfPlayers)
+    let numOfPlayersArr = [...Array(numOfPlayers)].map((_, i) => i);
+    console.log(numOfPlayersArr)
+
     const handleInputs = (e) => {
+        e.preventDefault()
         var clone = inputs
         clone[e.target.name] = e.target.value
         setInputs({ ...clone })
         console.log(clone)
+    }
+
+    const handlePlayerNames = (e) => {
+        e.preventDefault()
+        console.log(e.target.name)
+        console.log(e.target.value)
+
+        inputs.playerNameArr.push({ [e.target.name]: e.target.value })
+        for (let index = 0; index < inputs.playerNameArr.length; index++) {
+            if (inputs.playerNameArr[index] == e.target.name) {
+                console.log("hello")
+            }
+        }
+
+
+        console.log(inputs.playerNameArr)
+
+        // if (inputs.playerNameArr[e.target.name]) {
+        //     console.log("new player")
+        // } else {
+        //     inputs.playerNameArr.push({ [e.target.name]: e.target.value })
+        //     console.log(inputs.playerNameArr)
+        // }
+
     }
 
     const handleStartRound = () => {
@@ -82,19 +146,17 @@ function StartRound() {
                         </p>
                     </div>
 
-                    <div className="field column is-2">
+                    <div className="field column is-3">
                         <p className="control has-icons-left">
-                            Player 1: Name
+                            Player 1: {user.email}
                         </p>
-                        <p className="control has-icons-left">
-                            <input className="input" type="text" placeholder="Player 2" name="playerTwo" onChange={handleInputs} />
-                        </p>
-                        <p className="control has-icons-left">
-                            <input className="input" type="text" placeholder="Player 3" name="playerThree" onChange={handleInputs} />
-                        </p>
-                        <p className="control has-icons-left">
-                            <input className="input" type="text" placeholder="Player 4" name="playerFour" onChange={handleInputs} />
-                        </p>
+                        {
+                            numOfPlayersArr.map(each => (
+                                <p className="control has-icons-left">
+                                    <input className="input" type="text" placeholder={"Player" + " " + (each + 2)} name={"Player" + (each + 2)} onChange={handlePlayerNames} />
+                                </p>
+                            ))
+                        }
                     </div>
 
 
@@ -103,7 +165,7 @@ function StartRound() {
                 </form>
             </div>
 
-            <Scorecard />
+            <Scorecard details={inputs} />
         </>
     )
 

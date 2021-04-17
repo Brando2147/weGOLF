@@ -1,76 +1,57 @@
 import React from "react"
 
-function Scorecard(params) {
-    return (
-        <div className="table-container container column is-10">
-            <table className="table is-bordered is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Player/Hole</th>
-                        <th className="">1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
-                        <th>5</th>
-                        <th>6</th>
-                        <th>7</th>
-                        <th>8</th>
-                        <th>9</th>
+function Scorecard(props) {
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Andrew</th>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                    </tr>
-                    <tr>
-                        <th>Brandon</th>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                    </tr>
-                    <tr>
-                        <th>Josh</th>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                    </tr>
-                    <tr>
-                        <th>Martin</th>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                        <td contentEditable="true"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+
+    console.log(props.details)
+    console.log(typeof parseInt(props.details.numOfHoles))
+    let numOfHoles = parseInt(props.details.numOfHoles)
+    console.log(numOfHoles)
+    let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i);
+    console.log(numOfHolesArr)
+
+    let numOfPlayers = parseInt(props.details.numOfPlayers)
+    console.log(numOfPlayers)
+    let numOfPlayersArr = [...Array(numOfPlayers)].map((_, i) => i);
+    console.log(numOfPlayersArr)
+
+
+
+
+    return (
+        <>
+
+            <div className="table-container container column is-10">
+
+                <table className="table is-bordered is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Player/Hole</th>
+                            {numOfHolesArr.map(each => (
+
+                                <td className="">{each + 1}</td>
+                            )
+                            )}
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {numOfPlayersArr.map(each => (
+                            <tr>
+                                <th>{each}</th>
+                                {numOfHolesArr.map(each => (
+
+                                    <td contentEditable="true"></td>
+                                )
+                                )}
+                            </tr>
+                        ))}
+
+                    </tbody>
+                </table>
+            </div>
+        </>
     )
 
 }
