@@ -46,7 +46,7 @@ function Signup() {
             .then((userCredential) => {
                 // Signed in 
                 var user = userCredential.user;
-                // window.location.href = "/home"
+                window.location.href = "/home"
             })
             .catch((error) => {
                 var errorCode = error.code;
