@@ -8,7 +8,6 @@ function Home() {
     return (
         <>
             <UserNav />
-            {/* <NewsFeed /> */}
 
             <UserFooter />
         </>

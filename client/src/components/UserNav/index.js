@@ -1,9 +1,35 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import firebase from '../../firebase'
 import "./style.css"
 
 function UserNav() {
+    let history = useHistory();
+
+    const [user, setUser] = useState(false)
+
+    useEffect(() => {
+        console.log('happens');
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log(user.uid);
+                setUser(user)
+            } else {
+                console.log('user is not signed in');
+
+                history.push("/")
+            }
+        })
+    }, [])
+
+    const handleSignOut = () => {
+        firebase.auth().signOut()
+        setUser(false)
+    }
+
+
     return (
+
         <nav className="navbar is-success" role="navigation" aria-label="main navigation">
             <div className="navbar-brand">
                 <Link className="navbar-item" to="/home"><h3>weGolf</h3></Link>
@@ -41,6 +67,10 @@ function UserNav() {
                     <Link className="navbar-item is-tab" to="/help">
                         <span className="icon is-small"><i className="fas fa-question" aria-hidden="true"></i></span>
                         <span>Help</span>
+                    </Link>
+                    <Link className="navbar-item is-tab" to="/" onClick={handleSignOut}>
+                        <span className="icon is-small"><i className="fas fa-sign-out-alt" aria-hidden="true"></i></span>
+                        <span>Sign Out</span>
                     </Link>
                 </div>
             </div>
