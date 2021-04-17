@@ -1,10 +1,8 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
-const passport = require("../config/passport");
+const user = require("../models/user");
 
-module.exports = function(app) {
-  
-
+module.exports = function (app) {
   //****************** GET ROUTES ****************** /
 
   // Route for logging user out
@@ -23,94 +21,63 @@ module.exports = function(app) {
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
       });
     }
   });
 
-
-// GET route to retrieve data for specific state AND city sorted by ascending state
-app.get("/api/posts/locationAscending/:city/:state", function (req, res) {
-  db.Courses.findAll({
-    where: {
-      courseCity: req.params.city,
-      courseState: req.params.state,
-    },
-    order: [["courseState", "ASC"]],
-  }).then(function (dbPost) {
-    res.json(dbPost);
-  });
-});
-
-
-// GET route to find all cities that have been added to the database
-app.get("/api/city", function (req, res) {
-  db.Courses.findAll({
-    attributes: ["courseCity"],
-  }).then(function (dbPost) {
-    res.json(dbPost);
-  });
-});
-
-// GET route to find all states that have been added to the database
-app.get("/api/state", function (req, res) {
-  db.Courses.findAll({
-    attributes: ["courseState"],
-  }).then(function (dbPost) {
-    res.json(dbPost);
-  });
-});
-
-
-  //****************** POST ROUTES ****************** /
-
-// Using the passport.authenticate middleware with our local strategy.
-  // If the user has valid login credentials, send them to the members page.
-  // Otherwise the user will be sent an error
-  app.post("/api/login", passport.authenticate("local"), (req, res) => {
-    // Sending back a password, even a hashed password, isn't a good idea
-    res.json({
-      email: req.user.email,
-      id: req.user.id
+  // GET route to retrieve data for specific state AND city sorted by ascending state
+  app.get("/api/posts/locationAscending/:city/:state", function (req, res) {
+    db.Courses.findAll({
+      where: {
+        courseCity: req.params.city,
+        courseState: req.params.state,
+      },
+      order: [["courseState", "ASC"]],
+    }).then(function (dbPost) {
+      res.json(dbPost);
     });
   });
 
-  // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
-  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
-  // otherwise send back an error
-  app.post("/api/signup", (req, res) => {
-    db.User.create({
-      email: req.body.email,
-      password: req.body.password
-    })
-      .then((results) => {
-        res.redirect(307, "/api/login");
-        console.log(results);
-      })
-      .catch(err => {
-        res.status(401).json(err);
-      });
+  // GET route to find all cities that have been added to the database
+  app.get("/api/city", function (req, res) {
+    db.Courses.findAll({
+      attributes: ["courseCity"],
+    }).then(function (dbPost) {
+      res.json(dbPost);
+    });
   });
 
-// Route to sign up for an account 
+  // GET route to find all states that have been added to the database
+  app.get("/api/state", function (req, res) {
+    db.Courses.findAll({
+      attributes: ["courseState"],
+    }).then(function (dbPost) {
+      res.json(dbPost);
+    });
+  });
+
+  //****************** POST ROUTES ****************** /
+
+  // Route to sign up for an account
   app.post("/api/signup", (req, res) => {
     db.User.create({
       email: req.body.email,
-      password: req.body.password,
+      firebaseId: req.body.firebaseId,
       firstName: req.body.firstName,
       city: req.body.city,
       state: req.body.state,
       zip: req.body.zip,
     })
-      .then(() => {
-        res.redirect(307, "/api/login");
+      .then((results) => {
+        console.log(results)
+        // res.redirect(307, "/api/login");
       })
       .catch((err) => {
+        console.log(err.message);
         res.status(401).json(err.message);
       });
   });
 
-
-    //****************** PUT ROUTES ****************** /
-
-  };
+  //****************** PUT ROUTES ****************** /
+};
