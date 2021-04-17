@@ -11,6 +11,7 @@ function Signup() {
     // const [registerUsername, setRegisterUsername] = useState("");
     // const [registerPassword, setRegisterPassword] = useState("");
     // const register = () => {
+
     //     axios({
     //         method: "post",
     //         data: {
@@ -46,6 +47,7 @@ function Signup() {
             .then((userCredential) => {
                 // Signed in 
                 var user = userCredential.user;
+
                 window.location.href = "/home"
             })
             .catch((error) => {
@@ -58,7 +60,7 @@ function Signup() {
 
     return (
         <>
-            <NonUserNav />
+            {/* <NonUserNav /> */}
 
             <main className="container">
                 <form className="box column is-5 is-offset-6" onSubmit={handleSignUpFormSubmit}>
