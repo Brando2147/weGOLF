@@ -61,7 +61,7 @@ function Signup() {
             <NonUserNav />
 
             <main className="container">
-                <form className="column is-4 is-offset-7" onSubmit={handleSignUpFormSubmit}>
+                <form className="box column is-5 is-offset-6" onSubmit={handleSignUpFormSubmit}>
                     <h1>Sign Up</h1>
 
                     <div className="field">

@@ -39,7 +39,7 @@ function Login() {
         <>
             <NonUserNav />
             <main className="container">
-                <form className="column is-4 is-offset-7" onSubmit={handleLoginInFormSubmit}>
+                <form className="box column is-5 is-offset-6" onSubmit={handleLoginInFormSubmit}>
                     <h1>Login</h1>
                     <div className="field">
                         <p className="control has-icons-left">
