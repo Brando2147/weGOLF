@@ -5,91 +5,106 @@ import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase"
 
 function StartRound() {
+    //array of states that user can pick from
     let states = ["", "AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY",
         "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR",
         "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"]
 
+
+    //array of # of holes that user can pick from
     let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+
+    //array of # of players that can be in a match
+    let numOfPlayersOptions = [1, 2, 3, 4]
+
 
     useEffect(() => {
         console.log('happens');
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                console.log(user.uid);
                 setUser(user)
-                setInputs({
-                    ...inputs, playerNameArr: [{ "player1": user.email }],
-                })
-                console.log(user)
+                // setInputs({
+                //     ...inputs, playerNameArr: [{ "player1": user.email }],
+                // })
+                // setPlayerName({
+                //     ...playerName, "player1": user.email
+                // })
             } else {
-                console.log('user is not signed in');
-
                 history.push("/")
             }
         })
     }, [])
 
+    //state holding authenticatd user
     const [user, setUser] = useState(false)
 
-
-
+    //state holding details of match
     const [inputs, setInputs] = useState({
         numOfHoles: 1,
         numOfPlayers: 1,
-        playerNameArr: [{ "player1": userEmail }],
+        playerNameArr: [],
         roundState: ""
     })
 
+    console.log(inputs)
+
+    //state holding names of players
     const [playerName, setPlayerName] = useState({
-
-
+        player1: "",
+        player2: "",
+        player3: "",
+        player4: "",
 
     })
 
     let history = useHistory();
 
-
-
-    console.log(inputs)
-
     let numOfPlayers = parseInt(inputs.numOfPlayers)
-    console.log(numOfPlayers)
     let numOfPlayersArr = [...Array(numOfPlayers)].map((_, i) => i);
-    console.log(numOfPlayersArr)
 
     const handleInputs = (e) => {
         e.preventDefault()
         var clone = inputs
         clone[e.target.name] = e.target.value
         setInputs({ ...clone })
-        console.log(clone)
+        console.log(inputs)
     }
 
     const handlePlayerNames = (e) => {
         e.preventDefault()
-        console.log(e.target.name)
-        console.log(e.target.value)
 
-        inputs.playerNameArr.push({ [e.target.name]: e.target.value })
-        for (let index = 0; index < inputs.playerNameArr.length; index++) {
-            if (inputs.playerNameArr[index] == e.target.name) {
-                console.log("hello")
-            }
-        }
-
-
-        console.log(inputs.playerNameArr)
-
-        // if (inputs.playerNameArr[e.target.name]) {
-        //     console.log("new player")
-        // } else {
-        //     inputs.playerNameArr.push({ [e.target.name]: e.target.value })
-        //     console.log(inputs.playerNameArr)
-        // }
-
+        setPlayerName({
+            ...playerName, [e.target.name]: e.target.value
+        })
+        console.log(playerName)
+        console.log(playerName.playerNameArr)
     }
 
-    const handleStartRound = () => {
+    const handleStartRound = (e) => {
+        e.preventDefault()
+        let playerNameArr = []
+        for (let i = 1; i < 5; i++) {
+            let currentPlayer = "player" + i
+            let currentPlayerName = playerName[currentPlayer]
+            console.log(currentPlayerName)
+            if (currentPlayerName != "") {
+                playerNameArr.push(currentPlayerName)
+            }
+
+        }
+
+        // if (playerName.player1 != "") {
+        //     playerNameArr.push(playerName.player1)
+        // }
+        // playerNameArr.push(playerName.player2)
+        // playerNameArr.push(playerName.player3)
+        // playerNameArr.push(playerName.player4)
+
+        console.log(playerNameArr)
+        setInputs({
+            ...inputs, playerNameArr
+        })
+        console.log(inputs)
 
     }
 
@@ -120,15 +135,16 @@ function StartRound() {
                             <input className="input" type="text" placeholder="Course Name" name="roundCourseName" onChange={handleInputs} />
                         </p>
                     </div>
+
                     <div className="field column is-2">
                         <label className="label">Number of Players</label>
                         <p className="control has-icons-left">
                             <span className="select">
                                 <select name="numOfPlayers" onChange={handleInputs}>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3"> 3</option>
-                                    <option value="4">4</option>
+                                    {numOfPlayersOptions.map((each) =>
+                                        <option value={each}>{each}</option>
+                                    )}
+
                                 </select>
                             </span>
                         </p>
@@ -148,27 +164,22 @@ function StartRound() {
 
                     <div className="field column is-3">
                         <p className="control has-icons-left">
-                            Player 1: {user.email}
                         </p>
                         {
                             numOfPlayersArr.map(each => (
                                 <p className="control has-icons-left">
-                                    <input className="input" type="text" placeholder={"Player" + " " + (each + 2)} name={"Player" + (each + 2)} onChange={handlePlayerNames} />
+                                    Player {each + 1}: <input className="input" type="text" placeholder={"player" + " " + (each + 1)} name={"player" + (each + 1)} onChange={handlePlayerNames} />
                                 </p>
                             ))
                         }
                     </div>
-
-
-                    <button className="button is-success">Start Round</button>
-
+                    <button className="button is-success" onClick={handleStartRound}>Start Round</button>
                 </form>
             </div>
 
             <Scorecard details={inputs} />
         </>
     )
-
 }
 
 export default StartRound;
