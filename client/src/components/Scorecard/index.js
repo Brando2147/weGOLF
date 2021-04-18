@@ -4,19 +4,13 @@ function Scorecard(props) {
 
 
 
-    console.log(props.details)
-    console.log(typeof parseInt(props.details.numOfHoles))
     let numOfHoles = parseInt(props.details.numOfHoles)
-    console.log(numOfHoles)
-    let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i);
-    console.log(numOfHolesArr)
+    let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
 
-    let numOfPlayers = parseInt(props.details.numOfPlayers)
-    console.log(numOfPlayers)
-    let numOfPlayersArr = [...Array(numOfPlayers)].map((_, i) => i);
-    console.log(numOfPlayersArr)
+    // let numOfPlayers = parseInt(props.details.numOfPlayers)
+    // let numOfPlayersArr = [...Array(numOfPlayers)].map((_, i) => i);
 
-
+    // console.log(props.details.playerNameArr)
 
 
     return (
@@ -28,28 +22,32 @@ function Scorecard(props) {
                     <thead>
                         <tr>
                             <th>Player/Hole</th>
-                            {numOfHolesArr.map(each => (
+                            {numOfHolesArr.map((each, index) => (
 
-                                <td className="">{each + 1}</td>
+                                <td id={"hole" + (each)} className="">{each}</td>
                             )
                             )}
-
+                            <td>Total</td>
                         </tr>
                     </thead>
                     <tbody>
-                        {numOfPlayersArr.map(each => (
-                            <tr>
-                                <th>{each}</th>
-                                {numOfHolesArr.map(each => (
+                        {props.details.playerNameArr.map((playerName, i) => (
 
-                                    <td contentEditable="true"></td>
+                            <tr id={playerName} player={"player" + (i + 1)} key={playerName}>
+                                <th id={playerName} player={"player" + (i + 1)}>{playerName}</th>
+                                {numOfHolesArr.map((each, index) => (
+
+                                    <td id={playerName} hole={"hole" + each} player={"player" + (i + 1)} key={each} contentEditable="true"></td>
                                 )
                                 )}
+                                <td id={playerName + "Total"}></td>
                             </tr>
                         ))}
 
                     </tbody>
                 </table>
+                <button>Suspend Round</button>
+                <button>End Round</button>
             </div>
         </>
     )
