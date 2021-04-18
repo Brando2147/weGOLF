@@ -11,7 +11,6 @@ function UserNav() {
   
 
     useEffect(() => {
-        console.log('happens');
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 console.log(user.uid);
