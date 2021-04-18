@@ -13,14 +13,11 @@ function Login() {
         var clone = inputs
         clone[e.target.name] = e.target.value
         setInputs({ ...clone })
-        console.log(clone)
-        console.log(inputs.logInEmail)
-        console.log(inputs.logInPassword)
+        
     }
 
     const handleLoginInFormSubmit = (e) => {
         e.preventDefault()
-        console.log(inputs.logInEmail, inputs.logInPassword);
 
         firebase.auth().signInWithEmailAndPassword(inputs.logInEmail, inputs.logInPassword)
             .then((userCredential) => {
