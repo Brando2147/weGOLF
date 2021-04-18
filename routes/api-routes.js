@@ -26,6 +26,13 @@ module.exports = function (app) {
     }
   });
 
+  // GET route to find all courses in the database
+  app.get("/api/courses", function (req, res) {
+    db.Courses.findAll({}).then(function (dbPost) {
+      res.json(dbPost);
+    });
+  });
+
   // GET route to retrieve data for specific state AND city sorted by ascending state
   app.get("/api/posts/locationAscending/:city/:state", function (req, res) {
     db.Courses.findAll({
@@ -57,6 +64,15 @@ module.exports = function (app) {
     });
   });
 
+  // GET route to find courses by Zip
+  app.get("/api/zip", function (req, res) {
+    db.Courses.findAll({
+      attributes: ["courseZip"],
+    }).then(function (dbPost) {
+      res.json(dbPost);
+    });
+  });
+
   //****************** POST ROUTES ****************** /
 
   // Route to sign up for an account
@@ -70,7 +86,7 @@ module.exports = function (app) {
       zip: req.body.zip,
     })
       .then((results) => {
-        console.log(results)
+        console.log(results);
         // res.redirect(307, "/api/login");
       })
       .catch((err) => {
