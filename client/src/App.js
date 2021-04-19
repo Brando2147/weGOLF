@@ -6,6 +6,7 @@ import Login from "./pages/Login.js"
 import Signup from "./pages/Signup.js"
 import StartRound from "./pages/StartRound.js"
 import Home from "./pages/Home.js"
+import MatchHistory from "./pages/MatchHistory.js"
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/home" component={Home} />
         <Route exact path="/newmatch" component={StartRound} />
+        <Route exact path="/matchhistory" component={MatchHistory} />
       </Router>
     </>
   );
