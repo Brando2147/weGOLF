@@ -8,7 +8,7 @@ function UserNav() {
     let history = useHistory();
     const [isActive, setisActive] = React.useState(false);
     const [user, setUser] = useState(false)
-  
+
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
@@ -37,12 +37,13 @@ function UserNav() {
                     <Link className="navbar-item" to="/home"><h3>weGolf</h3></Link>
 
                     <a onClick={() => {
-                    setisActive(!isActive)}}
-                    role="button" 
-                    className={`navbar-burger burger ${isActive ? "is-active" : ""}`}
-                    aria-label="menu" 
-                    aria-expanded="false" 
-                    data-target="navbarBasicExample">
+                        setisActive(!isActive)
+                    }}
+                        role="button"
+                        className={`navbar-burger burger ${isActive ? "is-active" : ""}`}
+                        aria-label="menu"
+                        aria-expanded="false"
+                        data-target="navbarBasicExample">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -56,9 +57,9 @@ function UserNav() {
                             <span> New Match</span>
                         </Link>
 
-                        <Link className="navbar-item is-tab" to="/courses">
-                            <span className="icon is-small"><i className="fas fa-flag" aria-hidden="true"></i></span>
-                            <span>Courses</span>
+                        <Link className="navbar-item is-tab" to="/matchhistory">
+                            <span className="icon is-small"><i className="fas fa-table" aria-hidden="true"></i></span>
+                            <span>Recent Matches</span>
                         </Link>
 
                         <Link className="navbar-item is-tab" to="/leaderboards">

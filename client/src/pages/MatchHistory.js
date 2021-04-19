@@ -1,18 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from "react"
 import UserFooter from "../components/UserFooter/index.js";
 import UserNav from "../components/UserNav/index.js"
-import NewsFeed from "../components/NewsFeed/index.js"
 
-function Home() {
+function MatchHistory(params) {
     return (
         <>
             <UserNav />
-            {/* <NewsFeed /> */}
+            <h1>Recent Matches</h1>
 
             <UserFooter />
         </>
     )
 }
 
-export default Home;
+export default MatchHistory;
