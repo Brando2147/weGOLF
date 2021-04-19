@@ -1,5 +1,9 @@
 module.exports = function (sequelize, DataTypes) {
   var Scores = sequelize.define("Scores", {
+    playerName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     holeOne: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -77,5 +81,13 @@ module.exports = function (sequelize, DataTypes) {
     freezeTableName: true
   }
   );
-  return Scores;
+  Scores.associate = function (models) {
+    Scores.belongsTo(models.Round, {
+      foreignKey: {
+        allowNull: false,
+      },
+      onDelete: "CASCADE",
+    });
 };
+return Scores;
+}
