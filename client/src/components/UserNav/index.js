@@ -7,7 +7,7 @@ import "./style.css"
 function UserNav() {
     let history = useHistory();
     const [isActive, setisActive] = React.useState(false);
-    const [user, setUser] = useState(false)
+    const [user, setUser] = useState(false);
   
 
     useEffect(() => {

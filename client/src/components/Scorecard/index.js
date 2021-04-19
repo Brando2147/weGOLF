@@ -1,8 +1,6 @@
-import React from "react"
+import React from "react";
 
 function Scorecard(props) {
-
-
 
     let numOfHoles = parseInt(props.details.numOfHoles)
     let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
