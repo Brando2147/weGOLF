@@ -1,5 +1,5 @@
-import React from "react";
 import React, { useState } from "react";
+import PlayerScoreCard from "../PlayerScorecard/index.js"
 
 // const ScoreCard = (props) => {
 //   const { roundId, players = [], holes = [] } = props
@@ -9,19 +9,49 @@ import React, { useState } from "react";
 // }
 
 function Scorecard(props) {
+
+
   console.log(props);
+  console.log(props.details)
+  console.log(props.roundInfo)
 
   let numOfHoles = parseInt(props.details.numOfHoles);
+  console.log(numOfHoles)
   let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
 
-  // let numOfPlayers = parseInt(props.details.numOfPlayers)
-  // let numOfPlayersArr = [...Array(numOfPlayers)].map((_, i) => i);
-
-  // console.log(props.details.playerNameArr)
 
   return (
     <>
-      <p>
+      <div className="container">
+        <table className="table is-bordered is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th>Player/Hole</th>
+              {numOfHolesArr.map((each, index) => (
+                <td id={"hole" + each} className="">
+                  {each}
+                </td>
+              ))}
+              <td>Total</td>
+            </tr>
+          </thead>
+          <tbody>
+
+            {props.details.playerNameArr.map((each, index) => {
+              return (
+                <PlayerScoreCard playerName={each} player={"player" + (index + 1)} playerID={props.details.playerIdArr[index]} roundId={props.roundInfo.roundId} holes={numOfHolesArr} />
+              )
+            })}
+
+          </tbody>
+
+        </table>
+
+
+
+      </div>
+
+      {/* <p>
         Course Name: {props.details.roundCourseName} | Location:{" "}
         {props.details.roundCity}, {props.details.roundState}{" "}
         {props.details.RoundId}
@@ -61,7 +91,7 @@ function Scorecard(props) {
         </table>
         <button>Suspend Round</button>
         <button>End Round</button>
-      </div>
+      </div> */}
     </>
   );
 }
