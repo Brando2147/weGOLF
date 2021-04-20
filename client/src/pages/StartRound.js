@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import UserNav from "../components/UserNav/index.js"
+import UserFooter from "../components/UserFooter/index.js"
 import Scorecard from "../components/Scorecard/index.js"
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase";
@@ -220,7 +221,8 @@ function StartRound() {
                         {
                             numOfPlayersArr.map(each => (
                                 <p className="control has-icons-left">
-                                    Player {each + 1}: <input className="input" type="text" placeholder={"player" + " " + (each + 1)} name={"player" + (each + 1)} onChange={handlePlayerNames} />
+                                    <label className="label">Player {each + 1}: </label>
+                                    <input className="input" type="text" placeholder={"player" + " " + (each + 1)} name={"player" + (each + 1)} onChange={handlePlayerNames} />
                                 </p>
                             ))
                         }
@@ -230,6 +232,8 @@ function StartRound() {
             </div>
 
             <Scorecard details={inputs} />
+            <UserFooter />
+
         </>
     )
 }
