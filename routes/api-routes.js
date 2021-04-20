@@ -102,33 +102,45 @@ module.exports = function (app) {
 
   // Route to sign up for an account
 
-  app.post("/api/round", (req,res) => {
+  app.post("/api/round", (req, res) => {
     db.Round.create({
-        ownerId: req.body.ownerId,
-        courseName: req.body.courseName,
-        courseCity: req.body.courseCity,
-        courseState: req.body.courseState
-    }).then((result) => {
-      res.json(result)
-      console.log(result)
-    }).catch((err) => {
-      console.log(err.message)
-      res.status(401).json(err.message)
+      ownerId: req.body.ownerId,
+      courseName: req.body.courseName,
+      courseCity: req.body.courseCity,
+      courseState: req.body.courseState,
     })
-  })
+      .then((result) => {
+        res.json(result);
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
+  });
 
-  app.post("/api/scores", (req,res) => {
+  app.post("/api/scores", (req, res) => {
     db.Scores.create({
       playerName: req.body.playerName,
-      RoundId: req.body.roundId
-
-    }).then((res) => {
-      console.log(res)
-    }).catch((err) => {
-      console.log(err.message)
-      res.status(401).json(err.message)
+      RoundId: req.body.roundId,
     })
-  })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
+  });
 
   //****************** PUT ROUTES ****************** /
 };
+
+app.put("/api/score/:playerName/:RoundId", (req, res) => {
+  db.Scores.update(req.body, {
+    where: {
+      playerName: req.params.playerName,
+      RoundId: req.params.RoundId,
+    },
+  });
+});
