@@ -3,9 +3,11 @@ import UserNav from "../components/UserNav/index.js"
 import UserFooter from "../components/UserFooter/index.js"
 import Scorecard from "../components/Scorecard/index.js"
 import { Link, useHistory } from "react-router-dom";
-import firebase from "../firebase"
+import firebase from "../firebase";
+import axios from 'axios';
 
 function StartRound() {
+
     //array of states that user can pick from
     let states = ["", "AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY",
         "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR",
@@ -38,6 +40,13 @@ function StartRound() {
 
     //state holding authenticatd user
     const [user, setUser] = useState(false)
+    console.log(user.uid);
+
+    const [course, setCourse] = useState({
+        courseName: "",
+        courseState: "",
+        courseCity: ""
+    })
 
     //state holding details of match
     const [inputs, setInputs] = useState({
@@ -62,6 +71,14 @@ function StartRound() {
 
     let numOfPlayers = parseInt(inputs.numOfPlayers)
     let numOfPlayersArr = [...Array(numOfPlayers)].map((_, i) => i);
+
+    const handleCourse = (e) => {
+        e.preventDefault()
+        var newInfo = course
+        newInfo[e.target.name] = e.target.value
+        setCourse({ ...newInfo })
+        console.log(course)
+    }
 
     const handleInputs = (e) => {
         e.preventDefault()
@@ -93,6 +110,41 @@ function StartRound() {
             }
 
         }
+        // for (let i = 0; i < inputs.playerNameArr.length; i++) {
+        //     const element = inputs.playerNameArr[i];
+        //     axios({
+        //         method: "post",
+        //         data: {
+        //             playerName: element,
+        //             roundId: user.uid
+        //         },
+        //         url: "/api/scores",
+        //       }).then((res) => (res));
+        // }
+
+        axios({
+            method: "post",
+            data: {
+                ownerId: user.uid,
+                courseName: course.courseName,
+                courseCity: course.courseCity,
+                courseState: course.courseState
+            },
+            url: "/api/round",
+          }).then((res) => {
+            for (let i = 0; i < playerNameArr.length; i++) {
+                const element = playerNameArr[i];
+                console.log(element)
+                axios({
+                    method: "post",
+                    data: {
+                        playerName: element,
+                        roundId: res.data.id
+                    },
+                    url: "/api/scores",
+                  }).then((res) => (res));
+            }
+          });
 
         // if (playerName.player1 != "") {
         //     playerNameArr.push(playerName.player1)
@@ -117,13 +169,13 @@ function StartRound() {
                 <form className="" onSubmit={handleStartRound}>
                     <div className="field column is-2">
                         <p className="control has-icons-left">
-                            <input className="input" type="text" placeholder="City" name="roundCity" onChange={handleInputs} />
+                            <input className="input" type="text" placeholder="City" name="courseCity" onChange={handleCourse} />
                         </p>
                     </div>
                     <div className="field column is-2">
                         <p className="control has-icons-left">
                             <span className="select">
-                                <select name="roundState" onChange={handleInputs}>
+                                <select name="courseState" onChange={handleCourse}>
                                     {states.map((each) =>
                                         <option valeue={each}>{each}</option>
                                     )}
@@ -133,7 +185,7 @@ function StartRound() {
                     </div>
                     <div className="field column is-2">
                         <p className="control has-icons-left">
-                            <input className="input" type="text" placeholder="Course Name" name="roundCourseName" onChange={handleInputs} />
+                            <input className="input" type="text" placeholder="Course Name" name="courseName" onChange={handleCourse} />
                         </p>
                     </div>
 

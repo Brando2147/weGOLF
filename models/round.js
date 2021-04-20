@@ -1,7 +1,7 @@
 module.exports = function (sequelize, DataTypes) {
     var Round = sequelize.define("Round", {
       ownerId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       courseName: {
@@ -16,6 +16,11 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      isComplete: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        default: false
+      }
     },
     {
       freezeTableName: true

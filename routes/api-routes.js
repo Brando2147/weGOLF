@@ -11,20 +11,28 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
+  // app.post("/api/login", (req, res) => {
+  //   // Sending back a password, even a hashed password, isn't a good idea
+  //   res.json({
+  //     email: req.user.email,
+  //     id: req.user.id
+  //   });
+  // });
+
   // Route for getting some data about our user to be used client side
-  app.get("/api/user_data", (req, res) => {
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id,
-      });
-    }
-  });
+  // app.get("/api/user_data", (req, res) => {
+  //   if (!req.user) {
+  //     // The user is not logged in, send back an empty object
+  //     res.json({});
+  //   } else {
+  //     // Otherwise send back the user's email and id
+  //     // Sending back a password, even a hashed password, isn't a good idea
+  //     res.json({
+  //       email: req.User.email,
+  //       id: req.User.id,
+  //     });
+  //   }
+  // });
 
   // GET route to find all courses in the database
   app.get("/api/courses", function (req, res) {
@@ -74,8 +82,6 @@ module.exports = function (app) {
   });
 
   //****************** POST ROUTES ****************** /
-
-  // Route to sign up for an account
   app.post("/api/signup", (req, res) => {
     db.User.create({
       email: req.body.email,
@@ -87,13 +93,42 @@ module.exports = function (app) {
     })
       .then((results) => {
         console.log(results);
-        // res.redirect(307, "/api/login");
       })
       .catch((err) => {
         console.log(err.message);
         res.status(401).json(err.message);
       });
   });
+
+  // Route to sign up for an account
+
+  app.post("/api/round", (req,res) => {
+    db.Round.create({
+        ownerId: req.body.ownerId,
+        courseName: req.body.courseName,
+        courseCity: req.body.courseCity,
+        courseState: req.body.courseState
+    }).then((result) => {
+      res.json(result)
+      console.log(result)
+    }).catch((err) => {
+      console.log(err.message)
+      res.status(401).json(err.message)
+    })
+  })
+
+  app.post("/api/scores", (req,res) => {
+    db.Scores.create({
+      playerName: req.body.playerName,
+      RoundId: req.body.roundId
+
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err.message)
+      res.status(401).json(err.message)
+    })
+  })
 
   //****************** PUT ROUTES ****************** /
 };
