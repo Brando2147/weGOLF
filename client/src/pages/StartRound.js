@@ -45,7 +45,8 @@ function StartRound() {
     const [course, setCourse] = useState({
         courseName: "",
         courseState: "",
-        courseCity: ""
+        courseCity: "",
+        roundId: ""
     })
 
     //state holding details of match
@@ -132,6 +133,8 @@ function StartRound() {
             },
             url: "/api/round",
           }).then((res) => {
+              setCourse({...course, roundId: res.data.id})
+              console.log(course.roundId)
             for (let i = 0; i < playerNameArr.length; i++) {
                 const element = playerNameArr[i];
                 console.log(element)
