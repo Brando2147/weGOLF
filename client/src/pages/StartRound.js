@@ -46,7 +46,7 @@ function StartRound() {
         courseName: "",
         courseState: "",
         courseCity: "",
-        roundId: ""
+        roundId: 0,
     })
 
     //state holding details of match
