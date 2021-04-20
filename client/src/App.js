@@ -11,6 +11,7 @@ import Courses from "./pages/Courses"
 import LeaderBoards from './pages/LeaderBoards';
 import MyAccount from './pages/MyAccount';
 import Help from './pages/Help';
+import Directory from './pages/Directory';
 
 
 
@@ -27,6 +28,7 @@ function App() {
         <Route exact path="/leaderboards" component={LeaderBoards} />
         <Route exact path="/myaccount" component={MyAccount} />
         <Route exact path="/help" component={Help} />
+        <Route exact path="/directory" component={Directory} />
 
       </Router>
     </>
