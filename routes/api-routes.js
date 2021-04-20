@@ -124,8 +124,8 @@ module.exports = function (app) {
       playerName: req.body.playerName,
       RoundId: req.body.roundId,
     })
-      .then((res) => {
-        console.log(res);
+      .then((result) => {
+        res.json(result)
       })
       .catch((err) => {
         console.log(err.message);
@@ -134,13 +134,14 @@ module.exports = function (app) {
   });
 
   //****************** PUT ROUTES ****************** /
+  app.put("/api/score/:playerId/:roundId", (req, res) => {
+    db.Scores.update(req.body, {
+      where: {
+        id: req.params.playerId,
+        RoundId: req.params.roundId,
+      },
+    });
+  });
 };
 
-app.put("/api/score/:playerName/:RoundId", (req, res) => {
-  db.Scores.update(req.body, {
-    where: {
-      playerName: req.params.playerName,
-      RoundId: req.params.RoundId,
-    },
-  });
-});
+
