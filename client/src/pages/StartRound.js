@@ -22,7 +22,6 @@ function StartRound() {
 
 
     useEffect(() => {
-        console.log('happens');
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 setUser(user)
@@ -40,12 +39,12 @@ function StartRound() {
 
     //state holding authenticatd user
     const [user, setUser] = useState(false)
-    console.log(user.uid);
 
     const [course, setCourse] = useState({
         courseName: "",
         courseState: "",
-        courseCity: ""
+        courseCity: "",
+        roundId: 0
     })
 
     //state holding details of match
@@ -55,8 +54,6 @@ function StartRound() {
         playerNameArr: [],
         roundState: ""
     })
-
-    console.log(inputs)
 
     //state holding names of players
     const [playerName, setPlayerName] = useState({
@@ -77,7 +74,6 @@ function StartRound() {
         var newInfo = course
         newInfo[e.target.name] = e.target.value
         setCourse({ ...newInfo })
-        console.log(course)
     }
 
     const handleInputs = (e) => {
@@ -85,7 +81,6 @@ function StartRound() {
         var clone = inputs
         clone[e.target.name] = e.target.value
         setInputs({ ...clone })
-        console.log(inputs)
     }
 
     const handlePlayerNames = (e) => {
@@ -94,8 +89,6 @@ function StartRound() {
         setPlayerName({
             ...playerName, [e.target.name]: e.target.value
         })
-        console.log(playerName)
-        console.log(playerName.playerNameArr)
     }
 
     const handleStartRound = (e) => {
@@ -104,7 +97,6 @@ function StartRound() {
         for (let i = 1; i < 5; i++) {
             let currentPlayer = "player" + i
             let currentPlayerName = playerName[currentPlayer]
-            console.log(currentPlayerName)
             if (currentPlayerName != "") {
                 playerNameArr.push(currentPlayerName)
             }
@@ -131,10 +123,14 @@ function StartRound() {
                 courseState: course.courseState
             },
             url: "/api/round",
-          }).then((res) => {
+        }).then((res) => {
+
+
+            setCourse({
+                ...course, roundId: res.data.id
+            })
             for (let i = 0; i < playerNameArr.length; i++) {
                 const element = playerNameArr[i];
-                console.log(element)
                 axios({
                     method: "post",
                     data: {
@@ -142,9 +138,9 @@ function StartRound() {
                         roundId: res.data.id
                     },
                     url: "/api/scores",
-                  }).then((res) => (res));
+                }).then((res) => (res));
             }
-          });
+        });
 
         // if (playerName.player1 != "") {
         //     playerNameArr.push(playerName.player1)
@@ -153,20 +149,17 @@ function StartRound() {
         // playerNameArr.push(playerName.player3)
         // playerNameArr.push(playerName.player4)
 
-        console.log(playerNameArr)
         setInputs({
             ...inputs, playerNameArr
         })
-        console.log(inputs)
-
     }
 
     return (
         <>
             <UserNav />
 
-            <div className="container " id="roundDetails">
-                <form className="" onSubmit={handleStartRound}>
+            <div className="container" id="roundDetails">
+                <form className="column" onSubmit={handleStartRound}>
                     <div className="field column is-2">
                         <p className="control has-icons-left">
                             <input className="input" type="text" placeholder="City" name="courseCity" onChange={handleCourse} />
@@ -231,7 +224,7 @@ function StartRound() {
                 </form>
             </div>
 
-            <Scorecard details={inputs} />
+            <Scorecard details={inputs} roundInfo={course} />
             <UserFooter />
 
         </>
