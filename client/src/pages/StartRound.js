@@ -45,6 +45,7 @@ function StartRound() {
         courseState: "",
         courseCity: "",
         roundId: 0
+
     })
 
     //state holding details of match
@@ -124,11 +125,10 @@ function StartRound() {
             },
             url: "/api/round",
         }).then((res) => {
-
-
             setCourse({
                 ...course, roundId: res.data.id
             })
+
             for (let i = 0; i < playerNameArr.length; i++) {
                 const element = playerNameArr[i];
                 axios({
