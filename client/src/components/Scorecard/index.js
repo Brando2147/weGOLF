@@ -1,8 +1,8 @@
-import React from "react"
+import React from "react";
 
 function Scorecard(props) {
 
-
+    console.log(props)
 
     let numOfHoles = parseInt(props.details.numOfHoles)
     let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
@@ -15,7 +15,7 @@ function Scorecard(props) {
 
     return (
         <>
-
+            <p>Course Name: {props.details.roundCourseName} | Location: {props.details.roundCity}, {props.details.roundState}</p>
             <div className="table-container container column is-10">
 
                 <table className="table is-bordered is-hoverable is-fullwidth">
