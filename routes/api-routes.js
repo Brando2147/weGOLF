@@ -108,6 +108,20 @@ module.exports = function (app) {
         courseName: req.body.courseName,
         courseCity: req.body.courseCity,
         courseState: req.body.courseState
+    }).then((result) => {
+      res.json(result)
+      console.log(result)
+    }).catch((err) => {
+      console.log(err.message)
+      res.status(401).json(err.message)
+    })
+  })
+
+  app.post("/api/scores", (req,res) => {
+    db.Scores.create({
+      playerName: req.body.playerName,
+      RoundId: req.body.roundId
+
     }).then((res) => {
       console.log(res)
     }).catch((err) => {

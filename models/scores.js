@@ -2,79 +2,79 @@ module.exports = function (sequelize, DataTypes) {
   var Scores = sequelize.define("Scores", {
     playerName: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     holeOne: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeTwo: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeThree: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeFour: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeFive: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeSix: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeSeven: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeEight: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeNine: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeTen: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeEleven: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeTwelve: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeThirteen: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeFourteen: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeFifteen: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeSixteen: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeSeventeen: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     holeEighteen: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {

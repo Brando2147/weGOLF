@@ -109,6 +109,17 @@ function StartRound() {
             }
 
         }
+        // for (let i = 0; i < inputs.playerNameArr.length; i++) {
+        //     const element = inputs.playerNameArr[i];
+        //     axios({
+        //         method: "post",
+        //         data: {
+        //             playerName: element,
+        //             roundId: user.uid
+        //         },
+        //         url: "/api/scores",
+        //       }).then((res) => (res));
+        // }
 
         axios({
             method: "post",
@@ -119,7 +130,20 @@ function StartRound() {
                 courseState: course.courseState
             },
             url: "/api/round",
-          }).then((res) => (res));
+          }).then((res) => {
+            for (let i = 0; i < playerNameArr.length; i++) {
+                const element = playerNameArr[i];
+                console.log(element)
+                axios({
+                    method: "post",
+                    data: {
+                        playerName: element,
+                        roundId: res.data.id
+                    },
+                    url: "/api/scores",
+                  }).then((res) => (res));
+            }
+          });
 
         // if (playerName.player1 != "") {
         //     playerNameArr.push(playerName.player1)
