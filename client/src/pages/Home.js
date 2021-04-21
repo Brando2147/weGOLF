@@ -12,22 +12,22 @@ function Home() {
       <div class="columns is-centered is-mobile">
         <div class="row">
           <div class="column">
-            <div class="box">This button will go to "current round" page <p></p>or if no current round exists it will take the user to the new match page.<p></p>
+            <div class="box">Click here to go to your current round.<p></p>If no current round exists; this will create a new match.<p></p>
             <button class="button is-primary"><Link className="currentornew" to="/newmatch"><h3>Current Round</h3></Link></button></div>
           </div>
             {/* <NewsFeed /> */}
 
 
           <div class="column is-centered">
-            <div class="box">This button will take the user to a table<p></p> that allows them to search / filter users to find people to add / play against? <p></p><button class="button is-primary"><Link className="userdirectory" to="/directory"><h3>User Search</h3></Link></button></div>
+            <div class="box">Click here to see a list of users and their high scores.<p></p> See how your game compares to the competition!<p></p><button class="button is-primary"><Link className="userdirectory" to="/directory"><h3>User Search</h3></Link></button></div>
           </div>
         </div>
         <div class="row">
           <div class="column">
-            <div class="box">This button will take the user to a table view of their best scores. <p></p>This should be filterable (reddit or similar style) to "top all time" "top this month" etc.<p></p><button class="button is-primary"><Link className="bestscores" to="/best"><h3>Best Scores</h3></Link></button></div>
+            <div class="box">This button will take you to see your best scores. <p></p>This should be filterable (reddit or similar style) to "top all time" "top this month" etc.<p></p><button class="button is-primary"><Link className="bestscores" to="/best"><h3>Best Scores</h3></Link></button></div>
           </div>
           <div class="column">
-            <div class="box">This button will take the user to a list of their friends or something similar who are currently playing today. <p></p>Table that shows perosn playing / course / and score through the current spot of the course? <p></p><button class="button is-primary"><Link className="nowplaying" to="/nowplaying"><h3>Playing Now</h3></Link></button></div>
+            <div class="box">Unfortunately we still are not sure what to do with this button. <p></p>but it will someday have a home! <p></p><button class="button is-primary"><Link className="nowplaying" to="/nowplaying"><h3>Playing Now</h3></Link></button></div>
           </div>
         </div>
       </div>
