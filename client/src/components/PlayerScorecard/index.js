@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import "./style.css"
 
 
 const PlayerScoreCard = (props) => {
+    console.log(props)
     // playerId={each} roundId={props.roundInfo.roundId} holes={numOfHoles}
+
+    let numOfHoles = parseInt(props.holes);
+    let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
+
+    // console.log(props)
     const [state, setState] = useState({
         hole1: '',
         hole2: '',
@@ -23,28 +30,35 @@ const PlayerScoreCard = (props) => {
         hole16: '',
         hole17: '',
         hole18: '',
+        total: ''
     })
 
     const handleBlur = (e) => {
         axios({
             method: 'PUT',
             data: state,
-            url: `/api/scores/${props.playerId}/${props.roundId}`
+            url: `/api/scores/${props.playerID}/${props.roundId}/`
         })
     }
 
 
-    console.log(props)
     return (
         <>
             <tr>
-                {props.holes.map((each, index) => (
+                <td>{props.playerName}</td>
 
-                    <td><input holeNumber={"hole" + index + 1} input="text" onBlur={handleBlur} onChange={(value) => setState({ ...state, ["hole" + (index + 1)]: value })}>
-                    </input></td>
+                {numOfHolesArr.map((each, index) => (
+                    <>
+                        <td hole={'hole' + each}>
 
-
+                            <input className="scoreInput" playerName={props.playerName} holeNumber={"hole" + (index + 1)} input="text" onBlur={handleBlur} onChange={(value) => setState({ ...state, ["hole" + (index + 1)]: value })}>
+                            </input>
+                        </td>
+                    </>
                 ))}
+                <td>
+                    <input playerName={props.playerName} input="text" onChange={(value) => setState({ ...state, total: value })}></input>
+                </td>
             </tr>
         </>
     )
