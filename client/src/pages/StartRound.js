@@ -20,18 +20,15 @@ function StartRound() {
     //array of # of players that can be in a match
     let numOfPlayersOptions = [1, 2, 3, 4]
 
+    let playerIdArrTemp = []
+
+    let playerNameArr = []
 
     useEffect(() => {
-        console.log('happens');
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 setUser(user)
-                // setInputs({
-                //     ...inputs, playerNameArr: [{ "player1": user.email }],
-                // })
-                // setPlayerName({
-                //     ...playerName, "player1": user.email
-                // })
+
             } else {
                 history.push("/")
             }
@@ -40,23 +37,22 @@ function StartRound() {
 
     //state holding authenticatd user
     const [user, setUser] = useState(false)
-    console.log(user.uid);
 
     const [course, setCourse] = useState({
         courseName: "",
         courseState: "",
-        courseCity: ""
+        courseCity: "",
+        roundId: 0
+
     })
 
     //state holding details of match
     const [inputs, setInputs] = useState({
-        numOfHoles: 1,
+        numOfHoles: 18,
         numOfPlayers: 1,
         playerNameArr: [],
-        roundState: ""
+        playerIdArr: [],
     })
-
-    console.log(inputs)
 
     //state holding names of players
     const [playerName, setPlayerName] = useState({
@@ -77,7 +73,6 @@ function StartRound() {
         var newInfo = course
         newInfo[e.target.name] = e.target.value
         setCourse({ ...newInfo })
-        console.log(course)
     }
 
     const handleInputs = (e) => {
@@ -85,43 +80,29 @@ function StartRound() {
         var clone = inputs
         clone[e.target.name] = e.target.value
         setInputs({ ...clone })
-        console.log(inputs)
     }
 
     const handlePlayerNames = (e) => {
         e.preventDefault()
-
+        var nameClone = playerName
+        nameClone[e.target.name] = e.target.value
         setPlayerName({
-            ...playerName, [e.target.name]: e.target.value
+            ...nameClone,
         })
-        console.log(playerName)
-        console.log(playerName.playerNameArr)
     }
 
     const handleStartRound = (e) => {
         e.preventDefault()
-        let playerNameArr = []
         for (let i = 1; i < 5; i++) {
             let currentPlayer = "player" + i
             let currentPlayerName = playerName[currentPlayer]
-            console.log(currentPlayerName)
             if (currentPlayerName != "") {
                 playerNameArr.push(currentPlayerName)
             }
-
         }
-        // for (let i = 0; i < inputs.playerNameArr.length; i++) {
-        //     const element = inputs.playerNameArr[i];
-        //     axios({
-        //         method: "post",
-        //         data: {
-        //             playerName: element,
-        //             roundId: user.uid
-        //         },
-        //         url: "/api/scores",
-        //       }).then((res) => (res));
-        // }
-
+        setInputs({
+            ...inputs, playerNameArr
+        })
         axios({
             method: "post",
             data: {
@@ -131,10 +112,12 @@ function StartRound() {
                 courseState: course.courseState
             },
             url: "/api/round",
-          }).then((res) => {
+        }).then((res) => {
+            setCourse({
+                ...course, roundId: res.data.id
+            })
             for (let i = 0; i < playerNameArr.length; i++) {
                 const element = playerNameArr[i];
-                console.log(element)
                 axios({
                     method: "post",
                     data: {
@@ -142,22 +125,14 @@ function StartRound() {
                         roundId: res.data.id
                     },
                     url: "/api/scores",
-                  }).then((res) => (res));
+                }).then((result) => {
+                    playerIdArrTemp.push(result.data.id)
+                    setInputs({
+                        ...inputs, playerIdArr: playerIdArrTemp
+                    })
+                });
             }
-          });
-
-        // if (playerName.player1 != "") {
-        //     playerNameArr.push(playerName.player1)
-        // }
-        // playerNameArr.push(playerName.player2)
-        // playerNameArr.push(playerName.player3)
-        // playerNameArr.push(playerName.player4)
-
-        console.log(playerNameArr)
-        setInputs({
-            ...inputs, playerNameArr
-        })
-        console.log(inputs)
+        });
 
     }
 
@@ -165,8 +140,8 @@ function StartRound() {
         <>
             <UserNav />
 
-            <div className="container " id="roundDetails">
-                <form className="" onSubmit={handleStartRound}>
+            <div className="container" id="roundDetails">
+                <form className="column" onSubmit={handleStartRound}>
                     <div className="field column is-2">
                         <p className="control has-icons-left">
                             <input className="input" type="text" placeholder="City" name="courseCity" onChange={handleCourse} />
@@ -203,7 +178,7 @@ function StartRound() {
                         </p>
                     </div>
 
-                    <div className="field column is-2">
+                    {/* <div className="field column is-2">
                         <label className="label">Number of Holes</label>
                         <p className="control has-icons-left">
                             <span className="select">
@@ -213,7 +188,7 @@ function StartRound() {
                                 </select>
                             </span>
                         </p>
-                    </div>
+                    </div> */}
 
                     <div className="field column is-3">
                         <p className="control has-icons-left">
@@ -231,7 +206,7 @@ function StartRound() {
                 </form>
             </div>
 
-            <Scorecard details={inputs} />
+            <Scorecard details={inputs} roundInfo={course} />
             <UserFooter />
 
         </>

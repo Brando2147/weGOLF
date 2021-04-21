@@ -4,82 +4,82 @@ module.exports = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true
     },
-    holeOne: {
+    hole1: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeTwo: {
+    hole2: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeThree: {
+    hole3: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeFour: {
+    hole4: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeFive: {
+    hole5: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeSix: {
+    hole6: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeSeven: {
+    hole7: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeEight: {
+    hole8: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeNine: {
+    hole9: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeTen: {
+    hole10: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeEleven: {
+    hole11: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeTwelve: {
+    hole12: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeThirteen: {
+    hole13: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeFourteen: {
+    hole14: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeFifteen: {
+    hole15: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeSixteen: {
+    hole16: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeSeventeen: {
+    hole17: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    holeEighteen: {
+    hole18: {
       type: DataTypes.STRING,
       allowNull: true,
     },
   },
-  {
-    freezeTableName: true
-  }
+    {
+      freezeTableName: true
+    }
   );
   Scores.associate = function (models) {
     Scores.belongsTo(models.Round, {
@@ -88,6 +88,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       onDelete: "CASCADE",
     });
-};
-return Scores;
+  };
+  return Scores;
 }
