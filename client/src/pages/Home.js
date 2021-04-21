@@ -13,9 +13,9 @@ function Home() {
         <div class="row">
           <div class="column">
             <div class="box">This button will go to "current round" page <p></p>or if no current round exists it will take the user to the new match page.<p></p>
-            <button class="button is-primary"><Link className="currentornew" to="/newmatch"><h3>Current Round</h3></Link></button></div>
+              <button class="button is-primary"><Link className="currentornew" to="/newmatch"><h3>Current Round</h3></Link></button></div>
           </div>
-            {/* <NewsFeed /> */}
+          {/* <NewsFeed /> */}
 
 
           <div class="column is-centered">
@@ -31,7 +31,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <UserFooter />
+      {/* <UserFooter /> */}
     </>
   );
 }

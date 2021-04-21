@@ -13,7 +13,7 @@ function Login() {
         var clone = inputs
         clone[e.target.name] = e.target.value
         setInputs({ ...clone })
-        
+
     }
 
     const handleLoginInFormSubmit = (e) => {
@@ -64,7 +64,7 @@ function Login() {
                 </form>
 
             </main>
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }
