@@ -12,24 +12,23 @@ import PlayerScoreCard from "../PlayerScorecard/index.js"
 function Scorecard(props) {
 
 
-  console.log(props);
-  console.log(props.details)
-  console.log(props.roundInfo)
+  // console.log(props);
+  // console.log(props.details)
+
 
   let numOfHoles = parseInt(props.details.numOfHoles);
-  console.log(numOfHoles)
   let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
 
 
   return (
     <>
-      <div className="container">
-        <table className="table is-bordered is-hoverable is-fullwidth">
+      <div className="table-container">
+        <table className="table is-bordered is-narrow is-hoverable">
           <thead>
             <tr>
               <th>Player/Hole</th>
               {numOfHolesArr.map((each, index) => (
-                <td id={"hole" + each} className="">
+                <td hole={"hole" + each} key={"hole" + each} className="">
                   {each}
                 </td>
               ))}
@@ -40,7 +39,7 @@ function Scorecard(props) {
 
             {props.details.playerNameArr.map((each, index) => {
               return (
-                <PlayerScoreCard playerName={each} player={"player" + (index + 1)} playerID={props.details.playerIdArr[index]} roundId={props.roundInfo.roundId} holes={numOfHolesArr} />
+                <PlayerScoreCard playerName={each} player={"player" + (index + 1)} playerID={props.details.playerIdArr[index]} roundId={props.details.roundId} holes={props.details.numOfHoles} />
               )
             })}
 

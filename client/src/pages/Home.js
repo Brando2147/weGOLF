@@ -12,10 +12,12 @@ function Home() {
       <div class="columns is-centered is-mobile">
         <div class="row">
           <div class="column">
+
             <div class="box">Click here to go to your current round.<p></p>If no current round exists; this will create a new match.<p></p>
             <button class="button is-primary"><Link className="currentornew" to="/newmatch"><h3>Current Round</h3></Link></button></div>
+
           </div>
-            {/* <NewsFeed /> */}
+          {/* <NewsFeed /> */}
 
 
           <div class="column is-centered">
@@ -31,7 +33,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <UserFooter />
+      {/* <UserFooter /> */}
     </>
   );
 }

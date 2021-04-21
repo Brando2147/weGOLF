@@ -12,25 +12,32 @@ import LeaderBoards from './pages/LeaderBoards';
 import MyAccount from './pages/MyAccount';
 import Help from './pages/Help';
 import Directory from './pages/Directory';
+import Footer from "./components/UserFooter/index.js"
 
 
 
 function App() {
   return (
     <>
-      <Router>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/newmatch" component={StartRound} />
-        <Route exact path="/matchhistory" component={MatchHistory} />
-        <Route exact path="/courses" component={Courses} />
-        <Route exact path="/leaderboards" component={LeaderBoards} />
-        <Route exact path="/myaccount" component={MyAccount} />
-        <Route exact path="/help" component={Help} />
-        <Route exact path="/directory" component={Directory} />
+      <div className="page-container">
+        <div className="content-wrap">
+          <Router>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/newmatch" component={StartRound} />
+            <Route exact path="/matchhistory" component={MatchHistory} />
+            <Route exact path="/courses" component={Courses} />
+            <Route exact path="/leaderboards" component={LeaderBoards} />
+            <Route exact path="/myaccount" component={MyAccount} />
+            <Route exact path="/help" component={Help} />
+            <Route exact path="/directory" component={Directory} />
 
-      </Router>
+          </Router>
+        </div>
+        <Footer />
+      </div>
+
     </>
   );
 }

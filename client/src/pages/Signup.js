@@ -51,7 +51,7 @@ function Signup() {
           url: "/api/signup",
         }).then((res) => (res));
       })
-      
+
 
       .catch((error) => {
         var errorCode = error.code;
@@ -130,7 +130,7 @@ function Signup() {
           </p>
         </form>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
