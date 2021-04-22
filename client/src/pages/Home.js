@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 // import UserFooter from "../components/UserFooter/index.js";
 import UserNav from "../components/UserNav/index.js";
 import NewsFeed from "../components/NewsFeed/index.js";
+import fakeLogo from "../utils/images/webstore.jpeg"
+import scoreCardHome from "../utils/images/bestScores.jpeg"
+import currentRoundIMG from "../utils/images/currentRounds.jpeg"
+import usersIcon from "../utils/images/userDirectory.png"
 
 function Home() {
   return (
@@ -12,11 +16,19 @@ function Home() {
         <div class="row">
           <div class="column">
             <div class="box">
-              <figure class="image is-128x128">
-                <img src="https://bulma.io/images/placeholders/128x128.png"></img>
-              </figure>
-              Click here to go to your current round.<p></p>If no current round
-              exists; this will create a new match.<p></p>
+              {" "}
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image is-4by3">
+                    <img
+                      src={currentRoundIMG}
+                      alt="Placeholder image"
+                    ></img>
+                  </figure>
+                </div>
+              </div>
+              <p></p>
+              <p></p>
               <button class="button is-primary">
                 <Link className="currentornew" to="/newmatch">
                   <h3>Current Round</h3>
@@ -29,10 +41,17 @@ function Home() {
           <div class="column is-centered">
             <div class="box">
               {" "}
-              <figure class="image is-128x128">
-                <img src="https://bulma.io/images/placeholders/128x128.png"></img>
-              </figure>
-              Click here to see a list of users and their high scores.<p></p>{" "}
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image is-4by3">
+                    <img
+                      src={usersIcon}
+                      alt="Placeholder image"
+                    ></img>
+                  </figure>
+                </div>
+              </div>
+              <p></p>{" "}
               See how your game compares to the competition!<p></p>
               <button class="button is-primary">
                 <Link className="userdirectory" to="/directory">
@@ -46,12 +65,17 @@ function Home() {
           <div class="column">
             <div class="box">
               {" "}
-              <figure class="image is-128x128">
-                <img src="https://bulma.io/images/placeholders/128x128.png"></img>
-              </figure>
-              This button will take you to see your best scores. <p></p>This
-              should be filterable (reddit or similar style) to "top all time"
-              "top this month" etc.<p></p>
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image is-4by3">
+                    <img
+                      src={scoreCardHome}
+                      alt="Placeholder image"
+                    ></img>
+                  </figure>
+                </div>
+              </div>
+
               <button class="button is-primary">
                 <Link className="bestscores" to="/best">
                   <h3>Best Scores</h3>
@@ -61,14 +85,21 @@ function Home() {
           </div>
           <div class="column">
             <div class="box">
-              <figure class="image is-128x128">
-                <img src="https://bulma.io/images/placeholders/128x128.png"></img>
-              </figure>
-              Unfortunately we still are not sure what to do with this button.{" "}
-              <p></p>but it will someday have a home! <p></p>
+              <div class="card">
+                <div class="card-image">
+                  <figure class="image is-4by3">
+                    <img
+                      src={fakeLogo}
+                      alt="Placeholder image"
+                    ></img>
+                  </figure>
+                </div>
+              </div>
+              Click here to shop the weGOLF store! <p></p>Browse from T-Shirts,
+              Coffee Mugs, Golf Balls, and Club Covers! <p></p>
               <button class="button is-primary">
                 <Link className="nowplaying" to="/nowplaying">
-                  <h3>Playing Now</h3>
+                  <h3>weGOLF Store</h3>
                 </Link>
               </button>
             </div>

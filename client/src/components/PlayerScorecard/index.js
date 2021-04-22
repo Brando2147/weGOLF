@@ -11,29 +11,36 @@ const PlayerScoreCard = (props) => {
     let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
 
     // console.log(props)
+    const [total, setTotal] = useState(0)
     const [state, setState] = useState({
-        hole1: '',
-        hole2: '',
-        hole3: '',
-        hole4: '',
-        hole5: '',
-        hole6: '',
-        hole7: '',
-        hole8: '',
-        hole9: '',
-        hole10: '',
-        hole11: '',
-        hole12: '',
-        hole13: '',
-        hole14: '',
-        hole15: '',
-        hole16: '',
-        hole17: '',
-        hole18: '',
-        total: ''
+        hole1: 0,
+        hole2: 0,
+        hole3: 0,
+        hole4: 0,
+        hole5: 0,
+        hole6: 0,
+        hole7: 0,
+        hole8: 0,
+        hole9: 0,
+        hole10: 0,
+        hole11: 0,
+        hole12: 0,
+        hole13: 0,
+        hole14: 0,
+        hole15: 0,
+        hole16: 0,
+        hole17: 0,
+        hole18: 0
     })
 
+    var totalScore = function() {
+
+        let _total = Object.values(state).reduce((prev, next) => prev + next, 0)
+     setTotal(_total)
+    }
+
     const handleBlur = (e) => {
+        console.log(state)
         axios({
             method: 'PUT',
             data: state,
@@ -42,6 +49,16 @@ const PlayerScoreCard = (props) => {
             console.log(state)
         )
     }
+
+     const handleChange = event => {
+         event.preventDefault();
+        event.persist();
+        var clone = state;
+        clone[event.target.name] = parseInt(event.target.value);
+        setState({ ...clone})
+        totalScore();
+    }
+      
 
 
     return (
@@ -53,13 +70,13 @@ const PlayerScoreCard = (props) => {
                     <>
                         <td hole={'hole' + each}>
 
-                            <input className="scoreInput" playerName={props.playerName} holeNumber={"hole" + (index + 1)} input="text" onBlur={handleBlur} onChange={(value) => setState({ ...state, ["hole" + (index + 1)]: value })}>
+                            <input className="scoreInput" playerName={props.playerName} name={"hole" + (index + 1)} input="text" onBlur={handleBlur} onChange={handleChange}>
                             </input>
                         </td>
                     </>
                 ))}
                 <td>
-                    <input playerName={props.playerName} input="text" onChange={(value) => setState({ ...state, total: value })}></input>
+                {total}
                 </td>
             </tr>
         </>

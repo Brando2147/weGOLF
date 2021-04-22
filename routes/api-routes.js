@@ -134,12 +134,18 @@ module.exports = function (app) {
   });
 
   //****************** PUT ROUTES ****************** /
-  app.put("/api/score/:playerId/:roundId", (req, res) => {
+  app.put("/api/scores/:playerId/:roundId", (req, res) => {
     db.Scores.update(req.body, {
       where: {
         id: req.params.playerId,
         RoundId: req.params.roundId,
       },
+    }).then((result) => {
+      res.json(result)
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.status(401).json(err.message);
     });
   });
 };
