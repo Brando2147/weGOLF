@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useEffect, useState } from "react"
+import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 import Login from "./pages/Login.js"
 import Signup from "./pages/Signup.js"
 import StartRound from "./pages/StartRound.js"
@@ -12,11 +12,34 @@ import LeaderBoards from './pages/LeaderBoards';
 import MyAccount from './pages/MyAccount';
 import Help from './pages/Help';
 import Directory from './pages/Directory';
-import Footer from "./components/UserFooter/index.js"
+import Footer from "./components/Footer/index.js"
+import UserFooter from "./components/UserFooter/index.js"
+import firebase from "./firebase";
+import grassBanner from "./utils/images/grassbanner.png"
+
 
 
 
 function App() {
+  let history = useHistory();
+
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        setUser(user)
+
+      } else {
+
+      }
+    })
+  }, [])
+  const [user, setUser] = useState(false)
+
+  //state holding authenticatd user
+
+
+
   return (
     <>
       <div className="page-container">
@@ -35,7 +58,9 @@ function App() {
 
           </Router>
         </div>
-        <Footer />
+        <img src={grassBanner} height="50px"></img>
+        {user ? <UserFooter /> : <Footer />}
+
       </div>
 
     </>

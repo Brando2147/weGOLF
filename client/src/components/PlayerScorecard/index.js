@@ -45,7 +45,9 @@ const PlayerScoreCard = (props) => {
             method: 'PUT',
             data: state,
             url: `/api/scores/${props.playerID}/${props.roundId}/`
-        })
+        }).then(
+            console.log(state)
+        )
     }
 
      const handleChange = event => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import UserNav from "../components/UserNav/index.js"
-import UserFooter from "../components/UserFooter/index.js"
+// import UserFooter from "../components/UserFooter/index.js"
 import Scorecard from "../components/Scorecard/index.js"
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase";
@@ -21,10 +21,6 @@ function StartRound() {
     let numOfPlayersOptions = [1, 2, 3, 4]
 
 
-
-
-
-
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
@@ -39,11 +35,7 @@ function StartRound() {
     //state holding authenticatd user
     const [user, setUser] = useState(false)
 
-    // const [course, setCourse] = useState({
-
-
-    // })
-
+    const [startRound, setStartRound] = useState(false)
     //state holding details of match
     const [inputs, setInputs] = useState({
         numOfHoles: 18,
@@ -154,80 +146,76 @@ function StartRound() {
 
 
         });
+        setStartRound(true)
 
     }
 
     return (
         <>
             <UserNav />
-            <div className="container" id="roundDetails">
-                <form className="column" onSubmit={handleStartRound}>
-                    <div className="field column is-2">
-                        <p className="control has-icons-left">
-                            <input className="input" type="text" placeholder="City" name="courseCity" onChange={handleInputs} />
-                        </p>
-                    </div>
-                    <div className="field column is-2">
-                        <p className="control has-icons-left">
-                            <span className="select">
-                                <select name="courseState" onChange={handleInputs}>
-                                    {states.map((each) =>
-                                        <option valeue={each}>{each}</option>
-                                    )}
-                                </select>
-                            </span>
-                        </p>
-                    </div>
-                    <div className="field column is-2">
-                        <p className="control has-icons-left">
-                            <input className="input" type="text" placeholder="Course Name" name="courseName" onChange={handleInputs} />
-                        </p>
+            {!startRound &&
+                <form className="field" onSubmit={handleStartRound}>
+                    <div className="field is-horizontal">
+                        <div className="field column is-2">
+                            <label className="label">City</label>
+                            <p className="control has-icons-left">
+                                <input className="input" type="text" placeholder="City" name="courseCity" onChange={handleInputs} />
+                            </p>
+                        </div>
+                        <div className="field column is-2">
+                            <label className="label">State</label>
+                            <p className="control has-icons-left">
+                                <span className="select">
+                                    <select name="courseState" onChange={handleInputs}>
+                                        {states.map((each) =>
+                                            <option valeue={each}>{each}</option>
+                                        )}
+                                    </select>
+                                </span>
+                            </p>
+                        </div>
+                        <div className="field column is-2">
+                            <label className="label">Course</label>
+                            <p className="control has-icons-left">
+                                <input className="input" type="text" placeholder="Course Name" name="courseName" onChange={handleInputs} />
+                            </p>
+                        </div>
+
+                        <div className="field column is-2">
+                            <label className="label">Number of Players</label>
+                            <p className="control has-icons-left">
+                                <span className="select">
+                                    <select name="numOfPlayers" onChange={handleInputs}>
+                                        {numOfPlayersOptions.map((each) =>
+                                            <option value={each}>{each}</option>
+                                        )}
+
+                                    </select>
+                                </span>
+                            </p>
+                        </div>
                     </div>
 
+
                     <div className="field column is-2">
-                        <label className="label">Number of Players</label>
-                        <p className="control has-icons-left">
-                            <span className="select">
-                                <select name="numOfPlayers" onChange={handleInputs}>
-                                    {numOfPlayersOptions.map((each) =>
-                                        <option value={each}>{each}</option>
-                                    )}
-
-                                </select>
-                            </span>
-                        </p>
-                    </div>
-
-                    {/* <div className="field column is-2">
-                        <label className="label">Number of Holes</label>
-                        <p className="control has-icons-left">
-                            <span className="select">
-                                <select name="numOfHoles" onChange={handleInputs} >
-                                    {holes.map((each) =>
-                                        <option value={each}>{each}</option>)}
-                                </select>
-                            </span>
-                        </p>
-                    </div> */}
-
-                    <div className="field column is-3">
                         <p className="control has-icons-left">
                         </p>
                         {
                             numOfPlayersArr.map(each => (
                                 <p className="control has-icons-left">
                                     <label className="label">Player {each + 1}: </label>
-                                    <input className="input" type="text" placeholder={"player" + " " + (each + 1)} name={"player" + (each + 1)} onChange={handlePlayerNames} />
+                                    <input className="input" type="text" placeholder="Name" name={"player" + (each + 1)} onChange={handlePlayerNames} />
                                 </p>
                             ))
                         }
                     </div>
                     <button className="button is-success">Start Round</button>
                 </form>
-            </div>
+            }
 
-            <Scorecard details={inputs} />
-            <UserFooter />
+            {startRound && <Scorecard details={inputs} />}
+
+            {/* <UserFooter /> */}
 
         </>
     )

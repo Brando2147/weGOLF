@@ -80,7 +80,7 @@ function MyAccount() {
 
             </div>
 
-            <UserFooter />
+            {/* <UserFooter /> */}
         </>
     )
 }
