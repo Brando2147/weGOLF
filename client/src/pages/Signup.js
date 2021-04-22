@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer/index.js";
+// import Footer from "../components/Footer/index.js";
 import firebase from "../firebase";
 import NonUserNav from "../components/NonUserNav/index.js";
 import Home from "../pages/Home.js";

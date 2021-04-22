@@ -11,6 +11,7 @@ const PlayerScoreCard = (props) => {
     let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
 
     // console.log(props)
+    const [total, setTotal] = useState(0)
     const [state, setState] = useState({
         hole1: 0,
         hole2: 0,
@@ -29,9 +30,14 @@ const PlayerScoreCard = (props) => {
         hole15: 0,
         hole16: 0,
         hole17: 0,
-        hole18: 0,
-        total: 0
+        hole18: 0
     })
+
+    var totalScore = function() {
+
+        let _total = Object.values(state).reduce((prev, next) => prev + next, 0)
+     setTotal(_total)
+    }
 
     const handleBlur = (e) => {
         console.log(state)
@@ -39,15 +45,18 @@ const PlayerScoreCard = (props) => {
             method: 'PUT',
             data: state,
             url: `/api/scores/${props.playerID}/${props.roundId}/`
-        })
+        }).then(
+            console.log(state)
+        )
     }
 
      const handleChange = event => {
          event.preventDefault();
         event.persist();
         var clone = state;
-        clone[event.target.name] = event.target.value;
+        clone[event.target.name] = parseInt(event.target.value);
         setState({ ...clone})
+        totalScore();
     }
       
 
@@ -67,7 +76,7 @@ const PlayerScoreCard = (props) => {
                     </>
                 ))}
                 <td>
-                    <input playerName={props.playerName} input="text"  onChange={handleChange}></input>
+                {total}
                 </td>
             </tr>
         </>
