@@ -74,9 +74,7 @@ const PlayerScoreCard = (props) => {
                     </>
                 ))}
                 <td>
-                </td>
-                <td>
-                    {total}
+                {total}
                 </td>
             </tr>
         </>
