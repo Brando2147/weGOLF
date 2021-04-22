@@ -29,7 +29,8 @@ const PlayerScoreCard = (props) => {
         hole15: 0,
         hole16: 0,
         hole17: 0,
-        hole18: 0
+        hole18: 0,
+        total: 0
     })
 
     const handleBlur = (e) => {
@@ -66,7 +67,7 @@ const PlayerScoreCard = (props) => {
                     </>
                 ))}
                 <td>
-                    {/* <input playerName={props.playerName} input="text"  onChange={(value,) => setState({ ...state, total: value })}></input> */}
+                    <input playerName={props.playerName} input="text"  onChange={handleChange}></input>
                 </td>
             </tr>
         </>
