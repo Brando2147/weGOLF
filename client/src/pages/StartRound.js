@@ -141,7 +141,7 @@ function StartRound() {
                 })
                     .then((result) => {
 
-                        console.log(playerIdArrTemp)
+                        
                         playerIdArrTemp.push(result.data.id)
                         console.log(playerIdArrTemp)
                         setInputs({

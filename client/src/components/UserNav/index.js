@@ -15,7 +15,6 @@ function UserNav() {
             if (user) {
                 console.log(user.uid);
                 setUser(user)
-                console.log(user)
             } else {
                 console.log('user is not signed in');
 
