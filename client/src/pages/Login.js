@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase"
-import Footer from "../components/Footer/index.js"
+// import Footer from "../components/Footer/index.js"
 import NonUserNav from "../components/NonUserNav/index.js"
 import Signup from "./Signup.js"
 
