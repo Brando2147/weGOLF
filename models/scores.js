@@ -94,11 +94,6 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true,
       defaultValue: 0
     },
-    total: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      default: 0
-    }
   },
     {
       freezeTableName: true
