@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const user = require("../models/user");
+const { QueryTypes } = require("sequelize");
 
 module.exports = function (app) {
   //****************** GET ROUTES ****************** /
@@ -100,6 +101,22 @@ order by Round.createdAt DESC
       res.json(dbPost);
     });
   });
+
+
+  
+// ANDREW: GET route to retrieve data for Leaderboards
+app.get("/api/leaderboards", async function (req, res) {
+  await db.sequelize.query(
+`SELECT playerName from SCORES;`,
+{ type: QueryTypes.SELECT }
+  ).then(result => {
+    res.json(result)
+  }).catch(err => {
+    console.log(err)
+  }) 
+})
+
+
 
 
 
