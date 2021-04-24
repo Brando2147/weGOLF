@@ -82,45 +82,45 @@ module.exports = function (app) {
     });
   });
 
-
-  // GET route to retrieve recent matches 
+  // GET route to retrieve recent matches
   app.get("/api/recent/:ownerId", function (req, res) {
-   db.sequelize.query(
-      `use ctb3gejbzqwytitd;
-SELECT Round.ownerId, Scores.playerName,  Round.courseName, 
+    console.log(req.params);
+    db.sequelize
+      .query(
+        `SELECT Round.ownerId, Scores.playerName,  Round.id, Round.courseName, 
 Round.courseCity, Round.courseState, Scores.hole1, Scores.hole2, 
 Scores.hole3, Scores.hole4, Scores.hole5, Scores.hole6,Scores.hole7, 
 Scores.hole8, Scores.hole9, Scores.hole10, Scores.hole11, Scores.hole12, 
 Scores.hole13, Scores.hole14, Scores.hole15, Scores.hole16, Scores.hole17, 
 Scores.hole18, Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId
-where Round.ownerId = ${req.params.ownerId}
+where Round.ownerId = "${req.params.ownerId}"
 order by Round.createdAt DESC
 `,
-{ type: QueryTypes.SELECT }
-     ).then(function (dbPost) {
-      res.json(dbPost);
-    });
+        { type: QueryTypes.SELECT }
+      )
+      .then(function (dbPost) {
+        res.json(dbPost);
+      }).catch(err => {
+        console.log(err)
+      })
   });
 
-
-  
-// ANDREW: GET route to retrieve data for Leaderboards
-app.get("/api/leaderboards", async function (req, res) {
-  await db.sequelize.query(
-`SELECT Scores.playerName,  Round.courseName, 
+  // ANDREW: GET route to retrieve data for Leaderboards
+  app.get("/api/leaderboards", async function (req, res) {
+    await db.sequelize
+      .query(
+        `SELECT Scores.playerName,  Round.courseName, 
 Round.courseCity, Round.courseState,
 Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
-{ type: QueryTypes.SELECT }
-  ).then(result => {
-    res.json(result)
-  }).catch(err => {
-    console.log(err)
-  }) 
-})
-
-
-
-
+        { type: QueryTypes.SELECT }
+      )
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   //****************** POST ROUTES ****************** /
   app.post("/api/signup", (req, res) => {
@@ -166,7 +166,7 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
       RoundId: req.body.roundId,
     })
       .then((result) => {
-        res.json(result)
+        res.json(result);
       })
       .catch((err) => {
         console.log(err.message);
@@ -181,14 +181,13 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
         id: req.params.playerId,
         RoundId: req.params.roundId,
       },
-    }).then((result) => {
-      res.json(result)
     })
-    .catch((err) => {
-      console.log(err.message);
-      res.status(401).json(err.message);
-    });
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
   });
 };
-
-
