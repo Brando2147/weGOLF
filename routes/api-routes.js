@@ -87,7 +87,7 @@ module.exports = function (app) {
     console.log(req.params);
     db.sequelize
       .query(
-        `SELECT Round.ownerId, Scores.playerName,  Round.courseName, 
+        `SELECT Round.ownerId, Scores.playerName,  Round.id, Round.courseName, 
 Round.courseCity, Round.courseState, Scores.hole1, Scores.hole2, 
 Scores.hole3, Scores.hole4, Scores.hole5, Scores.hole6,Scores.hole7, 
 Scores.hole8, Scores.hole9, Scores.hole10, Scores.hole11, Scores.hole12, 
