@@ -7,7 +7,6 @@ import Home from "../pages/Home.js";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserFooter from "../components/UserFooter/index.js";
-let emptyArray = [];
 
 function LeaderBoards() {
   const [players, setPlayers] = useState([
@@ -77,10 +76,12 @@ return {
               </thead>
               
               <tbody>
-                {players.map(p => <tr>{p.playerName}</tr>)}
-                {players.map(c =><tr>{c.course}</tr>)}
-                {players.map(d =><tr>{d.city}</tr>)}
-                {players.map(e =><tr>{e.state}</tr>)}
+                <td>{players.map(p => <tr>{p.playerName}</tr>)}</td>
+                <td></td>
+                <td></td>
+                <td>{players.map(c =><tr>{c.course}</tr>)}</td>
+                <td>{players.map(d =><tr>{d.city}</tr>)}</td>
+                <td>{players.map(e =><tr>{e.state}</tr>)}</td>
                 
                 </tbody>
             </table>
