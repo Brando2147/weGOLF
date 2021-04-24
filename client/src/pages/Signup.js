@@ -8,16 +8,6 @@ import axios from "axios";
 
 function Signup() {
 
-  //   const [registerUsername, setRegisterUsername] = useState("");
-  //   const [registerPassword, setRegisterPassword] = useState("");
-  //   const register = () => {
-
-  //   function goToHome() {
-  //       window.location.replace("/home", function (data) {
-
-  //       })
-  //   }
-
   const [inputs, setInputs] = useState({});
 
   const handleInputs = (e) => {
@@ -130,7 +120,7 @@ function Signup() {
           </p>
         </form>
       </main>
-      {/* <Footer /> */}
+
     </>
   );
 }
