@@ -19,7 +19,7 @@ function Home() {
               {" "}
               <div class="card">
                 <div class="card-image">
-                  <figure class="image is-4by3">
+                  <figure class="image is-128x128">
                     <img
                       src={currentRoundIMG}
                       alt="Placeholder image"
@@ -27,6 +27,7 @@ function Home() {
                   </figure>
                 </div>
               </div>
+              See how your game compares to the competition!
               <p></p>
               <p></p>
               <button class="button is-primary">
@@ -43,7 +44,7 @@ function Home() {
               {" "}
               <div class="card">
                 <div class="card-image">
-                  <figure class="image is-4by3">
+                  <figure class="image is-128x128">
                     <img
                       src={usersIcon}
                       alt="Placeholder image"
@@ -67,7 +68,7 @@ function Home() {
               {" "}
               <div class="card">
                 <div class="card-image">
-                  <figure class="image is-4by3">
+                  <figure class="image is-128x128">
                     <img
                       src={scoreCardHome}
                       alt="Placeholder image"
@@ -75,7 +76,7 @@ function Home() {
                   </figure>
                 </div>
               </div>
-
+              See how your game compares to the competition!<p></p>
               <button class="button is-primary">
                 <Link className="bestscores" to="/best">
                   <h3>Best Scores</h3>
@@ -87,7 +88,7 @@ function Home() {
             <div class="box">
               <div class="card">
                 <div class="card-image">
-                  <figure class="image is-4by3">
+                  <figure class="image is-128x128 ">
                     <img
                       src={fakeLogo}
                       alt="Placeholder image"
@@ -95,8 +96,8 @@ function Home() {
                   </figure>
                 </div>
               </div>
-              Click here to shop the weGOLF store! <p></p>Browse from T-Shirts,
-              Coffee Mugs, Golf Balls, and Club Covers! <p></p>
+              See how your game compares to the competition!
+<p></p>
               <button class="button is-primary">
                 <Link className="nowplaying" to="/nowplaying">
                   <h3>weGOLF Store</h3>
