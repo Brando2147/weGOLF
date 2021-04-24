@@ -107,7 +107,9 @@ order by Round.createdAt DESC
 // ANDREW: GET route to retrieve data for Leaderboards
 app.get("/api/leaderboards", async function (req, res) {
   await db.sequelize.query(
-`SELECT playerName from SCORES;`,
+`SELECT Scores.playerName,  Round.courseName, 
+Round.courseCity, Round.courseState,
+Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
 { type: QueryTypes.SELECT }
   ).then(result => {
     res.json(result)
