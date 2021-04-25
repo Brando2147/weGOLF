@@ -86,7 +86,7 @@ const [matchData, setMatchData] = useState([ {
 
   return (
   <div>
-{matchData.map(md => <div>{md.playerName}</div>)}
+{/* {matchData.map(md => <div>{md.playerName}</div>)} */}
 
   </div>
 )
