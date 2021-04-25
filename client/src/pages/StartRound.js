@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import UserNav from "../components/UserNav/index.js"
-// import UserFooter from "../components/UserFooter/index.js"
+// import UserFooter from "../components/UserFooter/index.js"  
 import Scorecard from "../components/Scorecard/index.js"
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase";

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react"
 // import PlayerMatchHistory from "../PlayerMatchHistory/index.js";
 import axios from "axios";
 import "./style.css";
+import UserNav from "../UserNav";
+import UserFooter from "../UserFooter";
 
 
 
@@ -85,10 +87,34 @@ const [matchData, setMatchData] = useState([ {
 
 
   return (
-  <div>
-{/* {matchData.map(md => <div>{md.playerName}</div>)} */}
-
-  </div>
+  <>
+  <UserNav />
+  <div class="columns is-centered is-mobile">
+        <div class="row">
+          <div class="column">
+            <table class="table is-striped is-bordered">
+              <thead>
+                <tr>
+                  <th>User (Player) </th>
+                  <th>Date of Play </th>
+                  <th>Course Name </th>
+                  <th>City </th>
+                  <th>State </th>
+                </tr>
+              </thead>
+              
+              <tbody>
+              {matchData.map(md => <div>{md.playerName}</div>)}
+              <td>{matchData.map(ca => <div>{ca.createdAt}</div>)}</td>
+              <td>{matchData.map(cn => <div>{cn.courseName}</div>)}</td>
+              <td>{matchData.map(c => <div>{c.courseCity}</div>)}</td>
+              <td>{matchData.map(s => <div>{s.courseState}</div>)}</td>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+</>
 )
 
 }

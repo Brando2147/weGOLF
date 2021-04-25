@@ -56,7 +56,7 @@ function UserNav() {
                             <span> New Match</span>
                         </Link>
 
-                        <Link className="navbar-item is-tab" to="/matchhistory">
+                        <Link className="navbar-item is-tab" to="/RecentMatches">
                             <span className="icon is-small"><i className="fas fa-table" aria-hidden="true"></i></span>
                             <span>Recent Matches</span>
                         </Link>
