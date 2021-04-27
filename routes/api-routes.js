@@ -100,9 +100,10 @@ order by Round.createdAt DESC
       )
       .then(function (dbPost) {
         res.json(dbPost);
-      }).catch(err => {
-        console.log(err)
       })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   // ANDREW: GET route to retrieve data for Leaderboards
@@ -128,9 +129,6 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
       email: req.body.email,
       firebaseId: req.body.firebaseId,
       firstName: req.body.firstName,
-      city: req.body.city,
-      state: req.body.state,
-      zip: req.body.zip,
     })
       .then((results) => {
         console.log(results);
@@ -142,7 +140,6 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
   });
 
   // Route to sign up for an account
-
   app.post("/api/round", (req, res) => {
     db.Round.create({
       ownerId: req.body.ownerId,
@@ -160,10 +157,10 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
       });
   });
 
-  app.post("/api/scores", (req, res) => {
+  // Adding Total scores to the database
+  app.post("/api/addTotal", (req, res) => {
     db.Scores.create({
-      playerName: req.body.playerName,
-      RoundId: req.body.roundId,
+      Total: req.body.Total,
     })
       .then((result) => {
         res.json(result);
@@ -175,6 +172,7 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
   });
 
   //****************** PUT ROUTES ****************** /
+
   app.put("/api/scores/:playerId/:roundId", (req, res) => {
     db.Scores.update(req.body, {
       where: {
