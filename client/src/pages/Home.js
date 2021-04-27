@@ -12,11 +12,14 @@ function Home() {
   return (
     <>
       <UserNav />
-      <div className="columns is-centered is-mobile has-background-success">
-        <div className="row">
-          <div className="column">
-            <div className="box">
-              <div className="card">
+      {/* <NewsFeed /> */}
+
+      <div class="columns is-centered is-mobile">
+        <div class="row">
+          <div class="column">
+            <div class="box">
+              <div class="card">
+
                 <Link to="/newmatch">
                   <div className="card-image is-clickable">
                     <figure className="image is-256x256">
@@ -34,7 +37,6 @@ function Home() {
               <p></p>
             </div>
           </div>
-          {/* <NewsFeed /> */}
 
           <div className="column is-centered">
             <div className="box">
@@ -86,7 +88,6 @@ function Home() {
           </div>
         </div>
       </div>
-      {/* <UserFooter /> */}
     </>
   );
 }
