@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import PlayerScoreCard from "../PlayerScorecard/index.js"
+import axios from 'axios';
 
 // const ScoreCard = (props) => {
 //   const { roundId, players = [], holes = [] } = props
@@ -10,6 +11,18 @@ import PlayerScoreCard from "../PlayerScorecard/index.js"
 // }
 
 function Scorecard(props) {
+
+const updateComplete = function() {
+  axios({
+    method: 'PUT',
+    data: {
+      isComplete: 1
+    },
+    url: `/api/round/${props.details.roundId}`
+}).then((res) => {
+  console.log(res)
+})
+}
 
 
   // console.log(props);
@@ -46,7 +59,7 @@ function Scorecard(props) {
           </tbody>
 
         </table>
-        <button className="button has-background-danger">End Round</button>
+        <button className="button has-background-danger" onClick={updateComplete}>End Round</button>
 
 
       </div>

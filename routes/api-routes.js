@@ -169,13 +169,13 @@ module.exports = function (app) {
   });
   app.get("/api/current/:ownerId", function (req, res) {
     db.sequelize.query(
-      `SELECT hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18 courseName
-      FROM scores
-      INNER JOIN round 
-      ON round.id = scores.id
-      INNER JOIN user
-      ON user.firebaseId = round.ownerId
-      WHERE round.isComplete = 0 and round.ownerId = "${req.params.ownerId}"`,
+      `SELECT playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, courseName, round.id
+        FROM scores
+        INNER JOIN round 
+        ON round.id = scores.RoundId
+        INNER JOIN user
+        ON user.firebaseId = round.ownerId
+        WHERE round.isComplete = 0 and round.ownerId = "${req.params.ownerId}"`,
       { type: QueryTypes.SELECT }
     ).then((results) => {
       res.json(results)
@@ -219,10 +219,10 @@ module.exports = function (app) {
       });
   });
 
-  // Adding Total scores to the database
-  app.post("/api/addTotal", (req, res) => {
+  app.post("/api/scores", (req, res) => {
     db.Scores.create({
-      Total: req.body.Total,
+      playerName: req.body.playerName,
+      RoundId: req.body.roundId,
     })
       .then((result) => {
         res.json(result);
@@ -232,6 +232,20 @@ module.exports = function (app) {
         res.status(401).json(err.message);
       });
   });
+
+  // Adding Total scores to the database
+  // app.post("/api/addTotal", (req, res) => {
+  //   db.Scores.create({
+  //     Total: req.body.Total,
+  //   })
+  //     .then((result) => {
+  //       res.json(result);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //       res.status(401).json(err.message);
+  //     });
+  // });
 
   //****************** PUT ROUTES ****************** /
 

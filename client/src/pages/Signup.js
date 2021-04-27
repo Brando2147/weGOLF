@@ -39,7 +39,7 @@ function Signup() {
             firebaseId: user.uid,
           },
           url: "/api/signup",
-        }).then((res) => (res));
+        }).then((res) => console.log(res));
       })
 
 
