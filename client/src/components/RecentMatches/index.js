@@ -63,7 +63,7 @@ function RecentMatches() {
           courseState: each.courseState,
           date: each.createdAt
         }
-      }))
+      })); 
     })
   }, [user]);
 
@@ -166,6 +166,7 @@ function RecentMatches() {
         </div>
       </form>
       <hr></hr>
+
       {selectedRounds.roundId != "false" &&
         <table className="table is-bordered is-narrow is-hoverable">
           <caption>Course Name: <strong>{matchData[0].courseName}</strong> | Location: <strong>{matchData[0].courseCity}, {matchData[0].courseState}</strong> | Played on: <strong>{matchData[0].createdAt}</strong>
@@ -215,6 +216,7 @@ function RecentMatches() {
 
       {/* <div className="columns is-centered is-mobile table-container">
         <div className="row ">
+
           <div className="column">
             <table className="table is-striped is-bordered">
               <thead>
@@ -261,6 +263,7 @@ function RecentMatches() {
                 <td>{matchData.map(c => <div>{c.courseCity}</div>)}</td>
                 <td>{matchData.map(s => <div>{s.courseState}</div>)}</td> 
               </tbody>
+
             </table>
           </div>
           </div>
