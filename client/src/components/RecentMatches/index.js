@@ -77,7 +77,7 @@ const [matchData, setMatchData] = useState([ {
           hole17: matchArray.hole17,
           hole18: matchArray.hole18,
         }
-      }))
+      })); 
     })
   }, [user])
 
@@ -89,10 +89,10 @@ const [matchData, setMatchData] = useState([ {
   return (
   <>
   <UserNav />
-  <div class="columns is-centered is-mobile">
-        <div class="row">
-          <div class="column">
-            <table class="table is-striped is-bordered">
+  <div className="columns is-centered is-mobile">
+        <div className="row">
+          <div className="column">
+            <table className="table is-striped is-bordered">
               <thead>
                 <tr>
                   <th>User (Player) </th>
@@ -108,7 +108,7 @@ const [matchData, setMatchData] = useState([ {
               <td>{matchData.map(ca => <div>{ca.createdAt}</div>)}</td>
               <td>{matchData.map(cn => <div>{cn.courseName}</div>)}</td>
               <td>{matchData.map(c => <div>{c.courseCity}</div>)}</td>
-              <td>{matchData.map(s => <div>{s.courseState}</div>)}</td>
+              <td>{matchData.map(s => <div>{s.courseState}</div>)}</td>              
                 </tbody>
             </table>
           </div>

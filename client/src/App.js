@@ -16,7 +16,7 @@ import Footer from "./components/Footer/index.js"
 import UserFooter from "./components/UserFooter/index.js"
 import firebase from "./firebase";
 import grassBanner from "./utils/images/grassbanner.png"
-
+// import Directory from "./pages/Directory.js"
 
 
 
