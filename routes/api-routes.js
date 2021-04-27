@@ -182,6 +182,21 @@ module.exports = function (app) {
     }).catch((err) => {
       console.log(err)
     })
+  });
+
+  app.get("/api/complete/:firebaseId", function (req, res) {
+    db.sequelize.query(
+      `SELECT isComplete
+      FROM round
+      INNER JOIN user
+      ON round.ownerId = "${req.params.firebaseId}"
+      WHERE round.isComplete = 1`,
+      { type: QueryTypes.SELECT }
+    ).then((results) => {
+      res.json(results)
+    }).catch((err) => {
+      console.log(err)
+    })
   })
 
 
