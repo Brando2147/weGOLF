@@ -65,6 +65,7 @@ const PlayerScoreCard = (props) => {
         <>
             <tr>
                 <td>{props.playerName}</td>
+                
 
                 {numOfHolesArr.map((each, index) => (
                     <>

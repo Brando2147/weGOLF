@@ -46,7 +46,7 @@ function Scorecard(props) {
           </tbody>
 
         </table>
-
+        <button className="button has-background-danger">End Round</button>
 
 
       </div>

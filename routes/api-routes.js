@@ -122,6 +122,11 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
       });
   });
 
+
+
+
+
+
   //****************** POST ROUTES ****************** /
   app.post("/api/signup", (req, res) => {
     db.User.create({

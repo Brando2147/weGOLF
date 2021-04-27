@@ -153,6 +153,8 @@ function StartRound() {
     return (
         <>
             <UserNav />
+            <div class="box is-mobile has-background-success">
+            <div class="columns is-centered is-mobile">
             {!startRound &&
                 <form className="field" onSubmit={handleStartRound}>
                     <div className="field is-horizontal">
@@ -205,15 +207,23 @@ function StartRound() {
                                 <p className="control has-icons-left">
                                     <label className="label">Player {each + 1}: </label>
                                     <input className="input" type="text" placeholder="Name" name={"player" + (each + 1)} onChange={handlePlayerNames} />
+                                    
                                 </p>
+                                
                             ))
                         }
                     </div>
-                    <button className="button is-success">Start Round</button>
+                    <button className="button has-background-white-bis">Start Round</button>
                 </form>
             }
 
             {startRound && <Scorecard details={inputs} />}
+           
+            
+            
+            </div>
+            </div>
+            
 
             {/* <UserFooter /> */}
 

@@ -67,6 +67,7 @@ function MyAccount() {
     return (
         <>
             <UserNav />
+            <div className="box has-background-success olumns is-center">
             <div className="container">
                 <p><strong>Name:</strong> </p>
                 <p><strong>Email:</strong> {currentUser.email}</p>
@@ -76,7 +77,7 @@ function MyAccount() {
                 <div className="container column">
                     <button className="button is-danger" onClick={handleDeleteMyAccount}>Delete My Account</button>
                 </div>
-
+                </div>
 
             </div>
 

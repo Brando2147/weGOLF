@@ -50,10 +50,10 @@ return {
     
   
      <UserNav />
-     <div class="columns is-centered is-mobile">
-        <div class="row">
-          <div class="column">
-            <table class="table is-striped is-bordered">
+     <div className="columns is-centered has-background-success">
+        <div className="row">
+          <div className="column">
+            <table className="table is-narrow is-striped is-bordered is-hoverable">
               <thead>
                 <tr>
                   <th>User (Player) </th>
@@ -88,7 +88,7 @@ return {
           </div>
         </div>
       </div>
-       <UserFooter />
+       {/* <UserFooter /> */}
     </>
   );
 }
