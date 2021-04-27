@@ -48,3 +48,9 @@ SELECT round.id
 FROM round
 INNER JOIN user
 ON round.ownerId = user.Id;
+
+SELECT isComplete
+FROM round
+INNER JOIN user
+ON round.ownerId = user.firebaseId
+WHERE round.isComplete = 0
