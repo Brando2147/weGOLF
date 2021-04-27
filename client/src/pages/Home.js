@@ -12,6 +12,8 @@ function Home() {
   return (
     <>
       <UserNav />
+      {/* <NewsFeed /> */}
+
       <div class="columns is-centered is-mobile">
         <div class="row">
           <div class="column">
@@ -34,7 +36,6 @@ function Home() {
               <p></p>
             </div>
           </div>
-          {/* <NewsFeed /> */}
 
           <div class="column is-centered">
             <div class="box">
@@ -86,7 +87,6 @@ function Home() {
           </div>
         </div>
       </div>
-      {/* <UserFooter /> */}
     </>
   );
 }
