@@ -190,4 +190,19 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
         res.status(401).json(err.message);
       });
   });
+
+  app.put("/api/round/:roundId", (req, res) => {
+    db.Round.update(req.body, {
+      where: {
+        id: req.params.roundId
+      },
+    })
+      .then((results) => {
+        res.json(results)
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
+  })
 };

@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
       isComplete: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
-        default: false
+        defaultValue: false
       }
     },
     {
