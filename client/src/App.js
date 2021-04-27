@@ -8,6 +8,7 @@ import StartRound from "./pages/StartRound.js"
 import Home from "./pages/Home.js"
 import RecentMatches from "../src/components/RecentMatches/index.js"
 import Courses from "./pages/Courses"
+import MatchHistory from "./pages/MatchHistory.js"
 import LeaderBoards from './pages/LeaderBoards';
 import MyAccount from './pages/MyAccount';
 import Help from './pages/Help';
@@ -16,7 +17,7 @@ import Footer from "./components/Footer/index.js"
 import UserFooter from "./components/UserFooter/index.js"
 import firebase from "./firebase";
 import grassBanner from "./utils/images/grassbanner.png"
-
+// import Directory from "./pages/Directory.js"
 
 
 
@@ -49,7 +50,7 @@ function App() {
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/newmatch" component={StartRound} />
-            <Route exact path="/RecentMatches"  > <RecentMatches user={user}/> </Route>
+            <Route exact path="/RecentMatches" component={MatchHistory} />
             <Route exact path="/courses" component={Courses} />
             <Route exact path="/leaderboards" component={LeaderBoards} />
             <Route exact path="/myaccount" component={MyAccount} />

@@ -90,7 +90,7 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: 0
     },
     hole18: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
     },
