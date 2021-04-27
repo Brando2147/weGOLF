@@ -21,6 +21,9 @@ VALUES ("Joshua", 1);
 insert into player (playerName, ScoreId)
 VALUES ("Andrew", 1)
 
+INSERT INTO round (ownerId, courseName, courseCity, courseState, isComplete)
+VALUES ("K1ZN2KBSjYX9EiUGqDskhTiGiCe2")
+
 SELECT firstName, lastName, holeOne, holeTwo, holeThree, courseName, courseCity, courseState
 From user
 INNER JOIN report

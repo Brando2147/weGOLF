@@ -166,10 +166,22 @@ module.exports = function (app) {
         console.log(err);
       });
   });
-
-
-
-
+  app.get("/api/current/:ownerId", function (req, res) {
+    db.sequelize.query(
+      `SELECT hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18 courseName
+      FROM scores
+      INNER JOIN round 
+      ON round.id = scores.id
+      INNER JOIN user
+      ON user.firebaseId = round.ownerId
+      WHERE round.isComplete = 0 and round.ownerId = "${req.params.ownerId}"`,
+      { type: QueryTypes.SELECT }
+    ).then((results) => {
+      res.json(results)
+    }).catch((err) => {
+      console.log(err)
+    })
+  })
 
 
   //****************** POST ROUTES ****************** /
@@ -240,4 +252,19 @@ module.exports = function (app) {
         res.status(401).json(err.message);
       });
   });
+
+  app.put("/api/round/:roundId", (req, res) => {
+    db.Round.update(req.body, {
+      where: {
+        id: req.params.roundId
+      },
+    })
+      .then((results) => {
+        res.json(results)
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
+  })
 };
