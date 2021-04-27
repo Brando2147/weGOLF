@@ -122,6 +122,23 @@ Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
       });
   });
 
+  app.get("/api/current/:ownerId", function (req, res) {
+    db.sequelize.query(
+      `SELECT hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18 courseName
+      FROM scores
+      INNER JOIN round 
+      ON round.id = scores.id
+      INNER JOIN user
+      ON user.firebaseId = round.ownerId
+      WHERE round.isComplete = 0 and round.ownerId = "${req.params.ownerId}"`,
+      { type: QueryTypes.SELECT }
+    ).then((results) => {
+      res.json(results)
+    }).catch((err) => {
+      console.log(err)
+    })
+  })
+
   //****************** POST ROUTES ****************** /
   app.post("/api/signup", (req, res) => {
     db.User.create({
