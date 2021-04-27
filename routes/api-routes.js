@@ -144,9 +144,10 @@ module.exports = function (app) {
       )
       .then(function (dbPost) {
         res.json(dbPost);
-      }).catch(err => {
-        console.log(err)
       })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   // ANDREW: GET route to retrieve data for Leaderboards
@@ -190,9 +191,6 @@ module.exports = function (app) {
       email: req.body.email,
       firebaseId: req.body.firebaseId,
       firstName: req.body.firstName,
-      city: req.body.city,
-      state: req.body.state,
-      zip: req.body.zip,
     })
       .then((results) => {
         console.log(results);
@@ -204,7 +202,6 @@ module.exports = function (app) {
   });
 
   // Route to sign up for an account
-
   app.post("/api/round", (req, res) => {
     db.Round.create({
       ownerId: req.body.ownerId,
@@ -222,10 +219,10 @@ module.exports = function (app) {
       });
   });
 
-  app.post("/api/scores", (req, res) => {
+  // Adding Total scores to the database
+  app.post("/api/addTotal", (req, res) => {
     db.Scores.create({
-      playerName: req.body.playerName,
-      RoundId: req.body.roundId,
+      Total: req.body.Total,
     })
       .then((result) => {
         res.json(result);
@@ -237,6 +234,7 @@ module.exports = function (app) {
   });
 
   //****************** PUT ROUTES ****************** /
+
   app.put("/api/scores/:playerId/:roundId", (req, res) => {
     db.Scores.update(req.body, {
       where: {
