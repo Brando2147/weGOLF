@@ -14,6 +14,9 @@ function NewsCarousel(props) {
     };
 
     return (
+        
+        
+        
         <div className="container column is-6">
 
             {/* <div>
