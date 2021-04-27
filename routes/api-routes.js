@@ -82,20 +82,64 @@ module.exports = function (app) {
     });
   });
 
+  //GET route to retrieve user's unique rounds
+  app.get("/api/rounds/:ownerId", function (req, res) {
+    db.sequelize
+      .query(
+        `SELECT DISTINCT r.ownerId, s.RoundId, r.courseName, 
+        r.courseCity, r.courseState, r.createdAt 
+        FROM Round r
+        INNER JOIN Scores s
+        ON r.id = s.RoundId
+        WHERE r.ownerId = "${req.params.ownerId}"
+        ORDER BY r.createdAt DESC`,
+        { type: QueryTypes.SELECT }
+      )
+      .then(function (dbPost) {
+        res.json(dbPost);
+      }).catch(err => {
+        console.log(err)
+      })
+  });
+
+  //get to retrieve details for selected past round
+  app.get("/api/pastRound/:roundId", function (req, res) {
+    db.sequelize
+      .query(
+        `SELECT s.playerName, s.hole1, s.hole2, 
+        s.hole3, s.hole4, s.hole5, s.hole6,s.hole7, 
+        s.hole8, s.hole9, s.hole10, s.hole11, s.hole12, 
+        s.hole13, s.hole14, s.hole15, s.hole16, s.hole17, 
+        s.hole18, r.createdAt, r.courseName, r.courseCity, r.courseState
+        FROM Round r
+        INNER JOIN Scores s
+        ON r.id = s.RoundId
+        WHERE r.id = "${req.params.roundId}"`,
+        { type: QueryTypes.SELECT }
+      )
+      .then(function (dbPost) {
+        res.json(dbPost);
+      }).catch(err => {
+        console.log(err)
+      })
+  });
+
   // GET route to retrieve recent matches
   app.get("/api/recent/:ownerId", function (req, res) {
     console.log(req.params);
     db.sequelize
       .query(
-        `SELECT Round.ownerId, Scores.playerName,  Round.id, Round.courseName, 
-Round.courseCity, Round.courseState, Scores.hole1, Scores.hole2, 
-Scores.hole3, Scores.hole4, Scores.hole5, Scores.hole6,Scores.hole7, 
-Scores.hole8, Scores.hole9, Scores.hole10, Scores.hole11, Scores.hole12, 
-Scores.hole13, Scores.hole14, Scores.hole15, Scores.hole16, Scores.hole17, 
-Scores.hole18, Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId
-where Round.ownerId = "${req.params.ownerId}"
-order by Round.createdAt DESC
-`,
+        `SELECT r.ownerId, s.playerName,  r.id, r.courseName, 
+        r.courseCity, r.courseState, s.RoundId,s.hole1, s.hole2, 
+        s.hole3, s.hole4, s.hole5, s.hole6,s.hole7, 
+        s.hole8, s.hole9, s.hole10, s.hole11, s.hole12, 
+        s.hole13, s.hole14, s.hole15, s.hole16, s.hole17, 
+        s.hole18, r.createdAt 
+        FROM Round r
+        INNER JOIN Scores s
+        ON r.id = s.RoundId
+        WHERE r.ownerId = "${req.params.ownerId}"
+        ORDER BY r.createdAt DESC`,
         { type: QueryTypes.SELECT }
       )
       .then(function (dbPost) {
@@ -109,9 +153,10 @@ order by Round.createdAt DESC
   app.get("/api/leaderboards", async function (req, res) {
     await db.sequelize
       .query(
-        `SELECT Scores.playerName,  Round.courseName, 
-Round.courseCity, Round.courseState,
-Round.createdAt FROM Round INNER JOIN Scores ON Round.id = Scores.RoundId`,
+        `SELECT Scores.playerName,  Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
+        FROM Round 
+        INNER JOIN Scores 
+        ON Round.id = Scores.RoundId`,
         { type: QueryTypes.SELECT }
       )
       .then((result) => {
