@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
-import PlayerScoreCard from "../PlayerScorecard/index.js"
-import axios from 'axios';
+import PlayerScoreCard from "../PlayerScorecard/index.js";
+import axios from "axios";
 
 // const ScoreCard = (props) => {
 //   const { roundId, players = [], holes = [] } = props
@@ -11,27 +10,23 @@ import axios from 'axios';
 // }
 
 function Scorecard(props) {
-
-const updateComplete = function() {
-  axios({
-    method: 'PUT',
-    data: {
-      isComplete: 1
-    },
-    url: `/api/round/${props.details.roundId}`
-}).then((res) => {
-  console.log(res)
-})
-}
-
+  const updateComplete = function () {
+    axios({
+      method: "PUT",
+      data: {
+        isComplete: 1,
+      },
+      url: `/api/round/${props.details.roundId}`,
+    }).then((res) => {
+      console.log(res);
+    });
+  };
 
   // console.log(props);
   // console.log(props.details)
 
-
   let numOfHoles = parseInt(props.details.numOfHoles);
   let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
-
 
   return (
     <>
@@ -49,19 +44,25 @@ const updateComplete = function() {
             </tr>
           </thead>
           <tbody>
-
             {props.details.playerNameArr.map((each, index) => {
               return (
-                <PlayerScoreCard playerName={each} player={"player" + (index + 1)} playerID={props.details.playerIdArr[index]} roundId={props.details.roundId} holes={props.details.numOfHoles} />
-              )
+                <PlayerScoreCard
+                  playerName={each}
+                  player={"player" + (index + 1)}
+                  playerID={props.details.playerIdArr[index]}
+                  roundId={props.details.roundId}
+                  holes={props.details.numOfHoles}
+                />
+              );
             })}
-
           </tbody>
-
         </table>
-        <button className="button has-background-danger" onClick={updateComplete}>End Round</button>
-
-
+        <button
+          className="button has-background-danger"
+          onClick={updateComplete}
+        >
+          End Round
+        </button>
       </div>
 
       {/* <p>
