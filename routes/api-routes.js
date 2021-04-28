@@ -97,9 +97,10 @@ module.exports = function (app) {
       )
       .then(function (dbPost) {
         res.json(dbPost);
-      }).catch(err => {
-        console.log(err)
       })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   //get to retrieve details for selected past round
@@ -119,9 +120,10 @@ module.exports = function (app) {
       )
       .then(function (dbPost) {
         res.json(dbPost);
-      }).catch(err => {
-        console.log(err)
       })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   // GET route to retrieve recent matches
@@ -168,37 +170,42 @@ module.exports = function (app) {
       });
   });
   app.get("/api/current/:ownerId", function (req, res) {
-    db.sequelize.query(
-      `SELECT playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, courseName, round.id
+    db.sequelize
+      .query(
+        `SELECT playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, courseName, round.id
         FROM scores
         INNER JOIN round 
         ON round.id = scores.RoundId
         INNER JOIN user
         ON user.firebaseId = round.ownerId
         WHERE round.isComplete = 0 and round.ownerId = "${req.params.ownerId}"`,
-      { type: QueryTypes.SELECT }
-    ).then((results) => {
-      res.json(results)
-    }).catch((err) => {
-      console.log(err)
-    })
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   app.get("/api/complete/:firebaseId", function (req, res) {
-    db.sequelize.query(
-      `SELECT isComplete
+    db.sequelize
+      .query(
+        `SELECT isComplete
       FROM round
       INNER JOIN user
       ON round.ownerId = "${req.params.firebaseId}"
       WHERE round.isComplete = 1`,
-      { type: QueryTypes.SELECT }
-    ).then((results) => {
-      res.json(results)
-    }).catch((err) => {
-      console.log(err)
-    })
-  })
-
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   //****************** POST ROUTES ****************** /
   app.post("/api/signup", (req, res) => {
@@ -234,6 +241,7 @@ module.exports = function (app) {
       });
   });
 
+  // Route to add playernname and roundId to Scores table
   app.post("/api/scores", (req, res) => {
     db.Scores.create({
       playerName: req.body.playerName,
@@ -247,20 +255,6 @@ module.exports = function (app) {
         res.status(401).json(err.message);
       });
   });
-
-  // Adding Total scores to the database
-  // app.post("/api/addTotal", (req, res) => {
-  //   db.Scores.create({
-  //     Total: req.body.Total,
-  //   })
-  //     .then((result) => {
-  //       res.json(result);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //       res.status(401).json(err.message);
-  //     });
-  // });
 
   //****************** PUT ROUTES ****************** /
 
@@ -283,15 +277,32 @@ module.exports = function (app) {
   app.put("/api/round/:roundId", (req, res) => {
     db.Round.update(req.body, {
       where: {
-        id: req.params.roundId
+        id: req.params.roundId,
       },
     })
       .then((results) => {
-        res.json(results)
+        res.json(results);
       })
       .catch((err) => {
         console.log(err.message);
         res.status(401).json(err.message);
       });
-  })
+  });
 };
+
+//Updating player total in the database
+// app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
+//   db.Scores.update(req.body.total, {
+//     where: {
+//       id: req.params.playerId,
+//       RoundId: req.params.roundId,
+//     },
+//   })
+//     .then((result) => {
+//       res.json(result);
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//       res.status(401).json(err.message);
+//     });
+// });
