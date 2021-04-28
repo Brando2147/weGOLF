@@ -36,15 +36,15 @@ function UserNav() {
             method: "GET",
             url: `/api/complete/${user.uid}/`,
           }).then((result) => {
-             if (result.data.length === 0) {
+            console.log(result.data) 
+            if (result.data.length === 0) {
                  setRoute("/newMatch")
              } else {
-                 setRoute("/RecentMatches")
+                 setRoute("/CurrentRound")
              }
           })
     }
-    currentRoundCheck();
-
+currentRoundCheck();
 
     return (
         <>

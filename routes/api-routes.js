@@ -169,13 +169,13 @@ module.exports = function (app) {
   });
   app.get("/api/current/:ownerId", function (req, res) {
     db.sequelize.query(
-      `SELECT playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, courseName, round.id
-        FROM scores
-        INNER JOIN round 
-        ON round.id = scores.RoundId
-        INNER JOIN user
-        ON user.firebaseId = round.ownerId
-        WHERE round.isComplete = 0 and round.ownerId = "${req.params.ownerId}"`,
+      `SELECT scores.id, playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, roundId, courseName, courseCity, courseState
+      FROM scores
+      INNER JOIN round
+      ON scores.RoundId = round.Id
+      INNER JOIN user
+      ON round.ownerId = user.firebaseId
+      WHERE round.isComplete = 0 and user.firebaseId = "${req.params.ownerId}"`,
       { type: QueryTypes.SELECT }
     ).then((results) => {
       res.json(results)
@@ -190,7 +190,7 @@ module.exports = function (app) {
       FROM round
       INNER JOIN user
       ON round.ownerId = "${req.params.firebaseId}"
-      WHERE round.isComplete = 1`,
+      WHERE round.isComplete = 0`,
       { type: QueryTypes.SELECT }
     ).then((results) => {
       res.json(results)

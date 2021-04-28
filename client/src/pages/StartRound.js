@@ -15,7 +15,7 @@ function StartRound() {
 
 
     //array of # of holes that user can pick from
-    let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+    // let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
     //array of # of players that can be in a match
     let numOfPlayersOptions = [1, 2, 3, 4]

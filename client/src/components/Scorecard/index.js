@@ -1,4 +1,4 @@
-
+import { Link, Redirect, useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import PlayerScoreCard from "../PlayerScorecard/index.js"
 import axios from 'axios';
@@ -59,7 +59,7 @@ const updateComplete = function() {
           </tbody>
 
         </table>
-        <button className="button has-background-danger" onClick={updateComplete}>End Round</button>
+        <Link to="/home"><button className="button has-background-danger" onClick={updateComplete}>End Round</button></Link>
 
 
       </div>
