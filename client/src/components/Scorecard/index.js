@@ -61,7 +61,9 @@ function Scorecard(props) {
           </tbody>
         </table>
 
+
         <Link to="/home"><button className="button has-background-danger" onClick={updateComplete}>End Round</button></Link>
+
 
 
         <button
