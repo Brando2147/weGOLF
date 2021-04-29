@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import firebase from "../../firebase";
 import "./style.css";
-import PlayerScoreCard from "../PlayerScorecard";
+// import PlayerScoreCard from "../PlayerScorecard";
 
 function CurrentMatch() {
   const [user, setUser] = useState(false);
@@ -39,7 +39,7 @@ function CurrentMatch() {
         setUser(user);
       } else {
       }
-    });
+    })
   }, []);
 
   const getCurrentRound = function () {
@@ -77,20 +77,47 @@ function CurrentMatch() {
           };
         })
       );
+      console.log(matchData)
     });
   };
 
-  getCurrentRound();
   return <>
+  <button onClick={getCurrentRound}>Get Current Round</button>
+  
+  <div className="table-container">
+  <table className="table is-bordered is-narrow is-hoverable">
+    <thead>
+    <th>Player/Hole</th>
   <tbody>
     {matchData.map((array) => (
+      
       <tr>
-    <th>{array.playerName}</th>
+    <td>{array.playerName}</td>
     <td>{array.hole1}</td>
+    <td>{array.hole2}</td>
+    <td>{array.hole3}</td>
+    <td>{array.hole4}</td>
+    <td>{array.hole5}</td>
+    <td>{array.hole6}</td>
+    <td>{array.hole7}</td>
+    <td>{array.hole8}</td>
+    <td>{array.hole9}</td>
+    <td>{array.hole10}</td>
+    <td>{array.hole11}</td>
+    <td>{array.hole12}</td>
+    <td>{array.hole13}</td>
+    <td>{array.hole14}</td>
+    <td>{array.hole15}</td>
+    <td>{array.hole16}</td>
+    <td>{array.hole16}</td>
+    <td>{array.hole17}</td>
+    <td>{array.hole18}</td>
     </tr>
   ) )}
   </tbody>
-  
+  </thead>
+  </table>
+  </div>
   </>;
 }
 

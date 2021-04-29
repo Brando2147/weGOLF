@@ -44,7 +44,7 @@ function UserNav() {
              }
           })
     }
-currentRoundCheck();
+// currentRoundCheck();
 
     return (
         <>
@@ -68,7 +68,7 @@ currentRoundCheck();
 
                 <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
                     <div className="navbar-end">
-                        <Link className="navbar-item is-tab" to={route}>
+                        <Link className="navbar-item is-tab" to="/newMatch">
                             <span className="icon is-small"><i className="fas fa-golf-ball" aria-hidden="true"></i></span>
                             <span> New Match</span>
                         </Link>

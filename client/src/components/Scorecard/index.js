@@ -59,7 +59,7 @@ const updateComplete = function() {
           </tbody>
 
         </table>
-        <Link to="/home"><button className="button has-background-danger" onClick={updateComplete}>End Round</button></Link>
+        {/* <Link to="/home"><button className="button has-background-danger" onClick={updateComplete}>End Round</button></Link> */}
 
 
       </div>
