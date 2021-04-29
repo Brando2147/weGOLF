@@ -45,7 +45,7 @@ function App() {
             <Route exact path="/" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/home" component={Home} />
-            <Route exact path="/newmatch" component={StartRound} />
+            <Route exact path="/newMatch" component={StartRound} />
 
             <Route exact path="/RecentMatches" component={MatchHistory} />
             <Route exact path="/courses" component={Courses} />
