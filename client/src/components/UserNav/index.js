@@ -124,11 +124,11 @@ function UserNav() {
   );
 
   // let history = useHistory();
-  const [isActive, setisActive] = React.useState(false);
+  // const [isActive, setisActive] = React.useState(false);
 
-  const [user, setUser] = useState(false);
+  // const [user, setUser] = useState(false);
 
-  const [route, setRoute] = useState("");
+  // const [route, setRoute] = useState("");
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
