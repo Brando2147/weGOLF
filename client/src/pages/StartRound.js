@@ -5,92 +5,7 @@ import Scorecard from "../components/Scorecard/index.js";
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase";
 import axios from "axios";
-
 function StartRound() {
-
-    //array of states that user can pick from
-    let states = ["", "AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY",
-        "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR",
-        "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"]
-
-
-    //array of # of holes that user can pick from
-    // let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
-
-    //array of # of players that can be in a match
-    let numOfPlayersOptions = [1, 2, 3, 4]
-
-
-    useEffect(() => {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                setUser(user)
-
-            } else {
-                history.push("/")
-            }
-        })
-    }, [])
-
-    //state holding authenticatd user
-    const [user, setUser] = useState(false)
-
-    const [startRound, setStartRound] = useState(false)
-    //state holding details of match
-    const [inputs, setInputs] = useState({
-        numOfHoles: 18,
-        numOfPlayers: 1,
-        playerNameArr: [],
-        playerIdArr: [],
-        courseName: "",
-        courseState: "",
-        courseCity: "",
-        roundId: 0
-    })
-
-    //state holding names of players
-    const [playerName, setPlayerName] = useState({
-        player1: "",
-        player2: "",
-        player3: "",
-        player4: "",
-
-    })
-
-    let history = useHistory();
-
-    let numOfPlayersInt = parseInt(inputs.numOfPlayers)
-    let numOfPlayersArr = [...Array(numOfPlayersInt)].map((_, i) => i);
-
-    // const handleCourse = (e) => {
-    //     e.preventDefault()
-    //     var newInfo = inputs
-    //     newInfo[e.target.name] = e.target.value
-    //     setInputs({ ...inputs,  })
-    // }
-
-    const handleInputs = (e) => {
-        e.preventDefault()
-        var clone = inputs
-        clone[e.target.name] = e.target.value
-        setInputs({ ...clone })
-    }
-
-    const handlePlayerNames = (e) => {
-        e.preventDefault()
-        var nameClone = playerName
-        nameClone[e.target.name] = e.target.value
-        setPlayerName({
-            ...nameClone,
-        })
-        console.log(playerName)
-    }
-
-
-    const handleStartRound = (event) => {
-        event.preventDefault()
-
-=======
   //array of states that user can pick from
   let states = [
     "",
@@ -150,13 +65,10 @@ function StartRound() {
     "WV",
     "WY",
   ];
-
   //array of # of holes that user can pick from
   let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-
   //array of # of players that can be in a match
   let numOfPlayersOptions = [1, 2, 3, 4];
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -166,10 +78,8 @@ function StartRound() {
       }
     });
   }, []);
-
   //state holding authenticatd user
   const [user, setUser] = useState(false);
-
   const [startRound, setStartRound] = useState(false);
   //state holding details of match
   const [inputs, setInputs] = useState({
@@ -182,7 +92,6 @@ function StartRound() {
     courseCity: "",
     roundId: 0,
   });
-
   //state holding names of players
   const [playerName, setPlayerName] = useState({
     player1: "",
@@ -190,26 +99,21 @@ function StartRound() {
     player3: "",
     player4: "",
   });
-
   let history = useHistory();
-
   let numOfPlayersInt = parseInt(inputs.numOfPlayers);
   let numOfPlayersArr = [...Array(numOfPlayersInt)].map((_, i) => i);
-
   // const handleCourse = (e) => {
   //     e.preventDefault()
   //     var newInfo = inputs
   //     newInfo[e.target.name] = e.target.value
   //     setInputs({ ...inputs,  })
   // }
-
   const handleInputs = (e) => {
     e.preventDefault();
     var clone = inputs;
     clone[e.target.name] = e.target.value;
     setInputs({ ...clone });
   };
-
   const handlePlayerNames = (e) => {
     e.preventDefault();
     var nameClone = playerName;
@@ -219,10 +123,8 @@ function StartRound() {
     });
     console.log(playerName);
   };
-
   const handleStartRound = (event) => {
     event.preventDefault();
-
     axios({
       method: "post",
       data: {
@@ -234,7 +136,6 @@ function StartRound() {
       url: "/api/round",
     }).then((res) => {
       let updatedPlayerNameArr = [...inputs.playerNameArr];
-
       //adding player names to inputs state
       for (let i = 1; i < 5; i++) {
         let currentPlayer = "player" + i;
@@ -247,7 +148,6 @@ function StartRound() {
       //     ...inputs, playerNameArr: updatedPlayerNameArr, roundId: res.data.id
       // })
       let playerIdArrTemp = [];
-
       // let newRoundId = res.data.id
       // setInputs({
       //     ...inputs, roundId: newRoundId
@@ -255,7 +155,6 @@ function StartRound() {
       console.log(inputs);
       for (let i = 0; i < updatedPlayerNameArr.length; i++) {
         const element = updatedPlayerNameArr[i];
-
         axios({
           method: "post",
           data: {
@@ -277,7 +176,6 @@ function StartRound() {
     });
     setStartRound(true);
   };
-
   return (
     <>
       <UserNav />
@@ -322,7 +220,6 @@ function StartRound() {
                     />
                   </p>
                 </div>
-
                 <div className="field column is-2">
                   <label className="label">Number of Players</label>
                   <p className="control has-icons-left">
@@ -336,7 +233,6 @@ function StartRound() {
                   </p>
                 </div>
               </div>
-
               <div className="field column is-2">
                 <p className="control has-icons-left"></p>
                 {numOfPlayersArr.map((each) => (
@@ -357,14 +253,11 @@ function StartRound() {
               </button>
             </form>
           )}
-
           {startRound && <Scorecard details={inputs} />}
         </div>
       </div>
-
       {/* <UserFooter /> */}
     </>
   );
 }
-
 export default StartRound;
