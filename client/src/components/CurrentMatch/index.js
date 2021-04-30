@@ -12,6 +12,7 @@ function CurrentMatch() {
       courseName: "",
       courseCity: "",
       courseState: "",
+      playerId: 0,
       roundId: 0,
       hole1: 0,
       hole2: 0,
@@ -39,7 +40,7 @@ function CurrentMatch() {
         setUser(user);
       } else {
       }
-    })
+    });
   }, []);
 
   const getCurrentRound = function () {
@@ -56,6 +57,7 @@ function CurrentMatch() {
             courseCity: md.courseCity,
             courseState: md.courseState,
             roundId: md.roundId,
+            playerId: md.id,
             hole1: md.hole1,
             hole2: md.hole2,
             hole3: md.hole3,
@@ -77,49 +79,102 @@ function CurrentMatch() {
           };
         })
       );
-      console.log(matchData)
+      console.log(matchData);
     });
+
+    // const handleBlur = (e) => {
+    //   console.log(state);
+    //   axios({
+    //     method: "PUT",
+    //     data: state,
+    //     url: `/api/scores/${matchData.playerId}/${matchData.roundId}/`,
+    //   });
+    // };
+
+    // const handleChange = (event) => {
+    //   event.preventDefault();
+    //   event.persist();
+    //   var clone = state;
+    //   clone[event.target.name] = parseInt(event.target.value);
+    //   setState({ ...clone });
+    //   totalScore();
+    // };
   };
 
-  return <>
-  <button onClick={getCurrentRound}>Get Current Round</button>
-  
-  <div className="table-container">
-  <table className="table is-bordered is-narrow is-hoverable">
-    <thead>
-    <th>Player/Hole</th>
-  <tbody>
-    {matchData.map((array) => (
-      
-      <tr>
-    <td>{array.playerName}</td>
-    <td>{array.hole1}</td>
-    <td>{array.hole2}</td>
-    <td>{array.hole3}</td>
-    <td>{array.hole4}</td>
-    <td>{array.hole5}</td>
-    <td>{array.hole6}</td>
-    <td>{array.hole7}</td>
-    <td>{array.hole8}</td>
-    <td>{array.hole9}</td>
-    <td>{array.hole10}</td>
-    <td>{array.hole11}</td>
-    <td>{array.hole12}</td>
-    <td>{array.hole13}</td>
-    <td>{array.hole14}</td>
-    <td>{array.hole15}</td>
-    <td>{array.hole16}</td>
-    <td>{array.hole16}</td>
-    <td>{array.hole17}</td>
-    <td>{array.hole18}</td>
-    </tr>
-  ) )}
-  </tbody>
-  </thead>
-  </table>
-  </div>
-  </>;
+  let numOfHolesArr = [...Array(18)].map((_, i) => i + 1);
+
+  return (
+    <>
+      <button onClick={getCurrentRound}>Get Current Round</button>
+
+      <div className="table-container">
+        <table className="table is-bordered is-narrow is-hoverable">
+          <thead>
+            <tr>
+              <th></th>
+              {numOfHolesArr.map((each, index) => (
+                <td hole={"hole" + each} key={"hole" + each} className="">
+                  {"Hole " + each}
+                </td>
+              ))}
+              <td>Total</td>
+            </tr>
+          </thead>
+          <tbody>
+            {matchData.map((array, index) => (
+              <tr>
+                {/* <td hole={"hole" + array}>
+                  <input
+                    className="scoreInput"
+                    playerName={array.playerName}
+                    name={"hole" + (index + 1)}
+                    input="text"
+                    // onBlur={handleBlur}
+                    // onChange={handleChange}
+                    //  playerid={array.playerId}
+                    ></input>
+                </td> */}
+
+
+                <td>{array.playerName}</td>
+                
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole1"}
+                    input="text"
+                    // onBlur={handleBlur}
+                    // onChange={handleChange}
+                     playerid={array.playerId}
+                     defaultValue={array.hole1}
+                    ></input>
+                </td>
+
+                <td>{array.hole2}</td>
+                <td>{array.hole3}</td>
+                <td>{array.hole4}</td>
+                <td>{array.hole5}</td>
+                <td>{array.hole6}</td>
+                <td>{array.hole7}</td>
+                <td>{array.hole8}</td>
+                <td>{array.hole9}</td>
+                <td>{array.hole10}</td>
+                <td>{array.hole11}</td>
+                <td>{array.hole12}</td>
+                <td>{array.hole13}</td>
+                <td>{array.hole14}</td>
+                <td>{array.hole15}</td>
+                <td>{array.hole16}</td>
+                <td>{array.hole16}</td>
+                <td>{array.hole17}</td>
+                <td>{array.hole18}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
 }
 
 export default CurrentMatch;
-
