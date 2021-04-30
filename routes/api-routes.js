@@ -170,24 +170,23 @@ module.exports = function (app) {
       });
   });
   app.get("/api/current/:ownerId", function (req, res) {
-
-    db.sequelize.query(
-      `SELECT scores.id, playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, roundId, courseName, courseCity, courseState
+    db.sequelize
+      .query(
+        `SELECT scores.id, playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, roundId, courseName, courseCity, courseState
       FROM scores
       INNER JOIN round
       ON scores.RoundId = round.Id
       INNER JOIN user
       ON round.ownerId = user.firebaseId
       WHERE round.isComplete = 0 and user.firebaseId = "${req.params.ownerId}"`,
-      { type: QueryTypes.SELECT }
-    ).then((results) => {
-      res.json(results)
-    }).catch((err) => {
-      console.log(err)
-    })
-
- 
-
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   app.get("/api/complete/:firebaseId", function (req, res) {
@@ -199,13 +198,15 @@ module.exports = function (app) {
       ON round.ownerId = "${req.params.firebaseId}"
 
       WHERE round.isComplete = 0`,
-      { type: QueryTypes.SELECT }
-    ).then((results) => {
-      res.json(results)
-    }).catch((err) => {
-      console.log(err)
-    })
-  })
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   //****************** POST ROUTES ****************** /
   app.post("/api/signup", (req, res) => {
@@ -290,7 +291,7 @@ module.exports = function (app) {
   });
 };
 
-//Updating player total in the database
+// Updating player total in the database
 // app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
 //   db.Scores.update(req.body.total, {
 //     where: {

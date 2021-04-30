@@ -1,7 +1,5 @@
-
 import { Link, Redirect, useHistory } from "react-router-dom";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PlayerScoreCard from "../PlayerScorecard/index.js";
 import axios from "axios";
 
@@ -13,6 +11,36 @@ import axios from "axios";
 // }
 
 function Scorecard(props) {
+  const [players, setPlayers] = useState([]);
+  useEffect(() => {
+    const playersArr = props.details.playerIdArr.map((playerId) => {
+      return {
+        playerId,
+        score: {
+          hole1: 0,
+          hole2: 0,
+          hole3: 0,
+          hole4: 0,
+          hole5: 0,
+          hole6: 0,
+          hole7: 0,
+          hole8: 0,
+          hole9: 0,
+          hole10: 0,
+          hole11: 0,
+          hole12: 0,
+          hole13: 0,
+          hole14: 0,
+          hole15: 0,
+          hole16: 0,
+          hole17: 0,
+          hole18: 0,
+        },
+      };
+    });
+    setPlayers(playersArr);
+  }, []);
+
   const updateComplete = function () {
     axios({
       method: "PUT",
@@ -23,6 +51,26 @@ function Scorecard(props) {
     }).then((res) => {
       console.log(res);
     });
+  };
+
+  // Function to calculate total score from player score card
+  var totalScore = function (scores) {
+    let _total = Object.values(scores).reduce((prev, next) => prev + next, 0);
+    return _total;
+  };
+
+  // Function to send the total when the round is ended
+  const handleEndRound = (event) => {
+    event.preventDefault();
+    for (let i = 0; i < players.length; i++) {
+      const element = players[i];
+      axios({
+        method: "PUT",
+        data: { Total: totalScore(element.score) },
+        url: `/api/addTotal/${element.playerId}/${props.roundId}`,
+      }).then((response) => console.log(response));
+    }
+    updateComplete();
   };
 
   // console.log(props);
@@ -55,24 +103,23 @@ function Scorecard(props) {
                   playerID={props.details.playerIdArr[index]}
                   roundId={props.details.roundId}
                   holes={props.details.numOfHoles}
+                  setPlayers={setPlayers}
+                  index={index}
+                  players={players}
                 />
               );
             })}
           </tbody>
         </table>
 
-
-        <Link to="/home"><button className="button has-background-danger" onClick={updateComplete}>End Round</button></Link>
-
-
-
-        <button
-          className="button has-background-danger"
-          onClick={updateComplete}
-        >
-          End Round
-        </button>
-
+        <Link to="/home">
+          <button
+            className="button has-background-danger"
+            onClick={handleEndRound}
+          >
+            End Round
+          </button>
+        </Link>
       </div>
 
       {/* <p>
