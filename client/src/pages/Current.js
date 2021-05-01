@@ -11,7 +11,7 @@ function CurrentRound() {
 return (
     <>
     <UserNav />
-    <h1>So you think you can dance.</h1>
+    <h1>Current Round.</h1>
     <CurrentMatch />
         </>
 )

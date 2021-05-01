@@ -7,6 +7,7 @@ import currentRoundIMG from "../utils/images/currentRoundA.png";
 import usersIcon from "../utils/images/golfNews.png";
 import firebase from "../firebase.js"
 import axios from "axios";
+import newMatch from "../utils/images/newMatch.png"
 
 function Home() {
 
@@ -53,7 +54,7 @@ function Home() {
               <div class="box">
                 <div class="card">
 
-                  <Link to="/newmatch">
+                  <Link to="/CurrentRound">
                     <div className="card-image is-clickable">
                       <figure className="image is-256x256">
                         <img
@@ -76,8 +77,14 @@ function Home() {
                 <div class="card">
 
                   <Link to="/newmatch">
-                    <div className="card-image is-clickable">
-                      <p>New Match</p>
+                  <div className="card-image is-clickable">
+                      <figure className="image is-256x256">
+                        <img
+                          className="is-clickable"
+                          src={newMatch}
+                          alt="Placeholder image"
+                        ></img>
+                      </figure>
                     </div>
                   </Link>
                 </div>
