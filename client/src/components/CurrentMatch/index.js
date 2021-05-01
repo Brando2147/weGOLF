@@ -134,22 +134,12 @@ function CurrentMatch() {
                     //  playerid={array.playerId}
                     ></input>
                 </td> */}
-
-
-                <td>{array.playerName}</td>
-                
+                <td>{array.playerName}</td>               
                 <td>
-                  <input
-                    className="scoreInput"
-                    name={"hole1"}
-                    input="text"
-                    // onBlur={handleBlur}
-                    // onChange={handleChange}
-                     playerid={array.playerId}
-                     defaultValue={array.hole1}
-                    ></input>
+                  <input className="scoreInput"
+                  value={array.hole1}>
+                </input>
                 </td>
-
                 <td>{array.hole2}</td>
                 <td>{array.hole3}</td>
                 <td>{array.hole4}</td>
