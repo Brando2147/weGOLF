@@ -68,7 +68,7 @@ function Scorecard(props) {
 
   // Function to send the total when the round is ended
   const handleEndRound = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     for (let i = 0; i < players.length; i++) {
       const element = players[i];
       console.log(element.playerId);

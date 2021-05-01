@@ -299,13 +299,36 @@ module.exports = function (app) {
 
   // Put route to update round table with round ID
   app.put("/api/round/:roundId", (req, res) => {
-    db.Round.update(req.body, {
+    console.log(req.body)
+    db.Round.update({isComplete: req.body.isComplete}, {
       where: {
         id: req.params.roundId,
       },
     })
       .then((results) => {
-        res.json(results);
+        for (let i = 0; i < req.body.matchData.length; i++) { 
+          var sum = 0
+          const element = req.body.matchData[i];
+          for (let i2 = 1; i2 < 19; i2++) {
+           sum = sum + element["hole" + i2]
+            
+          }
+          console.log("sum", sum)
+          db.Scores.update({Total: sum}, {
+            where: {
+              id: element.playerId,
+              RoundId: req.params.roundId,
+            },
+          })
+            .then((result) => {
+              res.json(result);
+            })
+            .catch((err) => {
+              console.log(err.message);
+              res.status(401).json(err.message);
+            });
+        }
+        
       })
       .catch((err) => {
         console.log(err.message);
