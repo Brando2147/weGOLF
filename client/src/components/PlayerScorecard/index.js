@@ -51,7 +51,7 @@ const PlayerScoreCard = (props) => {
     clone[event.target.name] = parseInt(event.target.value);
     setState({ ...clone });
     const tempArr = [...props.players];
-    // tempArr[props.index].score = state;
+    tempArr[props.index].score = state;
     props.setPlayers(tempArr);
     totalScore();
   };
@@ -66,7 +66,6 @@ const PlayerScoreCard = (props) => {
             <td hole={"hole" + each}>
               <input
                 className="scoreInput"
-                playerName={props.playerName}
                 name={"hole" + (index + 1)}
                 input="text"
                 onBlur={handleBlur}

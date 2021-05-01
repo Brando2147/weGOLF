@@ -12,7 +12,10 @@ import axios from "axios";
 
 function Scorecard(props) {
   const [players, setPlayers] = useState([]);
+  const [roundId, setRoundId] = useState();
+
   useEffect(() => {
+    console.log(props.details.playerIdArr);
     const playersArr = props.details.playerIdArr.map((playerId) => {
       return {
         playerId,
@@ -39,7 +42,8 @@ function Scorecard(props) {
       };
     });
     setPlayers(playersArr);
-  }, []);
+    setRoundId(props.details.roundId);
+  }, [props.details]);
 
   // Function call to update status of round to completed
   const updateComplete = function () {
@@ -48,11 +52,13 @@ function Scorecard(props) {
       data: {
         isComplete: 1,
       },
-      url: `/api/round/${props.details.roundId}`,
+      url: `/api/round/${roundId}`,
     }).then((res) => {
       console.log(res);
     });
   };
+
+  console.log(props.details.roundId);
 
   // Function to calculate total score from player score card
   var totalScore = function (scores) {
@@ -62,20 +68,19 @@ function Scorecard(props) {
 
   // Function to send the total when the round is ended
   const handleEndRound = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     for (let i = 0; i < players.length; i++) {
       const element = players[i];
+      console.log(element.playerId);
+
       axios({
         method: "PUT",
         data: { Total: totalScore(element.score) },
-        url: `/api/addTotal/${element.playerId}/${props.roundId}`,
+        url: `/api/addTotal/${element.playerId}/${roundId}`,
       }).then((response) => console.log(response));
     }
     updateComplete();
   };
-
-  // console.log(props);
-  // console.log(props.details)
 
   let numOfHoles = parseInt(props.details.numOfHoles);
   let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
