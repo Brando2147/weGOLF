@@ -52,7 +52,19 @@ function RecentMatches() {
       method: "GET",
       url: `/api/rounds/${user.uid}/`,
     }).then((result) => {
-      setUniqueRounds(
+      console.log(result.data)
+      setUniqueRounds(result.data.map(each => {
+        var d = new Date(each.createdAt).toDateString();
+        return {
+          roundId: each.RoundId,
+          courseName: each.courseName,
+          courseCity: each.courseCity,
+          courseState: each.courseState,
+          date: d
+        }
+      }));
+    })
+    {/*      setUniqueRounds(
         result.data.map((each) => {
           return {
             roundId: each.RoundId,
@@ -64,7 +76,8 @@ function RecentMatches() {
         })
       );
     });
-  }, [user]);
+*/}
+}, [user]);
 
   // useEffect(() => {
   //   console.log(user.uid, "Something")
@@ -114,6 +127,37 @@ function RecentMatches() {
         method: "GET",
         url: `/api/pastRound/${e.target.value}/`,
       }).then((result) => {
+        console.log(result)
+        setMatchData(result.data.map(each => {
+          var d = new Date(each.createdAt).toDateString();
+          return {
+            playerName: each.playerName,
+            createdAt: d,
+            courseName: each.courseName,
+            courseCity: each.courseCity,
+            courseState: each.courseState,
+            hole1: each.hole1,
+            hole2: each.hole2,
+            hole3: each.hole3,
+            hole4: each.hole4,
+            hole5: each.hole5,
+            hole6: each.hole6,
+            hole7: each.hole7,
+            hole8: each.hole8,
+            hole9: each.hole9,
+            hole10: each.hole10,
+            hole11: each.hole11,
+            hole12: each.hole12,
+            hole13: each.hole13,
+            hole14: each.hole14,
+            hole15: each.hole15,
+            hole16: each.hole16,
+            hole17: each.hole17,
+            hole18: each.hole18,
+          }
+        }))
+      })
+      {/*
         console.log(result);
         setMatchData(
           result.data.map((each) => {
@@ -145,14 +189,16 @@ function RecentMatches() {
           })
         );
       });
+*/}
     }
   };
   let numOfHolesArr = [...Array(18)].map((_, i) => i + 1);
 
   return (
     <>
-      <form className="field">
-        <div className="select is-rounded">
+      <form className="field column is-4-fullhd is-offset-4-fullhd is-4-widescreen is-offset-4-widescreen 
+                is-6-desktop is-offset-3-desktop is-6-tablet is-offset-3-tablet is-8-mobile is-offset-2-mobile has-text-centered">
+        <div className="select is-rounded ">
           <select name="selectedRound" onChange={handleChange}>
             <option value="false">Select a round</option>
             {uniqueRounds.map((each) => (
