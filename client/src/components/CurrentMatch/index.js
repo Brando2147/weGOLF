@@ -2,51 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import firebase from "../../firebase";
 import "./style.css";
+
 // import PlayerScoreCard from "../PlayerScorecard";
 
 function CurrentMatch() {
   const [user, setUser] = useState(false);
-  const [matchData, setMatchData] = useState([
-    {
-      playerName: "",
-      courseName: "",
-      courseCity: "",
-      courseState: "",
-      playerId: 0,
-      roundId: 0,
-      hole1: 0,
-      hole2: 0,
-      hole3: 0,
-      hole4: 0,
-      hole5: 0,
-      hole6: 0,
-      hole7: 0,
-      hole8: 0,
-      hole9: 0,
-      hole10: 0,
-      hole11: 0,
-      hole12: 0,
-      hole13: 0,
-      hole14: 0,
-      hole15: 0,
-      hole16: 0,
-      hole17: 0,
-      hole18: 0,
-    },
-  ]);
+  const [matchData, setMatchData] = useState([])
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        getCurrentRound(user);
       } else {
       }
     });
   }, []);
 
-  const getCurrentRound = function () {
+  const getCurrentRound = function (_user) {
     axios({
       method: "GET",
-      url: `/api/current/${user.uid}/`,
+      url: `/api/current/${_user.uid}/`,
     }).then((results) => {
       console.log(results.data);
       setMatchData(
@@ -81,33 +56,38 @@ function CurrentMatch() {
       );
       console.log(matchData);
     });
+  };
 
-    // const handleBlur = (e) => {
-    //   console.log(state);
-    //   axios({
-    //     method: "PUT",
-    //     data: state,
-    //     url: `/api/scores/${matchData.playerId}/${matchData.roundId}/`,
-    //   });
-    // };
+  const handleBlur = (playerId, roundId) => {
+    console.log(matchData);
+    axios({
+      method: "PUT",
+      data: matchData.find(player => player.playerId === playerId),
+      url: `/api/scores/${playerId}/${roundId}/`,
+    })
+      .then((results) => {
+        console.log(results);
+      })
+      .catch((error) => console.log(error));
+  };
 
-    // const handleChange = (event) => {
-    //   event.preventDefault();
-    //   event.persist();
-    //   var clone = state;
-    //   clone[event.target.name] = parseInt(event.target.value);
-    //   setState({ ...clone });
-    //   totalScore();
-    // };
+  const handleChange = (value, playerId, holeId) => {
+    setMatchData(
+      matchData.map((player) => {
+        if (player.playerId !== playerId) return player;
+        player[holeId] = parseInt(value);
+        return player;
+      })
+    );
   };
 
   let numOfHolesArr = [...Array(18)].map((_, i) => i + 1);
 
   return (
     <>
-      <button onClick={getCurrentRound}>Get Current Round</button>
 
       <div className="table-container">
+        { matchData.length > 0 ?
         <table className="table is-bordered is-narrow is-hoverable">
           <thead>
             <tr>
@@ -123,56 +103,356 @@ function CurrentMatch() {
           <tbody>
             {matchData.map((array, index) => (
               <tr>
-                {/* <td hole={"hole" + array}>
-                  <input
-                    className="scoreInput"
-                    playerName={array.playerName}
-                    name={"hole" + (index + 1)}
-                    input="text"
-                    // onBlur={handleBlur}
-                    // onChange={handleChange}
-                    //  playerid={array.playerId}
-                    ></input>
-                </td> */}
-
-
                 <td>{array.playerName}</td>
-                
                 <td>
                   <input
                     className="scoreInput"
                     name={"hole1"}
                     input="text"
-                    // onBlur={handleBlur}
-                    // onChange={handleChange}
-                     playerid={array.playerId}
-                     defaultValue={array.hole1}
-                    ></input>
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole1}
+                  ></input>
                 </td>
-
-                <td>{array.hole2}</td>
-                <td>{array.hole3}</td>
-                <td>{array.hole4}</td>
-                <td>{array.hole5}</td>
-                <td>{array.hole6}</td>
-                <td>{array.hole7}</td>
-                <td>{array.hole8}</td>
-                <td>{array.hole9}</td>
-                <td>{array.hole10}</td>
-                <td>{array.hole11}</td>
-                <td>{array.hole12}</td>
-                <td>{array.hole13}</td>
-                <td>{array.hole14}</td>
-                <td>{array.hole15}</td>
-                <td>{array.hole16}</td>
-                <td>{array.hole16}</td>
-                <td>{array.hole17}</td>
-                <td>{array.hole18}</td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole2"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole2}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole3"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole3}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole4"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole4}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole5"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole5}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole6"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole6}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole7"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole7}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole8"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole8}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole9"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole9}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole10"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole10}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole11"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole11}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole12"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole12}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole13"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole13}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole14"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole14}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole15"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole15}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole16"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole16}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole17"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole17}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className="scoreInput"
+                    name={"hole18"}
+                    input="text"
+                    onBlur={handleBlur(array.playerId, array.roundId)}
+                    onChange={(event) => {
+                      event.preventDefault();
+                      event.persist();
+                      handleChange(
+                        event.target.value,
+                        array.playerId,
+                        event.target.name
+                      );
+                    }}
+                    playerid={array.playerId}
+                    Value={array.hole18}
+                  ></input>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+        :<div>LOADING IMAGE HERE</div>}
+        <button onClick="">End Round</button>
+     </div>
     </>
   );
 }
