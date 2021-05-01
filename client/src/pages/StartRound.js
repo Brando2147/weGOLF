@@ -5,6 +5,8 @@ import Scorecard from "../components/Scorecard/index.js";
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase";
 import axios from "axios";
+import loadingImg from "../utils/images/Spin-1s-200px.gif"
+
 function StartRound() {
   //array of states that user can pick from
   let states = [
@@ -75,9 +77,13 @@ function StartRound() {
         setUser(user);
       } else {
         history.push("/");
+        setUser(false)
       }
     });
   }, []);
+
+  const [showLoader, setShowLoader] = useState(false);
+
   //state holding authenticatd user
   const [user, setUser] = useState(false);
   const [startRound, setStartRound] = useState(false);
@@ -99,6 +105,12 @@ function StartRound() {
     player3: "",
     player4: "",
   });
+
+  const [playerNameStyle, setPlayerNameStyle] = useState(
+    "field column is-3-fullhd is-offset-4-fullhd is-3-widescreen is-offset-4-widescreen is-4-desktop is-offset-4-desktop \
+    is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile"
+  )
+
   let history = useHistory();
   let numOfPlayersInt = parseInt(inputs.numOfPlayers);
   let numOfPlayersArr = [...Array(numOfPlayersInt)].map((_, i) => i);
@@ -114,6 +126,25 @@ function StartRound() {
     clone[e.target.name] = e.target.value;
     setInputs({ ...clone });
   };
+
+  const handleNumberOfPlayers = (e) => {
+    e.preventDefault();
+    var clone = inputs;
+    clone[e.target.name] = parseInt(e.target.value);
+    setInputs({ ...clone });
+
+    if (inputs.numOfPlayers === 1) {
+      setPlayerNameStyle("field column is-3-fullhd is-offset-4-fullhd is-3-widescreen is-offset-4-widescreen is-4-desktop is-offset-4-desktop \
+      is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile")
+    } else if (inputs.numOfPlayers === 2) {
+      setPlayerNameStyle("")
+    } else if (inputs.numOfPlayers === 3) {
+      setPlayerNameStyle("")
+    } else if (inputs.numOfPlayers === 4) {
+      setPlayerNameStyle("")
+    }
+  };
+
   const handlePlayerNames = (e) => {
     e.preventDefault();
     var nameClone = playerName;
@@ -121,9 +152,9 @@ function StartRound() {
     setPlayerName({
       ...nameClone,
     });
-    console.log(playerName);
   };
   const handleStartRound = (event) => {
+    setShowLoader(true)
     event.preventDefault();
     axios({
       method: "post",
@@ -135,6 +166,7 @@ function StartRound() {
       },
       url: "/api/round",
     }).then((res) => {
+
       let updatedPlayerNameArr = [...inputs.playerNameArr];
       //adding player names to inputs state
       for (let i = 1; i < 5; i++) {
@@ -152,7 +184,6 @@ function StartRound() {
       // setInputs({
       //     ...inputs, roundId: newRoundId
       // })
-      console.log(inputs);
       for (let i = 0; i < updatedPlayerNameArr.length; i++) {
         const element = updatedPlayerNameArr[i];
         axios({
@@ -163,8 +194,8 @@ function StartRound() {
           },
           url: "/api/scores",
         }).then((result) => {
+          setShowLoader(false)
           playerIdArrTemp.push(result.data.id);
-          console.log(playerIdArrTemp);
           setInputs({
             ...inputs,
             playerIdArr: playerIdArrTemp,
@@ -179,12 +210,13 @@ function StartRound() {
   return (
     <>
       <UserNav />
-      <div class="box is-mobile has-background-success">
-        <div class="columns is-centered is-mobile">
+      <div class="roundInfoInput container">
+        <div class="is-centered">
           {!startRound && (
             <form className="field" onSubmit={handleStartRound}>
-              <div className="field is-horizontal">
-                <div className="field column is-2">
+              <div className="field is-horizontal columns">
+                <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
+                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
                   <label className="label">City</label>
                   <p className="control has-icons-left">
                     <input
@@ -196,7 +228,7 @@ function StartRound() {
                     />
                   </p>
                 </div>
-                <div className="field column is-2">
+                <div className="field column is-2-fullhd is-2-widescreen is-2-desktop is-2-tablet is-4-mobile is-offset-1-mobile">
                   <label className="label">State</label>
                   <p className="control has-icons-left">
                     <span className="select">
@@ -208,7 +240,11 @@ function StartRound() {
                     </span>
                   </p>
                 </div>
-                <div className="field column is-2">
+              </div>
+
+              <div className="columns">
+                <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
+                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
                   <label className="label">Course</label>
                   <p className="control has-icons-left">
                     <input
@@ -220,11 +256,12 @@ function StartRound() {
                     />
                   </p>
                 </div>
-                <div className="field column is-2">
+
+                <div className="field column is-3-fullhd is-3-widescreen is-3-desktop is-3-tablet is-5-mobile is-offset-1-mobile">
                   <label className="label">Number of Players</label>
                   <p className="control has-icons-left">
                     <span className="select">
-                      <select name="numOfPlayers" onChange={handleInputs}>
+                      <select name="numOfPlayers" onChange={handleNumberOfPlayers}>
                         {numOfPlayersOptions.map((each) => (
                           <option value={each}>{each}</option>
                         ))}
@@ -233,31 +270,46 @@ function StartRound() {
                   </p>
                 </div>
               </div>
-              <div className="field column is-2">
-                <p className="control has-icons-left"></p>
+
+              <div className="is-horizontal columns">
+
                 {numOfPlayersArr.map((each) => (
-                  <p className="control has-icons-left">
-                    <label className="label">Player {each + 1}: </label>
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="Name"
-                      name={"player" + (each + 1)}
-                      onChange={handlePlayerNames}
-                    />
-                  </p>
+                  <div className={playerNameStyle}>
+
+                    <p className="control has-icons-left">
+                      <label className="label">Player {each + 1}: </label>
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="Name"
+                        name={"player" + (each + 1)}
+                        onChange={handlePlayerNames}
+                      />
+                    </p>
+                  </div>
+
                 ))}
               </div>
-              <button className="button has-background-white-bis">
-                Start Round
+              <div className="column has-text-centered">
+                <button className="button if-medium is-rounded is-info">
+                  Start Match
               </button>
+              </div>
             </form>
           )}
+
           {startRound && <Scorecard details={inputs} />}
+          {showLoader &&
+            <div className="column center has-text-centered">
+              <img src={loadingImg}></img>
+            </div>
+          }
         </div>
       </div>
       {/* <UserFooter /> */}
     </>
   );
 }
+
 export default StartRound;
+

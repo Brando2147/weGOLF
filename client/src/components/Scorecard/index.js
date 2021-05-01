@@ -41,6 +41,7 @@ function Scorecard(props) {
     setPlayers(playersArr);
   }, []);
 
+  // Function call to update status of round to completed
   const updateComplete = function () {
     axios({
       method: "PUT",

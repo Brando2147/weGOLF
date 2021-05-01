@@ -7,8 +7,7 @@ function MatchHistory(params) {
     return (
         <>
             <UserNav />
-            <h1>Recent Matches</h1>
-
+            <h2>Recent Matches</h2>
             <RecentMatches />
 
         </>

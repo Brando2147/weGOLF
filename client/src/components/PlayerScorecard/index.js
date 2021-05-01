@@ -8,7 +8,6 @@ const PlayerScoreCard = (props) => {
   let numOfHoles = parseInt(props.holes);
   let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
 
-  // console.log(props)
   const [total, setTotal] = useState(0);
   const [state, setState] = useState({
     hole1: 0,
@@ -38,7 +37,6 @@ const PlayerScoreCard = (props) => {
   };
 
   const handleBlur = (e) => {
-    console.log(state);
     axios({
       method: "PUT",
       data: state,
