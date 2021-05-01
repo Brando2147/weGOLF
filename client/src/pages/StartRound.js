@@ -121,7 +121,6 @@ function StartRound() {
     setPlayerName({
       ...nameClone,
     });
-    console.log(playerName);
   };
   const handleStartRound = (event) => {
     event.preventDefault();
@@ -152,7 +151,6 @@ function StartRound() {
       // setInputs({
       //     ...inputs, roundId: newRoundId
       // })
-      console.log(inputs);
       for (let i = 0; i < updatedPlayerNameArr.length; i++) {
         const element = updatedPlayerNameArr[i];
         axios({
@@ -164,7 +162,6 @@ function StartRound() {
           url: "/api/scores",
         }).then((result) => {
           playerIdArrTemp.push(result.data.id);
-          console.log(playerIdArrTemp);
           setInputs({
             ...inputs,
             playerIdArr: playerIdArrTemp,
