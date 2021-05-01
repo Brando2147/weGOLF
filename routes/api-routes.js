@@ -329,22 +329,22 @@ module.exports = function (app) {
         console.log(err.message);
         res.status(401).json(err.message)
       })
-  })
-};
+  });
 
 // Updating player total in the database
-// app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
-//   db.Scores.update(req.body.total, {
-//     where: {
-//       id: req.params.playerId,
-//       RoundId: req.params.roundId,
-//     },
-//   })
-//     .then((result) => {
-//       res.json(result);
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//       res.status(401).json(err.message);
-//     });
-// });
+app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
+  db.Scores.update(req.body.total, {
+    where: {
+      id: req.params.playerId,
+      RoundId: req.params.roundId,
+    },
+  })
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res.status(401).json(err.message);
+    });
+});
+};
