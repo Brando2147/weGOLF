@@ -12,7 +12,7 @@ function LeaderBoards() {
   const [players, setPlayers] = useState([
     {
       playerName: '',
-      rank: '',
+      bestScore: '',
       best: '',
       course: '',
       city: '',
@@ -32,8 +32,7 @@ function LeaderBoards() {
         {
 return {
   playerName: leadername.playerName,
-  rank: '1',
-  best: '1',
+  bestScore: leadername.Total,
   course: leadername.courseName,
   city: leadername.courseCity,
   state: leadername.courseState,
@@ -58,10 +57,7 @@ return {
                 <tr>
                   <th>User (Player) </th>
                   <th>
-                    <abbr title="Rank">Rank</abbr>
-                  </th>
-                  <th>
-                    <abbr title="Score">Best Round</abbr>
+                    <abbr title="bestScore">Low Scores</abbr>
                   </th>
                   <th>
                     <abbr title="CourseName">Course</abbr>
@@ -77,8 +73,7 @@ return {
               
               <tbody>
                 <td>{players.map(p => <tr>{p.playerName}</tr>)}</td>
-                <td></td>
-                <td></td>
+                <td>{players.map(t =><tr>{t.bestScore}</tr>)}</td>
                 <td>{players.map(c =><tr>{c.course}</tr>)}</td>
                 <td>{players.map(d =><tr>{d.city}</tr>)}</td>
                 <td>{players.map(e =><tr>{e.state}</tr>)}</td>

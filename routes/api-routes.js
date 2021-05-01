@@ -156,10 +156,14 @@ module.exports = function (app) {
   app.get("/api/leaderboards", async function (req, res) {
     await db.sequelize
       .query(
-        `SELECT Scores.playerName,  Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
+        `SELECT Scores.playerName,  Scores.Total, Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
         FROM Round 
         INNER JOIN Scores 
-        ON Round.id = Scores.RoundId`,
+        ON Round.id = Scores.RoundId
+        WHERE Round.isComplete = 1
+        AND Scores.Total <> 0
+        ORDER BY Total`,
+        
         { type: QueryTypes.SELECT }
       )
       .then((result) => {
