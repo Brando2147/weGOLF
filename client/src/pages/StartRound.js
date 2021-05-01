@@ -67,13 +67,10 @@ function StartRound() {
     "WV",
     "WY",
   ];
-
   //array of # of holes that user can pick from
   let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
-
   //array of # of players that can be in a match
   let numOfPlayersOptions = [1, 2, 3, 4];
-
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -89,7 +86,6 @@ function StartRound() {
 
   //state holding authenticatd user
   const [user, setUser] = useState(false);
-
   const [startRound, setStartRound] = useState(false);
   //state holding details of match
   const [inputs, setInputs] = useState({
@@ -102,7 +98,6 @@ function StartRound() {
     courseCity: "",
     roundId: 0,
   });
-
   //state holding names of players
   const [playerName, setPlayerName] = useState({
     player1: "",
@@ -117,24 +112,20 @@ function StartRound() {
   )
 
   let history = useHistory();
-
   let numOfPlayersInt = parseInt(inputs.numOfPlayers);
   let numOfPlayersArr = [...Array(numOfPlayersInt)].map((_, i) => i);
-
   // const handleCourse = (e) => {
   //     e.preventDefault()
   //     var newInfo = inputs
   //     newInfo[e.target.name] = e.target.value
   //     setInputs({ ...inputs,  })
   // }
-
   const handleInputs = (e) => {
     e.preventDefault();
     var clone = inputs;
     clone[e.target.name] = e.target.value;
     setInputs({ ...clone });
   };
-
 
   const handleNumberOfPlayers = (e) => {
     e.preventDefault();
@@ -161,13 +152,10 @@ function StartRound() {
     setPlayerName({
       ...nameClone,
     });
-    console.log(playerName);
   };
-
   const handleStartRound = (event) => {
     setShowLoader(true)
     event.preventDefault();
-
     axios({
       method: "post",
       data: {
@@ -180,7 +168,6 @@ function StartRound() {
     }).then((res) => {
 
       let updatedPlayerNameArr = [...inputs.playerNameArr];
-
       //adding player names to inputs state
       for (let i = 1; i < 5; i++) {
         let currentPlayer = "player" + i;
@@ -193,12 +180,10 @@ function StartRound() {
       //     ...inputs, playerNameArr: updatedPlayerNameArr, roundId: res.data.id
       // })
       let playerIdArrTemp = [];
-
       // let newRoundId = res.data.id
       // setInputs({
       //     ...inputs, roundId: newRoundId
       // })
-      console.log(inputs);
       for (let i = 0; i < updatedPlayerNameArr.length; i++) {
         const element = updatedPlayerNameArr[i];
         axios({
@@ -211,7 +196,6 @@ function StartRound() {
         }).then((result) => {
           setShowLoader(false)
           playerIdArrTemp.push(result.data.id);
-          console.log(playerIdArrTemp);
           setInputs({
             ...inputs,
             playerIdArr: playerIdArrTemp,
@@ -223,7 +207,6 @@ function StartRound() {
     });
     setStartRound(true);
   };
-
   return (
     <>
       <UserNav />
@@ -289,6 +272,7 @@ function StartRound() {
               </div>
 
               <div className="is-horizontal columns">
+
                 {numOfPlayersArr.map((each) => (
                   <div className={playerNameStyle}>
 
@@ -314,7 +298,6 @@ function StartRound() {
             </form>
           )}
 
-
           {startRound && <Scorecard details={inputs} />}
           {showLoader &&
             <div className="column center has-text-centered">
@@ -323,10 +306,10 @@ function StartRound() {
           }
         </div>
       </div>
-
       {/* <UserFooter /> */}
     </>
   );
 }
 
 export default StartRound;
+

@@ -18,6 +18,7 @@ import Footer from "./components/Footer/index.js"
 import UserFooter from "./components/UserFooter/index.js"
 import firebase from "./firebase";
 import grassBanner from "./utils/images/grassbanner.png"
+import CurrentRound from './pages/Current';
 // import Directory from "./pages/Directory.js"
 
 
@@ -46,12 +47,14 @@ function App() {
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/newmatch" component={StartRound} />
-            <Route exact path="/recentMatches" component={MatchHistory} />
+            <Route exact path="/recentmatches" component={MatchHistory} />
+
             <Route exact path="/courses" component={Courses} />
             <Route exact path="/leaderboards" component={LeaderBoards} />
             <Route exact path="/myaccount" component={MyAccount} />
             <Route exact path="/help" component={Help} />
             <Route exact path="/directory" component={Directory} />
+            <Route exact path="/CurrentRound" component={CurrentRound} />
           </Router>
         </div>
         <img src={grassBanner} height="50px"></img>

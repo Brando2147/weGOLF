@@ -8,7 +8,6 @@ const PlayerScoreCard = (props) => {
   let numOfHoles = parseInt(props.holes);
   let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
 
-  // console.log(props)
   const [total, setTotal] = useState(0);
   const [state, setState] = useState({
     hole1: 0,
@@ -31,13 +30,13 @@ const PlayerScoreCard = (props) => {
     hole18: 0,
   });
 
+  // Function to calculate total score from player score card
   var totalScore = function () {
     let _total = Object.values(state).reduce((prev, next) => prev + next, 0);
     setTotal(_total);
   };
 
   const handleBlur = (e) => {
-    console.log(state);
     axios({
       method: "PUT",
       data: state,
@@ -51,17 +50,10 @@ const PlayerScoreCard = (props) => {
     var clone = state;
     clone[event.target.name] = parseInt(event.target.value);
     setState({ ...clone });
+    const tempArr = [...props.players];
+    // tempArr[props.index].score = state;
+    props.setPlayers(tempArr);
     totalScore();
-  };
-
-  //Function to add total to database when EndRound button is clicked
-  const handleEndRound = (event) => {
-    event.preventDefault();
-    axios({
-      method: "PUT",
-      data: { Total: total },
-      url: `/api/addTotal/${props.playerID}/${props.roundId}`,
-    });
   };
 
   return (
