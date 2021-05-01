@@ -224,9 +224,9 @@ module.exports = function (app) {
         res.json(results);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  })
+        console.log(err);
+      });
+  });
   //****************** POST ROUTES ****************** /
 
   // Post Route to signup user
@@ -313,38 +313,36 @@ module.exports = function (app) {
       });
   });
 
-
+  // Put route to update the name by firebaseID
   app.put("/api/nameupdate/:firebaseId", (req, res) => {
-    db.User.update(
-      req.body,
-      {
-        where: {
-          firebaseId: req.params.firebaseId,
-        },
-      })
+    db.User.update(req.body, {
+      where: {
+        firebaseId: req.params.firebaseId,
+      },
+    })
       .then((result) => {
         res.json(result);
       })
       .catch((err) => {
         console.log(err.message);
-        res.status(401).json(err.message)
-      })
+        res.status(401).json(err.message);
+      });
   });
 
-// Updating player total in the database
-app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
-  db.Scores.update(req.body.total, {
-    where: {
-      id: req.params.playerId,
-      RoundId: req.params.roundId,
-    },
-  })
-    .then((result) => {
-      res.json(result);
+  // Updating player total in the database
+  app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
+    db.Scores.update(req.body, {
+      where: {
+        id: req.params.playerId,
+        RoundId: req.params.roundId,
+      },
     })
-    .catch((err) => {
-      console.log(err.message);
-      res.status(401).json(err.message);
-    });
-});
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
+  });
 };
