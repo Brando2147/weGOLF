@@ -152,7 +152,7 @@ module.exports = function (app) {
       });
   });
 
-  // ANDREW: GET route to retrieve data for Leaderboards
+  // GET route to retrieve data for Leaderboards
   app.get("/api/leaderboards", async function (req, res) {
     await db.sequelize
       .query(
@@ -169,6 +169,8 @@ module.exports = function (app) {
         console.log(err);
       });
   });
+
+  // Get route to retrieve scores from current round by user
   app.get("/api/current/:ownerId", function (req, res) {
     db.sequelize
       .query(
@@ -189,6 +191,7 @@ module.exports = function (app) {
       });
   });
 
+  // Get route to retrieve completed rounds by user firebase ID
   app.get("/api/complete/:firebaseId", function (req, res) {
     db.sequelize
       .query(
@@ -209,6 +212,8 @@ module.exports = function (app) {
   });
 
   //****************** POST ROUTES ****************** /
+
+  // Post Route to signup user
   app.post("/api/signup", (req, res) => {
     db.User.create({
       email: req.body.email,
@@ -224,7 +229,7 @@ module.exports = function (app) {
       });
   });
 
-  // Route to sign up for an account
+  // Post Route to sign up for an account
   app.post("/api/round", (req, res) => {
     db.Round.create({
       ownerId: req.body.ownerId,
@@ -242,7 +247,7 @@ module.exports = function (app) {
       });
   });
 
-  // Route to add playernname and roundId to Scores table
+  // Post Route to add playernname and roundId to Scores table
   app.post("/api/scores", (req, res) => {
     db.Scores.create({
       playerName: req.body.playerName,
@@ -259,6 +264,7 @@ module.exports = function (app) {
 
   //****************** PUT ROUTES ****************** /
 
+  // Put Route to update scores where player/round Id
   app.put("/api/scores/:playerId/:roundId", (req, res) => {
     db.Scores.update(req.body, {
       where: {
@@ -275,6 +281,7 @@ module.exports = function (app) {
       });
   });
 
+  // Put route to update round table with round ID
   app.put("/api/round/:roundId", (req, res) => {
     db.Round.update(req.body, {
       where: {
