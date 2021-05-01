@@ -56,14 +56,15 @@ function RecentMatches() {
     }).then((result) => {
       console.log(result.data)
       setUniqueRounds(result.data.map(each => {
+        var d = new Date(each.createdAt).toDateString();
         return {
           roundId: each.RoundId,
           courseName: each.courseName,
           courseCity: each.courseCity,
           courseState: each.courseState,
-          date: each.createdAt
+          date: d
         }
-      })); 
+      }));
     })
   }, [user]);
 
@@ -117,9 +118,10 @@ function RecentMatches() {
       }).then((result) => {
         console.log(result)
         setMatchData(result.data.map(each => {
+          var d = new Date(each.createdAt).toDateString();
           return {
             playerName: each.playerName,
-            createdAt: each.createdAt,
+            createdAt: d,
             courseName: each.courseName,
             courseCity: each.courseCity,
             courseState: each.courseState,
@@ -155,8 +157,9 @@ function RecentMatches() {
 
   return (
     <>
-      <form className="field">
-        <div className="select is-rounded">
+      <form className="field column is-4-fullhd is-offset-4-fullhd is-4-widescreen is-offset-4-widescreen 
+                is-6-desktop is-offset-3-desktop is-6-tablet is-offset-3-tablet is-8-mobile is-offset-2-mobile has-text-centered">
+        <div className="select is-rounded ">
           <select name="selectedRound" onChange={handleChange}>
             <option value="false">Select a round</option>
             {uniqueRounds.map((each) =>
