@@ -78,7 +78,7 @@ function StartRound() {
       }
     });
   }, []);
-  //state holding authenticatd user
+  //state holding authenticated user
   const [user, setUser] = useState(false);
   const [startRound, setStartRound] = useState(false);
   //state holding details of match

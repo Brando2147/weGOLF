@@ -147,7 +147,6 @@ function RecentMatches() {
       });
     }
   };
-  console.log(selectedRounds);
   let numOfHolesArr = [...Array(18)].map((_, i) => i + 1);
 
   return (
