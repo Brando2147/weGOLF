@@ -207,6 +207,22 @@ module.exports = function (app) {
       });
   });
 
+  //route to retrieve user personal info
+  app.get("/api/userInfo/:firebaseId", function (req, res) {
+    db.sequelize
+      .query(
+        `SELECT email, firstName, lastName
+      FROM user
+      WHERE firebaseId ="${req.params.firebaseId}"`,
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  })
   //****************** POST ROUTES ****************** /
   app.post("/api/signup", (req, res) => {
     db.User.create({
@@ -288,8 +304,25 @@ module.exports = function (app) {
         res.status(401).json(err.message);
       });
   });
-};
 
+
+  app.put("/api/nameupdate/:firebaseId", (req, res) => {
+    db.User.update(
+      req.body,
+      {
+        where: {
+          firebaseId: req.params.firebaseId,
+        },
+      })
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message)
+      })
+  })
+};
 //Updating player total in the database
 // app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
 //   db.Scores.update(req.body.total, {
