@@ -5,11 +5,27 @@ import UserNav from "../components/UserNav/index.js"
 import NewsFeed from "../components/NewsFeed/index.js"
 import Home from "../pages/Home.js";
 import firebase from "../firebase";
+import axios from "axios";
 
 
 
 function MyAccount() {
     const [currentUser, setCurrentUser] = useState(false)
+
+    const [userDemographics, setUserDemographics] = useState({
+        userEmail: "",
+        userFirstName: "",
+        userLastName: "",
+    })
+
+    const [showNameModal, setShowNameModal] = useState(false)
+
+    const [showEmailModal, setShowEmailModal] = useState(false)
+
+    const [newUserInfo, setNewUserInfo] = useState({
+        firstName: "",
+        email: ""
+    })
 
     var auth = firebase.auth();
 
@@ -28,8 +44,58 @@ function MyAccount() {
 
                 history.push("/")
             }
+            axios({
+                method: "GET",
+                url: `/api/userInfo/${user.uid}`
+            }).then((results) => {
+                console.log(results)
+                setUserDemographics(
+                    {
+                        ...userDemographics,
+                        userEmail: results.data[0].email,
+                        userFirstName: results.data[0].firstName,
+                        userLastName: results.data[0].lastName
+                    })
+            })
         })
     }, [])
+
+    const handleDisplayNameModal = () => {
+        setShowNameModal("is-active")
+    }
+
+    const handleDisplayEmailModal = () => {
+        setShowEmailModal("is-active")
+    }
+
+    const handleCloseModal = () => {
+        setShowNameModal(false)
+        setShowEmailModal(false)
+    }
+
+    const handleNameUpdate = (event) => {
+        event.preventDefault();
+        var newName = newUserInfo.firstName
+        console.log(newName)
+        axios({
+            method: "PUT",
+            data: { firstName: newName },
+            url: `/api/nameupdate/${user.uid}`,
+        });
+        setShowNameModal(false)
+        setUserDemographics({
+            ...userDemographics,
+            userFirstName: newName
+        })
+
+    }
+
+    const handleChange = (event) => {
+        event.preventDefault();
+        var clone = newUserInfo;
+        clone[event.target.name] = event.target.value;
+        setNewUserInfo({ ...clone });
+    };
 
     const handleResetPassword = () => {
         auth.sendPasswordResetEmail(currentUser.email).then(function () {
@@ -67,16 +133,71 @@ function MyAccount() {
     return (
         <>
             <UserNav />
-            <div className="box has-background-success olumns is-center">
-            <div className="container">
-                <p><strong>Name:</strong> </p>
-                <p><strong>Email:</strong> {currentUser.email}</p>
-                <div className="container column">
-                    <button className="button is-warning" onClick={handleResetPassword}>Send Reset Password Link</button>
+            <div className="box has-background-success column is-6 is-offset-3 is-center">
+                <div className="column">
+                    <div className="column">
+                        <p><strong>Name:</strong> {userDemographics.userFirstName}</p>
+                        <p><strong>Email:</strong> {currentUser.email}</p>
+                    </div>
+
+                    <hr></hr>
+                    <div className="container columns">
+                        <div className="container column">
+                            <button className="button is-link" onClick={handleDisplayNameModal}>Update Name</button>
+                        </div>
+                        <div className="container column">
+                            <button className="button is-link" onClick={handleDisplayEmailModal}>Update Email</button>
+                        </div>
+                    </div>
+
+                    <div className="container columns">
+                        <div className="container column">
+                            <button className="button is-warning" onClick={handleResetPassword}>Send Password Reset Link</button>
+                        </div>
+                        <div className="container column">
+                            <button className="button is-danger" onClick={handleDeleteMyAccount}>Delete My Account</button>
+                        </div>
+                    </div>
                 </div>
-                <div className="container column">
-                    <button className="button is-danger" onClick={handleDeleteMyAccount}>Delete My Account</button>
+                <div className={"modal " + showNameModal}>
+                    <div className="modal-background"></div>
+                    <div className="modal-card">
+                        <header className="modal-card-head">
+                            <p className="modal-card-title">Update Name</p>
+                            <button className="delete" aria-label="close" onClick={handleCloseModal}></button>
+                        </header>
+                        <section className="modal-card-body">
+                            <p>New Name:</p>
+                            <input name="firstName" input="text"
+                                onChange={handleChange}></input>
+                        </section>
+
+                        <footer className="modal-card-foot">
+                            <button className="button is-success" onClick={handleNameUpdate}>Save changes</button>
+                        </footer>
+
+                        {/* <!-- Any other Bulma elements you want --> */}
+                    </div>
                 </div>
+
+                <div className={"modal " + showEmailModal}>
+                    <div className="modal-background"></div>
+                    <div className="modal-card">
+                        <header className="modal-card-head">
+                            <p className="modal-card-title">Update Email</p>
+                            <button className="delete" aria-label="close" onClick={handleCloseModal}></button>
+                        </header>
+                        <section className="modal-card-body">
+                            <p>New Email:</p>
+                            <input ></input>
+                        </section>
+
+                        <footer className="modal-card-foot">
+                            <button className="button is-success">Save changes</button>
+                        </footer>
+
+                        {/* <!-- Any other Bulma elements you want --> */}
+                    </div>
                 </div>
 
             </div>

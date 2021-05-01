@@ -1,0 +1,12 @@
+.loginButton, .signupButton {
+    margin: 0px 0px 10px 0px;
+}
+
+.errorMessage {
+    color: red
+}
+
+.roundInfoInput {
+    border: solid;
+    padding: 15px
+}
