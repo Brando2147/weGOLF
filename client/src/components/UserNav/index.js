@@ -105,7 +105,6 @@ function UserNav() {
       </nav>
 
       <p>Hi {user.email}</p>
-      <p> {user.uid}</p>
     </>
   );
 
