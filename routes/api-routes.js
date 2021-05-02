@@ -111,7 +111,7 @@ module.exports = function (app) {
         s.hole3, s.hole4, s.hole5, s.hole6,s.hole7, 
         s.hole8, s.hole9, s.hole10, s.hole11, s.hole12, 
         s.hole13, s.hole14, s.hole15, s.hole16, s.hole17, 
-        s.hole18, r.createdAt, r.courseName, r.courseCity, r.courseState
+        s.hole18, s.Total, r.createdAt, r.courseName, r.courseCity, r.courseState
         FROM Round r
         INNER JOIN Scores s
         ON r.id = s.RoundId

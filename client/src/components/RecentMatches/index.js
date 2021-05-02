@@ -60,7 +60,8 @@ function RecentMatches() {
           courseName: each.courseName,
           courseCity: each.courseCity,
           courseState: each.courseState,
-          date: d
+          date: d,
+          total: each.Total
         }
       }));
     })
@@ -154,6 +155,7 @@ function RecentMatches() {
             hole16: each.hole16,
             hole17: each.hole17,
             hole18: each.hole18,
+            total: each.Total,
           }
         }))
       })
@@ -253,6 +255,7 @@ function RecentMatches() {
                 <td>{each.hole16}</td>
                 <td>{each.hole17}</td>
                 <td>{each.hole18}</td>
+                <td>{each.total}</td>
               </tr>
             ))}
           </tbody>
