@@ -4,7 +4,6 @@ import firebase from "../firebase"
 import "./style.css"
 import NonUserNav from "../components/NonUserNav/index.js"
 
-
 function Login() {
     const [inputs, setInputs] = useState({})
     const [errorMessage, setErrorMessage] = useState("")
@@ -13,7 +12,6 @@ function Login() {
         var clone = inputs
         clone[e.target.name] = e.target.value
         setInputs({ ...clone })
-
     }
 
     const handleLoginInFormSubmit = (e) => {
@@ -36,9 +34,6 @@ function Login() {
         <>
             <NonUserNav />
             <main className="container">
-                {/* <div className="column is-3 is-offset-1">
-                        <img src={golferImg}></img>
-                    </div> */}
                 <form className="box column is-4-fullhd is-offset-4-fullhd is-4-widescreen is-offset-4-widescreen 
                 is-6-desktop is-offset-3-desktop is-6-tablet is-offset-3-tablet is-8-mobile is-offset-2-mobile"
                     onSubmit={handleLoginInFormSubmit}>
@@ -51,7 +46,6 @@ function Login() {
                             </span>
                         </p>
                     </div>
-
                     <div className="field">
                         <p className="control has-icons-left">
                             <input className="input" type="password" placeholder="Password" id="password-input" name="logInPassword" onChange={handleInputs} required />
@@ -68,11 +62,10 @@ function Login() {
                     <p>
                         Or sign up <Link to="/signup">here</Link>
                     </p>
-
                 </form>
             </main>
         </>
     )
-}
+};
 
 export default Login;
