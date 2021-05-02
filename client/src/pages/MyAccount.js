@@ -136,8 +136,8 @@ function MyAccount() {
             <div className="box has-background-success column is-6 is-offset-3 is-center">
                 <div className="column">
                     <div className="column">
-                        <p><strong>Name:</strong> {userDemographics.userFirstName}</p>
-                        <p><strong>Email:</strong> {currentUser.email}</p>
+                        <p style={{color: "white"}}><strong style={{color: "white"}}>Name:</strong> {userDemographics.userFirstName}</p>
+                        <p style={{color: "white"}}><strong style={{color: "white"}}>Email:</strong> {currentUser.email}</p>
                     </div>
 
                     <hr></hr>
