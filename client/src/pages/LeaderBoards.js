@@ -6,7 +6,7 @@ function LeaderBoards() {
   const [players, setPlayers] = useState([
     {
       playerName: '',
-      rank: '',
+      bestScore: '',
       best: '',
       course: '',
       city: '',
@@ -21,6 +21,7 @@ function LeaderBoards() {
         url: `/api/leaderboards`,
       }).then((data) => {
         const leaderData = data.data;
+        {/*
         setPlayers(leaderData.map(leadername => {
           return {
             playerName: leadername.playerName,
@@ -29,6 +30,15 @@ function LeaderBoards() {
             course: leadername.courseName,
             city: leadername.courseCity,
             state: leadername.courseState,
+*/}
+       setPlayers(leaderData.map(leadername =>
+        {
+return {
+  playerName: leadername.playerName,
+  bestScore: leadername.Total,
+  course: leadername.courseName,
+  city: leadername.courseCity,
+  state: leadername.courseState,
 
           }
         }));
@@ -46,14 +56,12 @@ function LeaderBoards() {
         <div className="row">
           <div className="column">
             <table className="leaderboardTable table is-narrow is-striped is-bordered is-hoverable">
+
               <thead>
                 <tr>
                   <th>User (Player) </th>
                   <th>
-                    <abbr title="Rank">Rank</abbr>
-                  </th>
-                  <th>
-                    <abbr title="Score">Best Round</abbr>
+                    <abbr title="bestScore">Low Scores</abbr>
                   </th>
                   <th>
                     <abbr title="CourseName">Course</abbr>
@@ -68,12 +76,13 @@ function LeaderBoards() {
               </thead>
               <tbody>
                 <td>{players.map(p => <tr>{p.playerName}</tr>)}</td>
-                <td></td>
-                <td></td>
-                <td>{players.map(c => <tr>{c.course}</tr>)}</td>
-                <td>{players.map(d => <tr>{d.city}</tr>)}</td>
-                <td>{players.map(e => <tr>{e.state}</tr>)}</td>
-              </tbody>
+
+                <td>{players.map(t =><tr>{t.bestScore}</tr>)}</td>
+                <td>{players.map(c =><tr>{c.course}</tr>)}</td>
+                <td>{players.map(d =><tr>{d.city}</tr>)}</td>
+                <td>{players.map(e =><tr>{e.state}</tr>)}</td>
+                
+                </tbody>
             </table>
           </div>
         </div>

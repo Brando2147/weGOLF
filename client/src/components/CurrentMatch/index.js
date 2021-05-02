@@ -7,6 +7,8 @@ import loadingImg from "../../utils/images/Spin-1s-200px.gif"
 function CurrentMatch() {
   const [user, setUser] = useState(false);
   const [matchData, setMatchData] = useState([])
+  const [roundState, setRoundState] = useState()
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -53,6 +55,7 @@ function CurrentMatch() {
           };
         })
       );
+      results.data[0] && setRoundState(results.data[0].roundId)
       console.log(matchData);
     });
   };
@@ -81,6 +84,39 @@ function CurrentMatch() {
   };
 
   let numOfHolesArr = [...Array(18)].map((_, i) => i + 1);
+  
+  const [total, setTotal] = useState(0);
+  var totalScore = function () {
+    let _total = Object.values(matchData).reduce((prev, next) => prev + next, 0);
+    setTotal(_total);
+  };
+  const updateComplete = function () {
+    axios({
+      method: "PUT",
+      data: {
+        isComplete: 1,
+        matchData: matchData,
+      },
+      url: `/api/round/${roundState}`,
+    }).then((res) => {
+      console.log(res);
+    });
+  };
+
+  const handleEndRound = (event) => {
+    // event.preventDefault();
+    // for (let i = 0; i < matchData.length; i++) {
+    //   const element = matchData[i];
+    //   console.log(element.playerId);
+
+    //   axios({
+    //     method: "PUT",
+    //     data: { Total: totalScore(element.score) },
+    //     url: `/api/addTotal/${element.playerId}/${roundState}`,
+    //   }).then((response) => console.log(response));
+    // }
+    updateComplete();
+  };
 
   return (
     <>
@@ -98,6 +134,7 @@ function CurrentMatch() {
                 ))}
                 <td>Total</td>
               </tr>
+{/*
             </thead>
             <tbody>
               {matchData.map((array, index) => (
@@ -455,6 +492,13 @@ function CurrentMatch() {
         }
         <button onClick="">End Round</button>
       </div>
+*/}
+            ))}
+          </tbody>
+        </table>
+        :<div>LOADING IMAGE HERE</div>}
+        <button onClick={handleEndRound}>End Round</button>
+     </div>
     </>
   );
 }

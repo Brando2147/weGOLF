@@ -111,7 +111,7 @@ module.exports = function (app) {
         s.hole3, s.hole4, s.hole5, s.hole6,s.hole7, 
         s.hole8, s.hole9, s.hole10, s.hole11, s.hole12, 
         s.hole13, s.hole14, s.hole15, s.hole16, s.hole17, 
-        s.hole18, r.createdAt, r.courseName, r.courseCity, r.courseState
+        s.hole18, s.Total, r.createdAt, r.courseName, r.courseCity, r.courseState
         FROM Round r
         INNER JOIN Scores s
         ON r.id = s.RoundId
@@ -156,10 +156,14 @@ module.exports = function (app) {
   app.get("/api/leaderboards", async function (req, res) {
     await db.sequelize
       .query(
-        `SELECT Scores.playerName,  Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
+        `SELECT Scores.playerName,  Scores.Total, Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
         FROM Round 
         INNER JOIN Scores 
-        ON Round.id = Scores.RoundId`,
+        ON Round.id = Scores.RoundId
+        WHERE Round.isComplete = 1
+        AND Scores.Total <> 0
+        ORDER BY Total`,
+        
         { type: QueryTypes.SELECT }
       )
       .then((result) => {
@@ -299,13 +303,36 @@ module.exports = function (app) {
 
   // Put route to update round table with round ID
   app.put("/api/round/:roundId", (req, res) => {
-    db.Round.update(req.body, {
+    console.log(req.body)
+    db.Round.update({isComplete: req.body.isComplete}, {
       where: {
         id: req.params.roundId,
       },
     })
       .then((results) => {
-        res.json(results);
+        for (let i = 0; i < req.body.matchData.length; i++) { 
+          var sum = 0
+          const element = req.body.matchData[i];
+          for (let i2 = 1; i2 < 19; i2++) {
+           sum = sum + element["hole" + i2]
+            
+          }
+          console.log("sum", sum)
+          db.Scores.update({Total: sum}, {
+            where: {
+              id: element.playerId,
+              RoundId: req.params.roundId,
+            },
+          })
+            .then((result) => {
+              res.json(result);
+            })
+            .catch((err) => {
+              console.log(err.message);
+              res.status(401).json(err.message);
+            });
+        }
+        
       })
       .catch((err) => {
         console.log(err.message);

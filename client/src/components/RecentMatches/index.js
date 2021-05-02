@@ -60,7 +60,8 @@ function RecentMatches() {
           courseName: each.courseName,
           courseCity: each.courseCity,
           courseState: each.courseState,
-          date: d
+          date: d,
+          total: each.Total
         }
       }));
     })
@@ -102,6 +103,7 @@ function RecentMatches() {
             hole16: each.hole16,
             hole17: each.hole17,
             hole18: each.hole18,
+            total: each.Total,
           }
         }))
       })
@@ -125,7 +127,6 @@ function RecentMatches() {
         </div>
       </form>
       <hr></hr>
-
       {selectedRounds.roundId != "false" &&
         <div className="table-container">
           <table className="previousMatchTable table is-bordered is-narrow is-hoverable is-striped">
@@ -145,7 +146,52 @@ function RecentMatches() {
                   </td>
                 ))}
                 <td>Total</td>
-              </tr>
+       {/*
+      {selectedRounds.roundId != "false" && (
+        <table className="table is-bordered is-narrow is-hoverable">
+          <caption style={{color: "white"}}>
+            Course Name: <strong style={{color: "white"}}>{matchData[0].courseName}</strong> | Location:{" "}
+            <strong style={{color: "white"}}>
+              {matchData[0].courseCity}, {matchData[0].courseState}
+            </strong>{" "}
+            | Played on: <strong style={{color: "white"}}>{matchData[0].createdAt}</strong>
+          </caption>
+          <thead>
+            <tr>
+              <th></th>
+              {numOfHolesArr.map((each, index) => (
+                <td hole={"hole" + each} key={"hole" + each} className="">
+                  {"Hole " + each}
+                </td>
+              ))}
+              <td>Total</td>
+            </tr>
+          </thead>
+          <tbody>
+            {matchData.map((each) => (
+              <tr>
+                <th>{each.playerName}</th>
+                <td>{each.hole1}</td>
+                <td>{each.hole2}</td>
+                <td>{each.hole3}</td>
+                <td>{each.hole4}</td>
+                <td>{each.hole5}</td>
+                <td>{each.hole6}</td>
+                <td>{each.hole7}</td>
+                <td>{each.hole8}</td>
+                <td>{each.hole9}</td>
+                <td>{each.hole10}</td>
+                <td>{each.hole11}</td>
+                <td>{each.hole12}</td>
+                <td>{each.hole13}</td>
+                <td>{each.hole14}</td>
+                <td>{each.hole15}</td>
+                <td>{each.hole16}</td>
+                <td>{each.hole17}</td>
+                <td>{each.hole18}</td>
+                <td>{each.total}</td>
+*/}
+</tr>
             </thead>
             <tbody>
               {matchData.map((each) => (

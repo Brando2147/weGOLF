@@ -132,6 +132,7 @@ function MyAccount() {
                     <div className="column">
                         <p><strong>Name:</strong> {userDemographics.userFirstName}</p>
                         <p><strong>Email:</strong> {userDemographics.userEmail}</p>
+
                     </div>
 
                     <hr></hr>
