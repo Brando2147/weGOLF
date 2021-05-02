@@ -47,12 +47,12 @@ return {
   return (
     <>
     
-  
+    
      <UserNav />
-     <div className="columns is-centered has-background-success">
+     <div className="columns is-centered">
         <div className="row">
           <div className="column">
-            <table className="table is-narrow is-striped is-bordered is-hoverable">
+            <table className="table is-narrow is-mobile is-striped is-bordered is-hoverable">
               <thead>
                 <tr>
                   <th>User (Player) </th>
