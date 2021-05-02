@@ -8,5 +8,15 @@
 
 .roundInfoInput {
     border: solid;
-    padding: 15px
+    padding: 15px;
+    background-color: aliceblue;
+}
+
+.title {
+    color:white;
+}
+
+.leaderboardTable{
+    margin-left: auto;
+    margin-right: auto;
 }
