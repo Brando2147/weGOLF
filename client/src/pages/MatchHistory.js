@@ -1,15 +1,17 @@
 import React from "react"
 import RecentMatches from "../components/RecentMatches/index.js";
-
 import UserNav from "../components/UserNav/index.js"
 
-function MatchHistory(params) {
+function MatchHistory() {
     return (
         <>
             <UserNav />
-            <h2>Recent Matches</h2>
-            <RecentMatches />
-
+            <div className="column has-text-centered">
+                <h1 className="title is-1">Recent Matches</h1>
+            </div>
+            <div className="roundInfoInput container box">
+                <RecentMatches />
+            </div>
         </>
     )
 }

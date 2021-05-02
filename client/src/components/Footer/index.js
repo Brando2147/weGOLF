@@ -5,7 +5,7 @@ function Footer() {
     return (
         <footer className="footer nonUserFooter">
             <div className="container content">
-                <strong>Collaborators</strong>
+                <strong className="footerTitle">Collaborators</strong>
                 <p>
                     <a href="https://github.com/abgabbard" target="_blank" rel="noreferrer">Andrew Gabbard</a>
                     &nbsp;| <a href="https://github.com/Brando2147" target="_blank" rel="noreferrer">Brandon Dana</a>

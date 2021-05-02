@@ -3,7 +3,6 @@ import axios from "axios";
 import "./style.css";
 
 const PlayerScoreCard = (props) => {
-  // playerId={each} roundId={props.roundInfo.roundId} holes={numOfHoles}
 
   let numOfHoles = parseInt(props.holes);
   let numOfHolesArr = [...Array(numOfHoles)].map((_, i) => i + 1);
@@ -60,7 +59,6 @@ const PlayerScoreCard = (props) => {
     <>
       <tr>
         <td>{props.playerName}</td>
-
         {numOfHolesArr.map((each, index) => (
           <>
             <td hole={"hole" + each}>

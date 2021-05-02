@@ -43,8 +43,6 @@ function Signup() {
           url: "/api/signup",
         }).then((res) => console.log(res));
       })
-
-
       .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;

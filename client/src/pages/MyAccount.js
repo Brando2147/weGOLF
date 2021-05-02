@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import UserFooter from "../components/UserFooter/index.js";
+import { useHistory } from "react-router-dom";
 import UserNav from "../components/UserNav/index.js"
-import NewsFeed from "../components/NewsFeed/index.js"
-import Home from "../pages/Home.js";
 import firebase from "../firebase";
 import axios from "axios";
-
-
 
 function MyAccount() {
     const [currentUser, setCurrentUser] = useState(false)
@@ -35,7 +30,6 @@ function MyAccount() {
 
     let history = useHistory();
 
-
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
@@ -48,7 +42,6 @@ function MyAccount() {
                 method: "GET",
                 url: `/api/userInfo/${user.uid}`
             }).then((results) => {
-                console.log(results)
                 setUserDemographics(
                     {
                         ...userDemographics,
@@ -76,7 +69,6 @@ function MyAccount() {
     const handleNameUpdate = (event) => {
         event.preventDefault();
         var newName = newUserInfo.firstName
-        console.log(newName)
         axios({
             method: "PUT",
             data: { firstName: newName },
@@ -87,7 +79,6 @@ function MyAccount() {
             ...userDemographics,
             userFirstName: newName
         })
-
     }
 
     const handleChange = (event) => {
@@ -133,24 +124,26 @@ function MyAccount() {
     return (
         <>
             <UserNav />
+            <div className="column has-text-centered">
+                <h1 className="title is-1">{userDemographics.userFirstName}'s Account</h1>
+            </div>
             <div className="box has-background-success column is-6 is-offset-3 is-center">
                 <div className="column">
                     <div className="column">
-                        <p style={{color: "white"}}><strong style={{color: "white"}}>Name:</strong> {userDemographics.userFirstName}</p>
-                        <p style={{color: "white"}}><strong style={{color: "white"}}>Email:</strong> {currentUser.email}</p>
+                        <p><strong>Name:</strong> {userDemographics.userFirstName}</p>
+                        <p><strong>Email:</strong> {userDemographics.userEmail}</p>
+
                     </div>
 
                     <hr></hr>
-                    <div className="container columns">
+                    <div className="container column">
                         <div className="container column">
                             <button className="button is-link" onClick={handleDisplayNameModal}>Update Name</button>
                         </div>
-                        <div className="container column">
+                        {/* <div className="container column">
                             <button className="button is-link" onClick={handleDisplayEmailModal}>Update Email</button>
-                        </div>
-                    </div>
+                        </div> */}
 
-                    <div className="container columns">
                         <div className="container column">
                             <button className="button is-warning" onClick={handleResetPassword}>Send Password Reset Link</button>
                         </div>
@@ -175,36 +168,11 @@ function MyAccount() {
                         <footer className="modal-card-foot">
                             <button className="button is-success" onClick={handleNameUpdate}>Save changes</button>
                         </footer>
-
-                        {/* <!-- Any other Bulma elements you want --> */}
                     </div>
                 </div>
-
-                <div className={"modal " + showEmailModal}>
-                    <div className="modal-background"></div>
-                    <div className="modal-card">
-                        <header className="modal-card-head">
-                            <p className="modal-card-title">Update Email</p>
-                            <button className="delete" aria-label="close" onClick={handleCloseModal}></button>
-                        </header>
-                        <section className="modal-card-body">
-                            <p>New Email:</p>
-                            <input ></input>
-                        </section>
-
-                        <footer className="modal-card-foot">
-                            <button className="button is-success">Save changes</button>
-                        </footer>
-
-                        {/* <!-- Any other Bulma elements you want --> */}
-                    </div>
-                </div>
-
             </div>
-
-            {/* <UserFooter /> */}
         </>
     )
-}
+};
 
 export default MyAccount;
