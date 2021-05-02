@@ -215,12 +215,12 @@ function RecentMatches() {
 
       {selectedRounds.roundId != "false" && (
         <table className="table is-bordered is-narrow is-hoverable">
-          <caption>
-            Course Name: <strong>{matchData[0].courseName}</strong> | Location:{" "}
-            <strong>
+          <caption style={{color: "white"}}>
+            Course Name: <strong style={{color: "white"}}>{matchData[0].courseName}</strong> | Location:{" "}
+            <strong style={{color: "white"}}>
               {matchData[0].courseCity}, {matchData[0].courseState}
             </strong>{" "}
-            | Played on: <strong>{matchData[0].createdAt}</strong>
+            | Played on: <strong style={{color: "white"}}>{matchData[0].createdAt}</strong>
           </caption>
           <thead>
             <tr>
