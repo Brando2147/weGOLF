@@ -28,21 +28,10 @@ class NewsFeed extends Component {
                             published: each.publishedAt
                         }
                     })
-
-
-
-
-
                 })
-
-                console.log(this.state.results.articles[0].title)
-
             })
             .catch(err => console.log(err))
-
     }
-
-
     render() {
         return (
             <NewsCarousel results={this.state.results} />
