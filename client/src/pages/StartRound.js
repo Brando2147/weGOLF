@@ -69,6 +69,7 @@ function StartRound() {
   ];
   //array of # of holes that user can pick from
   let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+
   //array of # of players that can be in a match
   let numOfPlayersOptions = [1, 2, 3, 4];
   useEffect(() => {
@@ -86,7 +87,11 @@ function StartRound() {
 
   //state holding authenticatd user
   const [user, setUser] = useState(false);
+
+  //state holding boolean on whether the match has started or not
   const [startRound, setStartRound] = useState(false);
+
+  const [displaySorecard, setDisplayScorecard] = useState(false)
   //state holding details of match
   const [inputs, setInputs] = useState({
     numOfHoles: 18,
@@ -106,20 +111,17 @@ function StartRound() {
     player4: "",
   });
 
+  //state holding the responsiveness of the input fields for player names
   const [playerNameStyle, setPlayerNameStyle] = useState(
     "field column is-3-fullhd is-offset-4-fullhd is-3-widescreen is-offset-4-widescreen is-4-desktop is-offset-4-desktop \
     is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile"
   )
 
   let history = useHistory();
+
   let numOfPlayersInt = parseInt(inputs.numOfPlayers);
   let numOfPlayersArr = [...Array(numOfPlayersInt)].map((_, i) => i);
-  // const handleCourse = (e) => {
-  //     e.preventDefault()
-  //     var newInfo = inputs
-  //     newInfo[e.target.name] = e.target.value
-  //     setInputs({ ...inputs,  })
-  // }
+
   const handleInputs = (e) => {
     e.preventDefault();
     var clone = inputs;
@@ -134,14 +136,15 @@ function StartRound() {
     setInputs({ ...clone });
 
     if (inputs.numOfPlayers === 1) {
-      setPlayerNameStyle("field column is-3-fullhd is-offset-4-fullhd is-3-widescreen is-offset-4-widescreen is-4-desktop is-offset-4-desktop \
-      is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile")
+      setPlayerNameStyle(" field column is-3-fullhd is-3-widescreen \
+      is-3-desktop  is-4-tablet  is-6-mobile ")
     } else if (inputs.numOfPlayers === 2) {
-      setPlayerNameStyle("")
+      setPlayerNameStyle("field column is-3-fullhd if-offset-2-fullhd is-3-widescreen is-offset-2-widescreen \
+      is-3-desktop is-offset-2-desktop is-3-tablet is-offset-2-tablet is-6-mobile is-offset-1-mobile")
     } else if (inputs.numOfPlayers === 3) {
-      setPlayerNameStyle("")
+      setPlayerNameStyle("column")
     } else if (inputs.numOfPlayers === 4) {
-      setPlayerNameStyle("")
+      setPlayerNameStyle("column")
     }
   };
 
@@ -153,6 +156,7 @@ function StartRound() {
       ...nameClone,
     });
   };
+
   const handleStartRound = (event) => {
     setShowLoader(true)
     event.preventDefault();
@@ -176,14 +180,9 @@ function StartRound() {
           updatedPlayerNameArr.push(currentPlayerName);
         }
       }
-      // setInputs({
-      //     ...inputs, playerNameArr: updatedPlayerNameArr, roundId: res.data.id
-      // })
+
       let playerIdArrTemp = [];
-      // let newRoundId = res.data.id
-      // setInputs({
-      //     ...inputs, roundId: newRoundId
-      // })
+
       for (let i = 0; i < updatedPlayerNameArr.length; i++) {
         const element = updatedPlayerNameArr[i];
         axios({
@@ -195,6 +194,7 @@ function StartRound() {
           url: "/api/scores",
         }).then((result) => {
           setShowLoader(false)
+          setDisplayScorecard(true)
           playerIdArrTemp.push(result.data.id);
           setInputs({
             ...inputs,
@@ -207,106 +207,101 @@ function StartRound() {
     });
     setStartRound(true);
   };
+
   return (
     <>
       <UserNav />
-      <div class="roundInfoInput container">
-        <div class="is-centered">
-          {!startRound && (
-            <form className="field" onSubmit={handleStartRound}>
-              <div className="field is-horizontal columns">
-                <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
-                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
-                  <label className="label">City</label>
-                  <p className="control has-icons-left">
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="City"
-                      name="courseCity"
-                      onChange={handleInputs}
-                    />
-                  </p>
-                </div>
-                <div className="field column is-2-fullhd is-2-widescreen is-2-desktop is-2-tablet is-4-mobile is-offset-1-mobile">
-                  <label className="label">State</label>
-                  <p className="control has-icons-left">
-                    <span className="select">
-                      <select name="courseState" onChange={handleInputs}>
-                        {states.map((each) => (
-                          <option valeue={each}>{each}</option>
-                        ))}
-                      </select>
-                    </span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="columns">
-                <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
-                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
-                  <label className="label">Course</label>
-                  <p className="control has-icons-left">
-                    <input
-                      className="input"
-                      type="text"
-                      placeholder="Course Name"
-                      name="courseName"
-                      onChange={handleInputs}
-                    />
-                  </p>
-                </div>
-
-                <div className="field column is-3-fullhd is-3-widescreen is-3-desktop is-3-tablet is-5-mobile is-offset-1-mobile">
-                  <label className="label">Number of Players</label>
-                  <p className="control has-icons-left">
-                    <span className="select">
-                      <select name="numOfPlayers" onChange={handleNumberOfPlayers}>
-                        {numOfPlayersOptions.map((each) => (
-                          <option value={each}>{each}</option>
-                        ))}
-                      </select>
-                    </span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="is-horizontal columns">
-
-                {numOfPlayersArr.map((each) => (
-                  <div className={playerNameStyle}>
-
-                    <p className="control has-icons-left">
-                      <label className="label">Player {each + 1}: </label>
-                      <input
-                        className="input"
-                        type="text"
-                        placeholder="Name"
-                        name={"player" + (each + 1)}
-                        onChange={handlePlayerNames}
-                      />
-                    </p>
-                  </div>
-
-                ))}
-              </div>
-              <div className="column has-text-centered">
-                <button className="button if-medium is-rounded is-info">
-                  Start Match
-              </button>
-              </div>
-            </form>
-          )}
-
-          {startRound && <Scorecard details={inputs} />}
-          {showLoader &&
-            <div className="column center has-text-centered">
-              <img src={loadingImg}></img>
-            </div>
-          }
-        </div>
+      <div className="column has-text-centered">
+        <h1 className="title is-1">Match</h1>
       </div>
-      {/* <UserFooter /> */}
+      <div className="roundInfoInput container box">
+        {!startRound &&
+          <form className="field" onSubmit={handleStartRound}>
+            <div className="field is-horizontal columns">
+              <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
+                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
+                <label className="label">City</label>
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="City"
+                    name="courseCity"
+                    onChange={handleInputs}
+                  />
+                </p>
+              </div>
+              <div className="field column is-2-fullhd is-2-widescreen is-2-desktop is-2-tablet is-4-mobile is-offset-1-mobile">
+                <label className="label">State</label>
+                <p className="control has-icons-left">
+                  <span className="select">
+                    <select name="courseState" onChange={handleInputs}>
+                      {states.map((each) => (
+                        <option valeue={each}>{each}</option>
+                      ))}
+                    </select>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className="columns">
+              <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
+                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
+                <label className="label">Course</label>
+                <p className="control has-icons-left">
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="Course Name"
+                    name="courseName"
+                    onChange={handleInputs}
+                  />
+                </p>
+              </div>
+              <div className="field column is-3-fullhd is-3-widescreen is-3-desktop is-3-tablet is-5-mobile is-offset-1-mobile">
+                <label className="label">Number of Players</label>
+                <p className="control has-icons-left">
+                  <span className="select">
+                    <select name="numOfPlayers" onChange={handleNumberOfPlayers}>
+                      {numOfPlayersOptions.map((each) => (
+                        <option value={each}>{each}</option>
+                      ))}
+                    </select>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className="columns">
+              {numOfPlayersArr.map((each) => (
+                <div className={playerNameStyle}>
+
+                  <p className="control has-icons-left">
+                    <label className="label">Player {each + 1}: </label>
+                    <input
+                      className="input"
+                      type="text"
+                      placeholder="Name"
+                      name={"player" + (each + 1)}
+                      onChange={handlePlayerNames}
+                    />
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="column has-text-centered">
+              <button className="button is-medium is-rounded is-info">
+                Start Match
+              </button>
+            </div>
+          </form>
+        }
+        {startRound && <Scorecard details={inputs} loadingDetails={displaySorecard} />}
+        {showLoader &&
+          <div className="column center has-text-centered">
+            <img src={loadingImg}></img>
+          </div>
+        }
+      </div>
     </>
   );
 }
