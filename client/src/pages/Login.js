@@ -20,11 +20,11 @@ function Login() {
         firebase.auth().signInWithEmailAndPassword(inputs.logInEmail, inputs.logInPassword)
             .then((userCredential) => {
                 // Signed in 
-                var user = userCredential.user;
+                // var user = userCredential.user;
                 window.location.href = "/home"
             })
             .catch((error) => {
-                var errorCode = error.code;
+                // var errorCode = error.code;
                 var errorMessage = error.message;
                 setErrorMessage(errorMessage)
             });

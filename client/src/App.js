@@ -1,5 +1,4 @@
 
-import logo from './logo.svg';
 import './App.css';
 import React, { useEffect, useState } from "react"
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -12,7 +11,8 @@ import MatchHistory from "./pages/MatchHistory.js"
 import LeaderBoards from './pages/LeaderBoards';
 import MyAccount from './pages/MyAccount';
 import Help from './pages/Help';
-import Directory from './pages/Directory';
+// import Directory from './pages/Directory';
+import NewsFeed from "./pages/NewsFeed.js"
 import Footer from "./components/Footer/index.js"
 import UserFooter from "./components/UserFooter/index.js"
 import firebase from "./firebase";
@@ -49,11 +49,12 @@ function App() {
             <Route exact path="/leaderboards" component={LeaderBoards} />
             <Route exact path="/myaccount" component={MyAccount} />
             <Route exact path="/help" component={Help} />
-            <Route exact path="/directory" component={Directory} />
+            <Route exact path="/news" component={NewsFeed} />
+            {/* <Route exact path="/directory" component={Directory} /> */}
             <Route exact path="/CurrentRound" component={CurrentRound} />
           </Router>
         </div>
-        <img src={grassBanner} height="50px"></img>
+        <img src={grassBanner} height="50px" alt="grass banner above footer"></img>
         {user ? <UserFooter /> : <Footer />}
       </div>
     </>

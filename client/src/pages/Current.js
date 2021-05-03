@@ -8,13 +8,17 @@ import UserNav from "../components/UserNav/index.js"
 function CurrentRound() {
 
 
-return (
-    <>
-    <UserNav />
-    <h1>Current Round.</h1>
-    <CurrentMatch />
+    return (
+        <>
+            <UserNav />
+            <div className="column has-text-centered">
+                <h1 className="title is-1">Match</h1>
+            </div>
+            <div className="roundInfoInput container box">
+                <CurrentMatch />
+            </div>
         </>
-)
+    )
 }
 
 export default CurrentRound;
