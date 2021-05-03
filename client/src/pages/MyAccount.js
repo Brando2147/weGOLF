@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
-import UserFooter from "../components/UserFooter/index.js";
+import { useHistory } from "react-router-dom";
 import UserNav from "../components/UserNav/index.js"
-import NewsFeed from "../components/NewsFeed/index.js"
-import Home from "../pages/Home.js";
 import firebase from "../firebase";
-
-
+import axios from "axios";
 
 function MyAccount() {
     const [currentUser, setCurrentUser] = useState(false)
+
+    const [userDemographics, setUserDemographics] = useState({
+        userEmail: "",
+        userFirstName: "",
+        userLastName: "",
+    })
+
+    const [showNameModal, setShowNameModal] = useState(false)
+
+    const [showEmailModal, setShowEmailModal] = useState(false)
+
+    const [newUserInfo, setNewUserInfo] = useState({
+        firstName: "",
+        email: ""
+    })
 
     var auth = firebase.auth();
 
@@ -19,7 +30,6 @@ function MyAccount() {
 
     let history = useHistory();
 
-
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
@@ -28,8 +38,55 @@ function MyAccount() {
 
                 history.push("/")
             }
+            axios({
+                method: "GET",
+                url: `/api/userInfo/${user.uid}`
+            }).then((results) => {
+                setUserDemographics(
+                    {
+                        ...userDemographics,
+                        userEmail: results.data[0].email,
+                        userFirstName: results.data[0].firstName,
+                        userLastName: results.data[0].lastName
+                    })
+            })
         })
     }, [])
+
+    const handleDisplayNameModal = () => {
+        setShowNameModal("is-active")
+    }
+
+    const handleDisplayEmailModal = () => {
+        setShowEmailModal("is-active")
+    }
+
+    const handleCloseModal = () => {
+        setShowNameModal(false)
+        setShowEmailModal(false)
+    }
+
+    const handleNameUpdate = (event) => {
+        event.preventDefault();
+        var newName = newUserInfo.firstName
+        axios({
+            method: "PUT",
+            data: { firstName: newName },
+            url: `/api/nameupdate/${user.uid}`,
+        });
+        setShowNameModal(false)
+        setUserDemographics({
+            ...userDemographics,
+            userFirstName: newName
+        })
+    }
+
+    const handleChange = (event) => {
+        event.preventDefault();
+        var clone = newUserInfo;
+        clone[event.target.name] = event.target.value;
+        setNewUserInfo({ ...clone });
+    };
 
     const handleResetPassword = () => {
         auth.sendPasswordResetEmail(currentUser.email).then(function () {
@@ -67,23 +124,55 @@ function MyAccount() {
     return (
         <>
             <UserNav />
-            <div className="box has-background-success olumns is-center">
-            <div className="container">
-                <p><strong>Name:</strong> </p>
-                <p><strong>Email:</strong> {currentUser.email}</p>
-                <div className="container column">
-                    <button className="button is-warning" onClick={handleResetPassword}>Send Reset Password Link</button>
-                </div>
-                <div className="container column">
-                    <button className="button is-danger" onClick={handleDeleteMyAccount}>Delete My Account</button>
-                </div>
-                </div>
-
+            <div className="column has-text-centered">
+                <h1 className="title is-1">{userDemographics.userFirstName}'s Account</h1>
             </div>
+            <div className="box has-background-success column is-6 is-offset-3 is-center">
+                <div className="column">
+                    <div className="column">
+                        <p><strong>Name:</strong> {userDemographics.userFirstName}</p>
+                        <p><strong>Email:</strong> {userDemographics.userEmail}</p>
 
-            {/* <UserFooter /> */}
+                    </div>
+
+                    <hr></hr>
+                    <div className="container column">
+                        <div className="container column">
+                            <button className="button is-link" onClick={handleDisplayNameModal}>Update Name</button>
+                        </div>
+                        {/* <div className="container column">
+                            <button className="button is-link" onClick={handleDisplayEmailModal}>Update Email</button>
+                        </div> */}
+
+                        <div className="container column">
+                            <button className="button is-warning" onClick={handleResetPassword}>Send Password Reset Link</button>
+                        </div>
+                        <div className="container column">
+                            <button className="button is-danger" onClick={handleDeleteMyAccount}>Delete My Account</button>
+                        </div>
+                    </div>
+                </div>
+                <div className={"modal " + showNameModal}>
+                    <div className="modal-background"></div>
+                    <div className="modal-card">
+                        <header className="modal-card-head">
+                            <p className="modal-card-title">Update Name</p>
+                            <button className="delete" aria-label="close" onClick={handleCloseModal}></button>
+                        </header>
+                        <section className="modal-card-body">
+                            <p>New Name:</p>
+                            <input name="firstName" input="text"
+                                onChange={handleChange}></input>
+                        </section>
+
+                        <footer className="modal-card-foot">
+                            <button className="button is-success" onClick={handleNameUpdate}>Save changes</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
         </>
     )
-}
+};
 
 export default MyAccount;

@@ -111,7 +111,7 @@ module.exports = function (app) {
         s.hole3, s.hole4, s.hole5, s.hole6,s.hole7, 
         s.hole8, s.hole9, s.hole10, s.hole11, s.hole12, 
         s.hole13, s.hole14, s.hole15, s.hole16, s.hole17, 
-        s.hole18, r.createdAt, r.courseName, r.courseCity, r.courseState
+        s.hole18, s.Total, r.createdAt, r.courseName, r.courseCity, r.courseState
         FROM Round r
         INNER JOIN Scores s
         ON r.id = s.RoundId
@@ -152,14 +152,18 @@ module.exports = function (app) {
       });
   });
 
-  // ANDREW: GET route to retrieve data for Leaderboards
+  // GET route to retrieve data for Leaderboards
   app.get("/api/leaderboards", async function (req, res) {
     await db.sequelize
       .query(
-        `SELECT Scores.playerName,  Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
+        `SELECT Scores.playerName,  Scores.Total, Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
         FROM Round 
         INNER JOIN Scores 
-        ON Round.id = Scores.RoundId`,
+        ON Round.id = Scores.RoundId
+        WHERE Round.isComplete = 1
+        AND Scores.Total <> 0
+        ORDER BY Total`,
+        
         { type: QueryTypes.SELECT }
       )
       .then((result) => {
@@ -169,27 +173,29 @@ module.exports = function (app) {
         console.log(err);
       });
   });
-  app.get("/api/current/:ownerId", function (req, res) {
 
-    db.sequelize.query(
-      `SELECT scores.id, playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, roundId, courseName, courseCity, courseState
+  // Get route to retrieve scores from current round by user
+  app.get("/api/current/:ownerId", function (req, res) {
+    db.sequelize
+      .query(
+        `SELECT scores.id, playerName, hole1, hole2, hole3, hole4, hole5, hole6, hole7, hole8, hole9, hole10, hole11, hole12, hole13, hole14, hole15, hole16, hole17, hole18, roundId, courseName, courseCity, courseState
       FROM scores
       INNER JOIN round
       ON scores.RoundId = round.Id
       INNER JOIN user
       ON round.ownerId = user.firebaseId
       WHERE round.isComplete = 0 and user.firebaseId = "${req.params.ownerId}"`,
-      { type: QueryTypes.SELECT }
-    ).then((results) => {
-      res.json(results)
-    }).catch((err) => {
-      console.log(err)
-    })
-
- 
-
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
+  // Get route to retrieve completed rounds by user firebase ID
   app.get("/api/complete/:firebaseId", function (req, res) {
     db.sequelize
       .query(
@@ -199,15 +205,35 @@ module.exports = function (app) {
       ON round.ownerId = "${req.params.firebaseId}"
 
       WHERE round.isComplete = 0`,
-      { type: QueryTypes.SELECT }
-    ).then((results) => {
-      res.json(results)
-    }).catch((err) => {
-      console.log(err)
-    })
-  })
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
+  //route to retrieve user personal info
+  app.get("/api/userInfo/:firebaseId", function (req, res) {
+    db.sequelize
+      .query(
+        `SELECT email, firstName, lastName
+      FROM user
+      WHERE firebaseId ="${req.params.firebaseId}"`,
+        { type: QueryTypes.SELECT }
+      )
+      .then((results) => {
+        res.json(results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
   //****************** POST ROUTES ****************** /
+
+  // Post Route to signup user
   app.post("/api/signup", (req, res) => {
     db.User.create({
       email: req.body.email,
@@ -223,7 +249,7 @@ module.exports = function (app) {
       });
   });
 
-  // Route to sign up for an account
+  // Post Route to sign up for an account
   app.post("/api/round", (req, res) => {
     db.Round.create({
       ownerId: req.body.ownerId,
@@ -241,7 +267,7 @@ module.exports = function (app) {
       });
   });
 
-  // Route to add playernname and roundId to Scores table
+  // Post Route to add playernname and roundId to Scores table
   app.post("/api/scores", (req, res) => {
     db.Scores.create({
       playerName: req.body.playerName,
@@ -258,6 +284,7 @@ module.exports = function (app) {
 
   //****************** PUT ROUTES ****************** /
 
+  // Put Route to update scores where player/round Id
   app.put("/api/scores/:playerId/:roundId", (req, res) => {
     db.Scores.update(req.body, {
       where: {
@@ -274,14 +301,71 @@ module.exports = function (app) {
       });
   });
 
+  // Put route to update round table with round ID
   app.put("/api/round/:roundId", (req, res) => {
-    db.Round.update(req.body, {
+    console.log(req.body)
+    db.Round.update({isComplete: req.body.isComplete}, {
       where: {
         id: req.params.roundId,
       },
     })
       .then((results) => {
-        res.json(results);
+        for (let i = 0; i < req.body.matchData.length; i++) { 
+          var sum = 0
+          const element = req.body.matchData[i];
+          for (let i2 = 1; i2 < 19; i2++) {
+           sum = sum + element["hole" + i2]
+            
+          }
+          console.log("sum", sum)
+          db.Scores.update({Total: sum}, {
+            where: {
+              id: element.playerId,
+              RoundId: req.params.roundId,
+            },
+          })
+            .then((result) => {
+              res.json(result);
+            })
+            .catch((err) => {
+              console.log(err.message);
+              res.status(401).json(err.message);
+            });
+        }
+        
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
+  });
+
+  // Put route to update the name by firebaseID
+  app.put("/api/nameupdate/:firebaseId", (req, res) => {
+    db.User.update(req.body, {
+      where: {
+        firebaseId: req.params.firebaseId,
+      },
+    })
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(401).json(err.message);
+      });
+  });
+
+  // Updating player total in the database
+  app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
+    db.Scores.update(req.body, {
+      where: {
+        id: req.params.playerId,
+        RoundId: req.params.roundId,
+      },
+    })
+      .then((result) => {
+        res.json(result);
       })
       .catch((err) => {
         console.log(err.message);
@@ -289,20 +373,3 @@ module.exports = function (app) {
       });
   });
 };
-
-//Updating player total in the database
-// app.put("/api/addTotal/:playerId/:roundId", (req, res) => {
-//   db.Scores.update(req.body.total, {
-//     where: {
-//       id: req.params.playerId,
-//       RoundId: req.params.roundId,
-//     },
-//   })
-//     .then((result) => {
-//       res.json(result);
-//     })
-//     .catch((err) => {
-//       console.log(err.message);
-//       res.status(401).json(err.message);
-//     });
-// });

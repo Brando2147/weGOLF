@@ -1,3 +1,12 @@
+.nonUserFooter{
+height: 20px;
+background-image:url(https://i.pinimg.com/originals/cf/21/11/cf2111c2acdc9b075f176c922438b30a.png);
+}
+
+.footerTitle {
+    color:white;
+}
+
 footer{
     height: 30px;
 }

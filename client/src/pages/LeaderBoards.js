@@ -1,18 +1,12 @@
-// import React from "react";
-import { Link } from "react-router-dom";
-// import UserFooter from "../components/UserFooter/i.js";
 import UserNav from "../components/UserNav/index.js";
-import NewsFeed from "../components/NewsFeed/index.js";
-import Home from "../pages/Home.js";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UserFooter from "../components/UserFooter/index.js";
 
 function LeaderBoards() {
   const [players, setPlayers] = useState([
     {
       playerName: '',
-      rank: '',
+      bestScore: '',
       best: '',
       course: '',
       city: '',
@@ -26,42 +20,48 @@ function LeaderBoards() {
         method: "GET",
         url: `/api/leaderboards`,
       }).then((data) => {
-        console.log(data)
         const leaderData = data.data;
+        {/*
+        setPlayers(leaderData.map(leadername => {
+          return {
+            playerName: leadername.playerName,
+            rank: '1',
+            best: '1',
+            course: leadername.courseName,
+            city: leadername.courseCity,
+            state: leadername.courseState,
+*/}
        setPlayers(leaderData.map(leadername =>
         {
 return {
   playerName: leadername.playerName,
-  rank: '1',
-  best: '1',
+  bestScore: leadername.Total,
   course: leadername.courseName,
   city: leadername.courseCity,
   state: leadername.courseState,
 
-}
+          }
         }));
       });
     };
     leaders();
   }, []);
-  console.log("players:", players)
   return (
     <>
-    
-  
-     <UserNav />
-     <div className="columns is-centered has-background-success">
+      <UserNav />
+      <div className="column has-text-centered">
+        <h1 className="title is-1">Leaderboard</h1>
+      </div>
+      <div className="roundInfoInput container box">
         <div className="row">
           <div className="column">
-            <table className="table is-narrow is-striped is-bordered is-hoverable">
+            <table className="leaderboardTable table is-narrow is-striped is-bordered is-hoverable">
+
               <thead>
                 <tr>
                   <th>User (Player) </th>
                   <th>
-                    <abbr title="Rank">Rank</abbr>
-                  </th>
-                  <th>
-                    <abbr title="Score">Best Round</abbr>
+                    <abbr title="bestScore">Low Scores</abbr>
                   </th>
                   <th>
                     <abbr title="CourseName">Course</abbr>
@@ -74,11 +74,10 @@ return {
                   </th>
                 </tr>
               </thead>
-              
               <tbody>
                 <td>{players.map(p => <tr>{p.playerName}</tr>)}</td>
-                <td></td>
-                <td></td>
+
+                <td>{players.map(t =><tr>{t.bestScore}</tr>)}</td>
                 <td>{players.map(c =><tr>{c.course}</tr>)}</td>
                 <td>{players.map(d =><tr>{d.city}</tr>)}</td>
                 <td>{players.map(e =><tr>{e.state}</tr>)}</td>
@@ -88,7 +87,6 @@ return {
           </div>
         </div>
       </div>
-       {/* <UserFooter /> */}
     </>
   );
 }
