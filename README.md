@@ -34,11 +34,11 @@ weGOLF is a golf score tracking up bootstrapped using React.js. The user can eas
 
 ## Technologies-Used
  Some of the most notable technologies and resources used are the following:
- * [MySQL](https://www.mysql.com/
+ * [MySQL](https://www.mysql.com/)
  * [Express.js](https://expressjs.com/)
  * [React](https://reactjs.org/) 
  * [Node.js](https://nodejs.org/en/)
- * [Firebase] (https://firebase.google.com/)
+ * [Firebase](https://firebase.google.com/)
  * [Sequelize ORM](https://sequelize.org/)
  * [jawsDB](https://www.jawsdb.com/)
  * [Bulma CSS](https://bulma.io/)
