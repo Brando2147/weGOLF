@@ -215,6 +215,7 @@ function RecentMatches() {
                   <td>{each.hole16}</td>
                   <td>{each.hole17}</td>
                   <td>{each.hole18}</td>
+                  <td>{each.total}</td>
                 </tr>
               ))}
             </tbody>

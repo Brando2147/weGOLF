@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import firebase from "../../firebase";
 import "./style.css";
+import axios from "axios";
 
 function UserNav() {
   let history = useHistory();
@@ -10,10 +11,13 @@ function UserNav() {
 
   const [user, setUser] = useState(false);
 
+  const [routeCheck, setRouteCheck] = useState("");
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        currentRoundCheck(user)
       } else {
         console.log("user is not signed in");
 
@@ -27,6 +31,20 @@ function UserNav() {
     setUser(false);
   };
 
+  const currentRoundCheck = function (_user) {
+    console.log("SomeText")
+    axios({
+      method: "GET",
+      url: `/api/complete/${_user.uid}/`,
+    }).then((result) => {
+      console.log(result.data)
+      if (result.data.length === 0) {
+        setRouteCheck("/newMatch")
+      } else {
+        setRouteCheck("/CurrentRound")
+      }
+    });
+  };
 
   return (
     <>
@@ -58,7 +76,7 @@ function UserNav() {
 
         <div className={`navbar-menu ${isActive ? "is-active" : ""}`}>
           <div className="navbar-end">
-            <Link className="navbar-item is-tab" to="/newmatch">
+            <Link className="navbar-item is-tab" to={routeCheck}>
 
               <span className="icon is-small">
                 <i className="fas fa-golf-ball" aria-hidden="true"></i>
