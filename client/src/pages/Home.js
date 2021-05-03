@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import UserNav from "../components/UserNav/index.js";
-import fakeLogo from "../utils/images/weGolfStoreA.png";
-import scoreCardHome from "../utils/images/bestScoresA.png";
+import fakeLogo from "../utils/images/weGolfStoreComingSoon.png"; 
+import scoreCardHome from "../utils/images/bestScoresComingSoon.png";
 import currentRoundIMG from "../utils/images/currentRoundA.png";
 import usersIcon from "../utils/images/golfNews.png";
 import firebase from "../firebase.js"
