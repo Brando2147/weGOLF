@@ -14,7 +14,6 @@ function Signup() {
     var clone = inputs;
     clone[e.target.name] = e.target.value;
     setInputs({ ...clone });
-    console.log(inputs)
   };
 
   const handleSignUpFormSubmit = (e) => {
@@ -44,7 +43,7 @@ function Signup() {
         }).then((res) => console.log(res));
       })
       .catch((error) => {
-        var errorCode = error.code;
+        // var errorCode = error.code;
         var errorMessage = error.message;
         setErrorMessage(errorMessage)
       });

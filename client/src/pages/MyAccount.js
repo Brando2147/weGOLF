@@ -15,7 +15,7 @@ function MyAccount() {
 
     const [showNameModal, setShowNameModal] = useState(false)
 
-    const [showEmailModal, setShowEmailModal] = useState(false)
+    // const [showEmailModal, setShowEmailModal] = useState(false)
 
     const [newUserInfo, setNewUserInfo] = useState({
         firstName: "",
@@ -57,13 +57,13 @@ function MyAccount() {
         setShowNameModal("is-active")
     }
 
-    const handleDisplayEmailModal = () => {
-        setShowEmailModal("is-active")
-    }
+    // const handleDisplayEmailModal = () => {
+    //     setShowEmailModal("is-active")
+    // }
 
     const handleCloseModal = () => {
         setShowNameModal(false)
-        setShowEmailModal(false)
+        // setShowEmailModal(false)
     }
 
     const handleNameUpdate = (event) => {

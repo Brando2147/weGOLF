@@ -31,14 +31,13 @@ function LeaderBoards() {
             city: leadername.courseCity,
             state: leadername.courseState,
 */}
-       setPlayers(leaderData.map(leadername =>
-        {
-return {
-  playerName: leadername.playerName,
-  bestScore: leadername.Total,
-  course: leadername.courseName,
-  city: leadername.courseCity,
-  state: leadername.courseState,
+        setPlayers(leaderData.map(leadername => {
+          return {
+            playerName: leadername.playerName,
+            bestScore: leadername.Total,
+            course: leadername.courseName,
+            city: leadername.courseCity,
+            state: leadername.courseState,
 
           }
         }));
@@ -54,7 +53,7 @@ return {
       </div>
       <div className="roundInfoInput container box">
         <div className="row">
-          <div className="column">
+          <div className="column table-container">
             <table className="leaderboardTable table is-narrow is-striped is-bordered is-hoverable">
 
               <thead>
@@ -77,12 +76,12 @@ return {
               <tbody>
                 <td>{players.map(p => <tr>{p.playerName}</tr>)}</td>
 
-                <td>{players.map(t =><tr>{t.bestScore}</tr>)}</td>
-                <td>{players.map(c =><tr>{c.course}</tr>)}</td>
-                <td>{players.map(d =><tr>{d.city}</tr>)}</td>
-                <td>{players.map(e =><tr>{e.state}</tr>)}</td>
-                
-                </tbody>
+                <td>{players.map(t => <tr>{t.bestScore}</tr>)}</td>
+                <td>{players.map(c => <tr>{c.course}</tr>)}</td>
+                <td>{players.map(d => <tr>{d.city}</tr>)}</td>
+                <td>{players.map(e => <tr>{e.state}</tr>)}</td>
+
+              </tbody>
             </table>
           </div>
         </div>

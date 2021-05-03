@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import UserNav from "../components/UserNav/index.js";
 // import UserFooter from "../components/UserFooter/index.js"
 import Scorecard from "../components/Scorecard/index.js";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import firebase from "../firebase";
 import axios from "axios";
-import loadingImg from "../utils/images/Spin-1s-200px.gif";
+import loadingImg from "../utils/images/Spin-1s-200px.gif"
 function StartRound() {
   //array of states that user can pick from
   let states = [
@@ -67,7 +67,7 @@ function StartRound() {
     "WY",
   ];
   //array of # of holes that user can pick from
-  let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+  // let holes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
   //array of # of players that can be in a match
   let numOfPlayersOptions = [1, 2, 3, 4];
   useEffect(() => {
@@ -76,16 +76,16 @@ function StartRound() {
         setUser(user);
       } else {
         history.push("/");
-        setUser(false);
+        setUser(false)
       }
     });
   }, []);
   const [showLoader, setShowLoader] = useState(false);
-  //state holding authenticated user
+  //state holding authenticatd user
   const [user, setUser] = useState(false);
   //state holding boolean on whether the match has started or not
   const [startRound, setStartRound] = useState(false);
-  const [displayScorecard, setDisplayScorecard] = useState(false);
+  const [displaySorecard, setDisplayScorecard] = useState(false)
   //state holding details of match
   const [inputs, setInputs] = useState({
     numOfHoles: 18,
@@ -106,9 +106,8 @@ function StartRound() {
   });
   //state holding the responsiveness of the input fields for player names
   const [playerNameStyle, setPlayerNameStyle] = useState(
-    "field column is-3-fullhd is-offset-4-fullhd is-3-widescreen is-offset-4-widescreen is-4-desktop is-offset-4-desktop \
-    is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile"
-  );
+    "field column is-3-fullhd is-offset-4-fullhd is-3-widescreen is-offset-4-widescreen is-4-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile"
+  )
   let history = useHistory();
   let numOfPlayersInt = parseInt(inputs.numOfPlayers);
   let numOfPlayersArr = [...Array(numOfPlayersInt)].map((_, i) => i);
@@ -124,19 +123,13 @@ function StartRound() {
     clone[e.target.name] = parseInt(e.target.value);
     setInputs({ ...clone });
     if (inputs.numOfPlayers === 1) {
-      setPlayerNameStyle(
-        " field column is-3-fullhd is-3-widescreen \
-      is-3-desktop  is-4-tablet  is-6-mobile "
-      );
+      setPlayerNameStyle(" field column is-3-fullhd is-3-widescreen is-3-desktop  is-4-tablet  is-6-mobile ")
     } else if (inputs.numOfPlayers === 2) {
-      setPlayerNameStyle(
-        "field column is-3-fullhd if-offset-2-fullhd is-3-widescreen is-offset-2-widescreen \
-      is-3-desktop is-offset-2-desktop is-3-tablet is-offset-2-tablet is-6-mobile is-offset-1-mobile"
-      );
+      setPlayerNameStyle("field column is-3-fullhd if-offset-2-fullhd is-3-widescreen is-offset-2-widescreen is-3-desktop is-offset-2-desktop is-3-tablet is-offset-2-tablet is-6-mobile is-offset-1-mobile")
     } else if (inputs.numOfPlayers === 3) {
-      setPlayerNameStyle("column");
+      setPlayerNameStyle("column")
     } else if (inputs.numOfPlayers === 4) {
-      setPlayerNameStyle("column");
+      setPlayerNameStyle("column")
     }
   };
   const handlePlayerNames = (e) => {
@@ -148,7 +141,7 @@ function StartRound() {
     });
   };
   const handleStartRound = (event) => {
-    setShowLoader(true);
+    setShowLoader(true)
     event.preventDefault();
     axios({
       method: "post",
@@ -165,7 +158,7 @@ function StartRound() {
       for (let i = 1; i < 5; i++) {
         let currentPlayer = "player" + i;
         let currentPlayerName = playerName[currentPlayer];
-        if (currentPlayerName != "") {
+        if (currentPlayerName !== "") {
           updatedPlayerNameArr.push(currentPlayerName);
         }
       }
@@ -180,8 +173,8 @@ function StartRound() {
           },
           url: "/api/scores",
         }).then((result) => {
-          setShowLoader(false);
-          setDisplayScorecard(true);
+          setShowLoader(false)
+          setDisplayScorecard(true)
           playerIdArrTemp.push(result.data.id);
           setInputs({
             ...inputs,
@@ -201,13 +194,11 @@ function StartRound() {
         <h1 className="title is-1">Match</h1>
       </div>
       <div className="roundInfoInput container box">
-        {!startRound && (
+        {!startRound &&
           <form className="field" onSubmit={handleStartRound}>
             <div className="field is-horizontal columns">
-              <div
-                className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
-                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile"
-              >
+              <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
+                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
                 <label className="label">City</label>
                 <p className="control has-icons-left">
                   <input
@@ -225,7 +216,7 @@ function StartRound() {
                   <span className="select">
                     <select name="courseState" onChange={handleInputs}>
                       {states.map((each) => (
-                        <option value={each}>{each}</option>
+                        <option key={each} valeue={each}>{each}</option>
                       ))}
                     </select>
                   </span>
@@ -233,10 +224,8 @@ function StartRound() {
               </div>
             </div>
             <div className="columns">
-              <div
-                className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
-                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile"
-              >
+              <div className="field column is-3-fullhd if-offset-4-fullhd is-3-widescreen is-offset-4-widescreen
+                is-3-desktop is-offset-4-desktop is-4-tablet is-offset-3-tablet is-6-mobile is-offset-1-mobile">
                 <label className="label">Course</label>
                 <p className="control has-icons-left">
                   <input
@@ -252,12 +241,9 @@ function StartRound() {
                 <label className="label">Number of Players</label>
                 <p className="control has-icons-left">
                   <span className="select">
-                    <select
-                      name="numOfPlayers"
-                      onChange={handleNumberOfPlayers}
-                    >
+                    <select name="numOfPlayers" onChange={handleNumberOfPlayers}>
                       {numOfPlayersOptions.map((each) => (
-                        <option value={each}>{each}</option>
+                        <option key={each} value={each}>{each}</option>
                       ))}
                     </select>
                   </span>
@@ -266,7 +252,7 @@ function StartRound() {
             </div>
             <div className="columns">
               {numOfPlayersArr.map((each) => (
-                <div className={playerNameStyle}>
+                <div key={each} className={playerNameStyle}>
                   <p className="control has-icons-left">
                     <label className="label">Player {each + 1}: </label>
                     <input
@@ -286,15 +272,13 @@ function StartRound() {
               </button>
             </div>
           </form>
-        )}
-        {startRound && (
-          <Scorecard details={inputs} loadingDetails={displayScorecard} />
-        )}
-        {showLoader && (
+        }
+        {startRound && <Scorecard details={inputs} loadingDetails={displaySorecard} />}
+        {showLoader &&
           <div className="column center has-text-centered">
-            <img src={loadingImg}></img>
+            <img src={loadingImg} alt="loading spinner"></img>
           </div>
-        )}
+        }
       </div>
     </>
   );

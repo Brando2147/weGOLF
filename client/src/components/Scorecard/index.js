@@ -1,4 +1,4 @@
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import PlayerScoreCard from "../PlayerScorecard/index.js";
 import axios from "axios";
@@ -102,6 +102,7 @@ function Scorecard(props) {
                 <PlayerScoreCard
                   playerName={each}
                   player={"player" + (index + 1)}
+                  kety={props.details.playerIdArr[index]}
                   playerID={props.details.playerIdArr[index]}
                   roundId={props.details.roundId}
                   holes={props.details.numOfHoles}

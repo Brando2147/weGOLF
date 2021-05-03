@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import UserNav from "../components/UserNav/index.js";
-import fakeLogo from "../utils/images/weGolfStoreA.png";
-import scoreCardHome from "../utils/images/bestScoresA.png";
+import fakeLogo from "../utils/images/weGolfStoreComingSoon.png"; 
+import scoreCardHome from "../utils/images/bestScoresComingSoon.png";
 import currentRoundIMG from "../utils/images/currentRoundA.png";
 import usersIcon from "../utils/images/golfNews.png";
 import firebase from "../firebase.js"
@@ -47,12 +47,12 @@ function Home() {
   return (
     <>
       <UserNav />
-      <div class="columns is-centered is-mobile">
-        <div class="row">
+      <div className="columns is-centered is-mobile">
+        <div className="row">
           {continueRound &&
-            <div class="column">
-              <div class="box">
-                <div class="card">
+            <div className="column">
+              <div className="box">
+                <div className="card">
 
                   <Link to="/CurrentRound">
                     <div className="card-image is-clickable">
@@ -60,7 +60,7 @@ function Home() {
                         <img
                           className="is-clickable"
                           src={currentRoundIMG}
-                          alt="Placeholder image"
+                          alt="current round button"
                         ></img>
                       </figure>
                     </div>
@@ -72,17 +72,17 @@ function Home() {
             </div>
           }
           {!continueRound &&
-            <div class="column">
-              <div class="box">
-                <div class="card">
+            <div className="column">
+              <div className="box">
+                <div className="card">
 
                   <Link to="/newmatch">
-                  <div className="card-image is-clickable">
+                    <div className="card-image is-clickable">
                       <figure className="image is-256x256">
                         <img
                           className="is-clickable"
                           src={newMatch}
-                          alt="Placeholder image"
+                          alt="new match button"
                         ></img>
                       </figure>
                     </div>
@@ -96,10 +96,10 @@ function Home() {
           <div className="column is-centered">
             <div className="box">
               <div className="card">
-                <Link to="/directory">
+                <Link to="/news">
                   <div className="card-image is-clickable">
                     <figure className="image is-256x256">
-                      <img src={usersIcon} alt="Placeholder image"></img>
+                      <img src={usersIcon} alt="golf news button"></img>
                     </figure>
                   </div>
                 </Link>
@@ -113,13 +113,11 @@ function Home() {
           <div className="column">
             <div className="box">
               <div className="card">
-                <Link to="/newmatch">
                   <div className="card-image">
                     <figure className="image is-256x256">
-                      <img src={scoreCardHome} alt="Placeholder image"></img>
+                      <img src={scoreCardHome} alt="wegolf store button"></img>
                     </figure>
                   </div>
-                </Link>
               </div>
               <p></p>
               <p></p>
@@ -129,13 +127,12 @@ function Home() {
             <div className="box">
               {" "}
               <div className="card">
-                <Link to="/newmatch">
+               
                   <div className="card-image">
                     <figure className="image is-256x256 ">
-                      <img src={fakeLogo} alt="Placeholder image"></img>
+                      <img src={fakeLogo} alt="new match button"></img>
                     </figure>
                   </div>
-                </Link>
               </div>
               <p></p>
               <p></p>
