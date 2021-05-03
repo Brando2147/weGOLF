@@ -117,7 +117,7 @@ function RecentMatches() {
           <select name="selectedRound" onChange={handleChange}>
             <option value="false">Select a match</option>
             {uniqueRounds.map((each) => (
-              <option value={each.roundId}>
+              <option key={each.roundId} value={each.roundId}>
                 {each.courseName}, {each.date}
               </option>
             ))}
@@ -192,8 +192,8 @@ function RecentMatches() {
               </tr>
             </thead>
             <tbody>
-              {matchData.map((each) => (
-                <tr>
+              {matchData.map((each, index) => (
+                <tr key={index}>
                   <th><strong>{each.playerName}</strong></th>
                   <td>{each.hole1}</td>
                   <td>{each.hole2}</td>

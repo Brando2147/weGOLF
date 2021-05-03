@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# weGOLF
 
-## Available Scripts
+  ### Table of contents
+  * [Description](#description)
+  * [Walkthrough](#walkthrough)
+  * [Installation](#installation)
+  * [Deployed-Link](#deployed-link)
+  * [Usage](#usage)
+  * [Technologies-Used](#technologies-used)
+  * [Questions](#questions)
 
-In the project directory, you can run:
+   ## Description
+weGOLF is a golf score tracking up bootstrapped using React.js. The user can easily track their golf scores using the app. They can also see how their golf score compares to other users’ scores across the app.
 
-### `npm start`
+## Walkthrough
+![Application usage gif](./media/weGOLF.gif)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
+  No prior installation is required for using this application. Simply head to the deployed link provided below!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Deployed-Link
+[weGOLF](https://wegolf-bmaj.herokuapp.com/)
 
-### `npm test`
+## Usage
+1. Provide your first name, email, and password to sign up for [weGOLF](https://wegolf-bmaj.herokuapp.com/).
+1. To start a new round click on 'New Match' in the navbar or on the home page.
+1. Then provide the details for your match and click 'Start Match'.
+1. You will then see a scorecard to input scores. Have fun!
+1. You can view previously played and completed matches in the 'Recent Matches' tab.
+1. You can view how your scores compare to others in the 'Leaderboards' tab.
+1. You can also manage your [weGOLF](https://wegolf-bmaj.herokuapp.com/) account in the 'My Account' tab.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Technologies-Used
+ Some of the most notable technologies and resources used are the following:
+ * [MySQL](https://www.mysql.com/
+ * [Express.js](https://expressjs.com/)
+ * [React](https://reactjs.org/) 
+ * [Node.js](https://nodejs.org/en/)
+ * [Firebase] (https://firebase.google.com/)
+ * [Sequelize ORM](https://sequelize.org/)
+ * [jawsDB](https://www.jawsdb.com/)
+ * [Bulma CSS](https://bulma.io/)
+ * [React Router](https://reactrouter.com/)
+ * [axios](https://www.npmjs.com/package/axios)
+ * [News API](https://newsapi.org/)
 
-### `npm run build`
+  ## Questions
+  For further questions you can contact us at:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  GitHub:
+  * Andrew Gabbard [ABGABBARD](https://github.com/abgabbard)
+  * Brandon Dana [Brando2147](https://github.com/Brando2147)
+  * Joshua Arroyo [JAA459](https://github.com/JAA459)
+  * Martin Mondaca [martinmondaca](https://github.com/martinmondaca)
+  
+  Email: 
+  * abgabbard@gmail.com
+  * brando2147@gmail.com
+  * jalexarroyo@gmail.com
+  * martin7mondaca@gmail.com
