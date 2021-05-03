@@ -15,7 +15,7 @@
 weGOLF is a golf score tracking up bootstrapped using React.js. The user can easily track their golf scores using the app. They can also see how their golf score compares to other users’ scores across the app.
 
 ## Walkthrough
-![Application usage gif](./media/weGOLF.gif)
+![Application usage gif](media/weGOLF.gif)
 
 ## Installation
   No prior installation is required for using this application. Simply head to the deployed link provided below!
