@@ -1,6 +1,6 @@
 import React from "react";
 import UserNav from "../components/UserNav/index.js"
-import HelpIMG from "../utils/images/weGOLFHelp.png"
+import HelpIMG from "../utils/images/newWeGOLFHELP.png"
 
 function Help() {
     return (

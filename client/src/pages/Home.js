@@ -113,13 +113,11 @@ function Home() {
           <div className="column">
             <div className="box">
               <div className="card">
-                <Link to="/newmatch">
                   <div className="card-image">
                     <figure className="image is-256x256">
                       <img src={scoreCardHome} alt="Placeholder image"></img>
                     </figure>
                   </div>
-                </Link>
               </div>
               <p></p>
               <p></p>
@@ -129,13 +127,12 @@ function Home() {
             <div className="box">
               {" "}
               <div className="card">
-                <Link to="/newmatch">
+               
                   <div className="card-image">
                     <figure className="image is-256x256 ">
                       <img src={fakeLogo} alt="Placeholder image"></img>
                     </figure>
                   </div>
-                </Link>
               </div>
               <p></p>
               <p></p>
