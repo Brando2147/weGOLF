@@ -3,6 +3,7 @@ import axios from "axios";
 import firebase from "../../firebase";
 import "./style.css";
 import loadingImg from "../../utils/images/Spin-1s-200px.gif"
+import { Link} from "react-router-dom";
 
 function CurrentMatch() {
   const [user, setUser] = useState(false);
@@ -104,17 +105,6 @@ function CurrentMatch() {
   };
 
   const handleEndRound = (event) => {
-    // event.preventDefault();
-    // for (let i = 0; i < matchData.length; i++) {
-    //   const element = matchData[i];
-    //   console.log(element.playerId);
-
-    //   axios({
-    //     method: "PUT",
-    //     data: { Total: totalScore(element.score) },
-    //     url: `/api/addTotal/${element.playerId}/${roundState}`,
-    //   }).then((response) => console.log(response));
-    // }
     updateComplete();
   };
 
@@ -132,9 +122,8 @@ function CurrentMatch() {
                     {"Hole " + each}
                   </td>
                 ))}
-                <td>Total</td>
               </tr>
-{/*
+
             </thead>
             <tbody>
               {matchData.map((array, index) => (
@@ -490,15 +479,9 @@ function CurrentMatch() {
             <img src={loadingImg}></img>
           </div>
         }
-        <button onClick="">End Round</button>
+        <Link to="/home"><button onClick={handleEndRound}>End Round</button></Link>
       </div>
-*/}
-            ))}
-          </tbody>
-        </table>
-        :<div>LOADING IMAGE HERE</div>}
-        <button onClick={handleEndRound}>End Round</button>
-     </div>
+
     </>
   );
 }
