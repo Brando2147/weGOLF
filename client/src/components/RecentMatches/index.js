@@ -52,7 +52,6 @@ function RecentMatches() {
       method: "GET",
       url: `/api/rounds/${user.uid}/`,
     }).then((result) => {
-      console.log(result.data)
       setUniqueRounds(result.data.map(each => {
         var d = new Date(each.createdAt).toDateString();
         return {
@@ -71,12 +70,11 @@ function RecentMatches() {
   const handleChange = (e) => {
     e.preventDefault();
     setSelectedRounds({ roundId: e.target.value });
-    if (e.target.value != "false") {
+    if (e.target.value !== "false") {
       axios({
         method: "GET",
         url: `/api/pastRound/${e.target.value}/`,
       }).then((result) => {
-        console.log(result)
         setMatchData(result.data.map(each => {
           var d = new Date(each.createdAt).toDateString();
           return {
@@ -127,7 +125,7 @@ function RecentMatches() {
         </div>
       </form>
       <hr></hr>
-      {selectedRounds.roundId != "false" &&
+      {selectedRounds.roundId !== "false" &&
         <div className="table-container">
           <table className="previousMatchTable table is-bordered is-narrow is-hoverable is-striped">
             <caption>
@@ -146,7 +144,7 @@ function RecentMatches() {
                   </td>
                 ))}
                 <td>Total</td>
-       {/*
+                {/*
       {selectedRounds.roundId != "false" && (
         <table className="table is-bordered is-narrow is-hoverable">
           <caption style={{color: "white"}}>
@@ -191,12 +189,12 @@ function RecentMatches() {
                 <td>{each.hole18}</td>
                 <td>{each.total}</td>
 */}
-</tr>
+              </tr>
             </thead>
             <tbody>
               {matchData.map((each) => (
                 <tr>
-                  <th>{each.playerName}</th>
+                  <th><strong>{each.playerName}</strong></th>
                   <td>{each.hole1}</td>
                   <td>{each.hole2}</td>
                   <td>{each.hole3}</td>

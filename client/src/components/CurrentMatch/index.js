@@ -3,7 +3,7 @@ import axios from "axios";
 import firebase from "../../firebase";
 import "./style.css";
 import loadingImg from "../../utils/images/Spin-1s-200px.gif"
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function CurrentMatch() {
   const [user, setUser] = useState(false);
@@ -25,7 +25,6 @@ function CurrentMatch() {
       method: "GET",
       url: `/api/current/${_user.uid}/`,
     }).then((results) => {
-      console.log(results.data);
       setMatchData(
         results.data.map((md) => {
           return {
@@ -57,19 +56,17 @@ function CurrentMatch() {
         })
       );
       results.data[0] && setRoundState(results.data[0].roundId)
-      console.log(matchData);
     });
   };
 
   const handleBlur = (playerId, roundId) => {
-    console.log(matchData);
     axios({
       method: "PUT",
       data: matchData.find(player => player.playerId === playerId),
       url: `/api/scores/${playerId}/${roundId}/`,
     })
       .then((results) => {
-        console.log(results);
+        // console.log(results);
       })
       .catch((error) => console.log(error));
   };
@@ -85,7 +82,7 @@ function CurrentMatch() {
   };
 
   let numOfHolesArr = [...Array(18)].map((_, i) => i + 1);
-  
+
   const [total, setTotal] = useState(0);
   var totalScore = function () {
     let _total = Object.values(matchData).reduce((prev, next) => prev + next, 0);
@@ -100,7 +97,7 @@ function CurrentMatch() {
       },
       url: `/api/round/${roundState}`,
     }).then((res) => {
-      console.log(res);
+      // console.log(res);
     });
   };
 
@@ -110,12 +107,11 @@ function CurrentMatch() {
 
   return (
     <>
-
       <div className="table-container">
         {matchData.length > 0 ?
           <table className="table is-bordered is-narrow is-hoverable">
             <thead>
-              <tr>
+              <tr className="tableHeader">
                 <th></th>
                 {numOfHolesArr.map((each, index) => (
                   <td hole={"hole" + each} key={"hole" + each} className="">
@@ -128,7 +124,7 @@ function CurrentMatch() {
             <tbody>
               {matchData.map((array, index) => (
                 <tr>
-                  <td>{array.playerName}</td>
+                  <td><strong>{array.playerName}</strong></td>
                   <td>
                     <input
                       className="scoreInput"
@@ -476,12 +472,15 @@ function CurrentMatch() {
             </tbody>
           </table>
           : <div className="column center has-text-centered">
-            <img src={loadingImg}></img>
+            <img src={loadingImg} alt="loading spinner"></img>
           </div>
         }
-        <Link to="/home"><button onClick={handleEndRound}>End Round</button></Link>
+        <Link to="/home">
+          <div className="column has-text-centered">
+            <button className="button is-medium is-rounded is-danger" onClick={handleEndRound}>End Round</button>
+          </div>
+        </Link>
       </div>
-
     </>
   );
 }

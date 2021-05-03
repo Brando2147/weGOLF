@@ -10,7 +10,7 @@ function Help() {
                 <h1 className="title is-1">Help</h1>
             </div>
             <div className="column is-centered has-text-centered">
-                <img src={HelpIMG} alt="Help image" width="750px" />
+                <img src={HelpIMG} alt="app walkthrough" width="750px" />
             </div>
         </>
     )
