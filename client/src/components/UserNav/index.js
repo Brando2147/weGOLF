@@ -13,6 +13,7 @@ function UserNav() {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log(user.uid);
         setUser(user);
       } else {
         console.log("user is not signed in");
@@ -27,6 +28,21 @@ function UserNav() {
     setUser(false);
   };
 
+
+  const currentRoundCheck = function () {
+    axios({
+      method: "GET",
+      url: `/api/complete/${user.uid}/`,
+    }).then((result) => {
+      console.log(result.data);
+      if (result.data.length === 0) {
+        setRoute("/newMatch");
+      } else {
+        setRoute("/CurrentRound");
+      }
+    });
+  };
+  currentRoundCheck();
 
   return (
     <>
@@ -104,6 +120,7 @@ function UserNav() {
       </nav>
     </>
   );
+
 }
 
 export default UserNav;

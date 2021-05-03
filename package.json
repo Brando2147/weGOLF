@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Mern Demo",
   "main": "server.js",
+  "engines": {
+    "node": "14.x"
+},
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
     "start:prod": "node server.js",
@@ -18,6 +21,7 @@
   "devDependencies": {
     "concurrently": "^4.1.0",
     "nodemon": "^1.18.7"
+    
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
