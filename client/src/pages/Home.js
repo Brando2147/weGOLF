@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserNav from "../components/UserNav/index.js";
-import fakeLogo from "../utils/images/weGolfStoreA.png";
-import scoreCardHome from "../utils/images/bestScoresA.png";
+import fakeLogo from "../utils/images/weGolfStoreComingSoon.png"; 
+import scoreCardHome from "../utils/images/bestScoresComingSoon.png";
 import currentRoundIMG from "../utils/images/currentRoundA.png";
 import usersIcon from "../utils/images/golfNews.png";
 import firebase from "../firebase.js"
@@ -113,13 +113,11 @@ function Home() {
           <div className="column">
             <div className="box">
               <div className="card">
-                <Link to="/newmatch">
                   <div className="card-image">
                     <figure className="image is-256x256">
                       <img src={scoreCardHome} alt="wegolf store button"></img>
                     </figure>
                   </div>
-                </Link>
               </div>
               <p></p>
               <p></p>
@@ -129,13 +127,12 @@ function Home() {
             <div className="box">
               {" "}
               <div className="card">
-                <Link to="/newmatch">
+               
                   <div className="card-image">
                     <figure className="image is-256x256 ">
                       <img src={fakeLogo} alt="new match button"></img>
                     </figure>
                   </div>
-                </Link>
               </div>
               <p></p>
               <p></p>
