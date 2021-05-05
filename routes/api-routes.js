@@ -173,7 +173,28 @@ module.exports = function (app) {
         console.log(err);
       });
   });
-
+// Route to get Best Round Data
+  
+app.get("/api/leaderboards", async function (req, res) {
+    await db.sequelize
+      .query(
+        `SELECT Scores.playerName,  Scores.Total, Round.courseName, Round.courseCity, Round.courseState, Round.createdAt 
+        FROM Round 
+        INNER JOIN Scores 
+        ON Round.id = Scores.RoundId
+        WHERE Round.isComplete = 1
+        AND Scores.Total <> 0
+        ORDER BY Total`,
+        
+        { type: QueryTypes.SELECT }
+      )
+      .then((result) => {
+        res.json(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
   // Get route to retrieve scores from current round by user
   app.get("/api/current/:ownerId", function (req, res) {
     db.sequelize

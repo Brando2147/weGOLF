@@ -18,6 +18,7 @@ import UserFooter from "./components/UserFooter/index.js"
 import firebase from "./firebase";
 import grassBanner from "./utils/images/grassbanner.png"
 import CurrentRound from './pages/Current';
+import BestRounds from './pages/BestRounds';
 // import Directory from "./pages/Directory.js"
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
             <Route exact path="/recentmatches" component={MatchHistory} />
             {/* <Route exact path="/courses" component={Courses} /> */}
             <Route exact path="/leaderboards" component={LeaderBoards} />
+            <Route exact path="/BestRounds" component={BestRounds} />
             <Route exact path="/myaccount" component={MyAccount} />
             <Route exact path="/help" component={Help} />
             <Route exact path="/news" component={NewsFeed} />
