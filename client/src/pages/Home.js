@@ -113,11 +113,13 @@ function Home() {
           <div className="column">
             <div className="box">
               <div className="card">
-                  <div className="card-image">
+              <Link to="/BestRounds">
+                  <div className="card-image is-clickable">
                     <figure className="image is-256x256">
                       <img src={scoreCardHome} alt="wegolf store button"></img>
                     </figure>
                   </div>
+                  </Link>
               </div>
               <p></p>
               <p></p>
