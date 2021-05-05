@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import UserNav from "../components/UserNav/index.js";
 import fakeLogo from "../utils/images/weGolfStoreComingSoon.png"; 
-import scoreCardHome from "../utils/images/bestScoresComingSoon.png";
+import scoreCardHome from "../utils/images/bestScoresA.png";
 import currentRoundIMG from "../utils/images/currentRoundA.png";
 import usersIcon from "../utils/images/golfNews.png";
 import firebase from "../firebase.js"
@@ -113,11 +113,13 @@ function Home() {
           <div className="column">
             <div className="box">
               <div className="card">
+              <Link to="/BestRounds">
                   <div className="card-image">
                     <figure className="image is-256x256">
                       <img src={scoreCardHome} alt="wegolf store button"></img>
                     </figure>
                   </div>
+                  </Link>
               </div>
               <p></p>
               <p></p>
